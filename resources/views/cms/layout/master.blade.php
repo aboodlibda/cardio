@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+
+@if(App::getLocale()=='ar')
+    <html dir="rtl" lang="ar">
+@else
+    <html dir="ltr" lang="en">
+@endif
+
 <!--begin::Head-->
 <head>
     <base href="">
@@ -22,19 +28,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
 
+
+    @if(App::getLocale()=='ar')
+        <!--AR files-->
+        {{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
+            <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
+            <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
+
+    @else
+        <!--EN files-->
+        <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    @endif
     <!--end::Fonts-->
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
 
-    <!--EN files-->
-        <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('assets/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-
-    <!--AR files-->
-{{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
-{{--    <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
-{{--    <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
     @yield('style')
 
 
@@ -1606,55 +1616,42 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end" data-kt-menu-flip="{default: 'top', lg: ''}">
-                                <a href="#" class="menu-link px-5">
+                                @if (App::getLocale() == 'en')
+                                    <a href="#" class="menu-link px-5">
 											<span class="menu-title position-relative">Language
 											<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">English
-											<img class="w-15px h-15px rounded-1 ms-2" src="assets/media/flags/united-states.svg" alt="metronic" /></span></span>
-                                </a>
+											<img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/united-states.svg')}}" alt="metronic" /></span></span>
+                                    </a>
+                                @else
+                                    <a href="#" class="menu-link px-5">
+											<span class="menu-title position-relative">اللغة
+											<span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">العربية
+											<img class="w-15px h-15px rounded-1 ms-2" src="{{asset('assets/media/flags/saudi-arabia.svg')}}" alt="metronic" /></span></span>
+                                    </a>
+                                @endif
+
+
+
                                 <!--begin::Menu sub-->
                                 <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                    @foreach(LaravelLocalization::getSupportedLocales()  as $localeCode => $properties)
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/settings.html" class="menu-link d-flex px-5 active">
+                                        <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" hreflang="{{ $localeCode }}" class="menu-link d-flex px-5 active">
 												<span class="symbol symbol-20px me-4">
-													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="metronic" />
-												</span>English</a>
+                                                    @if($localeCode == 'ar')
+                                                        <img class="rounded-1" src="{{asset('assets/media/flags/saudi-arabia.svg')}}" alt="saudi arabia flag" />
+                                                    @else
+                                                        <img class="rounded-1" src="{{asset('assets/media/flags/united-states.svg')}}" alt="united states flag" />
+                                                    @endif
+												</span>{{ $properties['native'] }}</a>
                                     </div>
                                     <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/settings.html" class="menu-link d-flex px-5">
-												<span class="symbol symbol-20px me-4">
-													<img class="rounded-1" src="assets/media/flags/spain.svg" alt="metronic" />
-												</span>Spanish</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/settings.html" class="menu-link d-flex px-5">
-												<span class="symbol symbol-20px me-4">
-													<img class="rounded-1" src="assets/media/flags/germany.svg" alt="metronic" />
-												</span>German</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/settings.html" class="menu-link d-flex px-5">
-												<span class="symbol symbol-20px me-4">
-													<img class="rounded-1" src="assets/media/flags/japan.svg" alt="metronic" />
-												</span>Japanese</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/settings.html" class="menu-link d-flex px-5">
-												<span class="symbol symbol-20px me-4">
-													<img class="rounded-1" src="assets/media/flags/france.svg" alt="metronic" />
-												</span>French</a>
-                                    </div>
-                                    <!--end::Menu item-->
+                                    @endforeach
                                 </div>
                                 <!--end::Menu sub-->
+
+
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
