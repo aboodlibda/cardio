@@ -126,7 +126,7 @@
 											</span>
                                             <!--end::Svg Icon-->
 										</span>
-                                <span class="menu-title">Dashboard</span>
+                                <span class="menu-title">{{trans('dashboard_trans.Dashboard')}}</span>
                             </a>
                         </div>
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
