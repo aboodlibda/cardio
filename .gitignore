@@ -22,3 +22,6 @@ Homestead.json
 /.vagrant
 .phpunit.result.cache
 .idea/laravel-idea.xml
+/.idea
+.idea/cardio.iml
+.idea/php.xml
