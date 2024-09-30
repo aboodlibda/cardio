@@ -2,6 +2,9 @@
 return [
     'Hello'=>'Hello',
     'Dashboard' => 'Dashboard',
+    'Language' => 'Language',
+    'Arabic' => 'Arabic',
+    'English' => 'English',
     'Sign In to Dashboard Admin' => 'Sign in to Dashboard Admin',
     'Sign In' => 'Sign In',
     'Home' => 'Home',

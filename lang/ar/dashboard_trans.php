@@ -2,6 +2,9 @@
 return [
     'Hello'=>'مرحبا',
     'Dashboard' => 'لوحة التحكم',
+    'Language' => 'اللغة',
+    'Arabic' => 'العربية',
+    'English' => 'الانجليزية',
     'Sign In to Dashboard Admin' => 'تسجيل دخول الى لوحة تحكم الأدمن',
     'Sign In' => 'تسجيل دخول',
     'Home' => 'الرئيسية',
