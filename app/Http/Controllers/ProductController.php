@@ -8,6 +8,7 @@ class ProductController extends Controller
 {
     public function index()
     {
+        return view('cms.product.index');
 
     }
 
