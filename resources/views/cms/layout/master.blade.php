@@ -27,7 +27,6 @@
 
     @if(App::getLocale()=='ar')
         <!--AR files-->
-        {{--    <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">--}}
             <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
             <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
 
@@ -137,27 +136,25 @@
 										<span class="menu-arrow"></span>
 									</span>
                             <div class="menu-sub menu-sub-accordion">
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<span class="menu-link">
-                                                <a  href="#">
+
+                                <div  class="menu-item menu-accordion">
+                                    <a class="menu-link" href="{{ route('products.index') }}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                                </a>
 												<span class="menu-title">{{trans('dashboard_trans.All Products')}}</span>
-											</span>
-                                </div>
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<span class="menu-link">
-                                                <a href="#">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                </a>
-												<span class="menu-title">{{trans('dashboard_trans.Add new products')}}</span>
-											</span>
+                                            </a>
+
                                 </div>
 
+                                <div class="menu-item menu-accordion">
+                                        <a class="menu-link" href="{{ route('products.create') }}">
+														<span class="menu-bullet">
+															<span class="bullet bullet-dot"></span>
+														</span>
+                                            <span class="menu-title">{{trans('dashboard_trans.Add new products')}}</span>
+                                        </a>
+                                    </div>
                             </div>
                         </div>
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
