@@ -318,7 +318,7 @@
                                     <!--begin::Menu item-->
                                     @foreach(LaravelLocalization::getSupportedLocales()  as $localeCode => $properties)
                                     <div class="menu-item px-3">
-                                        <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" hreflang="{{ $localeCode }}" class="menu-link d-flex px-5 active">
+                                        <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" hreflang="{{ $localeCode }}" class="menu-link d-flex px-5">
 												<span class="symbol symbol-20px me-4">
 {{--													<img class="rounded-1" src="assets/media/flags/united-states.svg" alt="" />--}}
 												</span>{{ $properties['native'] }}</a>
