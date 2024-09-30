@@ -1,5 +1,6 @@
 <?php
 return [
+    'Hello'=>'Hello',
     'Dashboard' => 'Dashboard',
     'Sign In to Dashboard Admin' => 'Sign in to Dashboard Admin',
     'Sign In' => 'Sign In',

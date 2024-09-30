@@ -1,5 +1,6 @@
 <?php
 return [
+    'Hello'=>'مرحبا',
     'Dashboard' => 'لوحة التحكم',
     'Sign In to Dashboard Admin' => 'تسجيل دخول الى لوحة تحكم الأدمن',
     'Sign In' => 'تسجيل دخول',
