@@ -353,6 +353,8 @@ return [
     'Style'=>'الستايل',
     'Add another variation'=>'أضف اختلافًا آخر',
     'Advanced'=>'متقدم',
+    'All'=>'الكل',
+
 
 
 

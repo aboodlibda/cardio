@@ -353,6 +353,7 @@ return [
     'Style'=>'Style',
     'Add another variation'=>'Add another variation',
     'Advanced'=>'Advanced',
+    'All'=>'All',
 
 
 
