@@ -375,6 +375,9 @@ return [
     'Add New Tag'=>'Add New Tag',
     'Click on the below buttons to launch'=>'Click on the below buttons to launch',
     'Tag Name'=>'Tag Name',
+    'Quick Search'=>'Quick Search',
+    'You have got new sales'=>'You have got new sales',
+
 
 
 

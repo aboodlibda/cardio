@@ -376,6 +376,10 @@ return [
     'Add New Tag'=>'اضافة وسم جديد',
     'Click on the below buttons to launch'=>'انقر على الأزرار أدناه لبدء التشغيل',
     'Tag Name'=>'اسم الوسم',
+    'Quick Search'=>'بحث سريع',
+    'You have got new sales'=>'لقد حصلت على مبيعات جديدة',
+
+
 
 
 
