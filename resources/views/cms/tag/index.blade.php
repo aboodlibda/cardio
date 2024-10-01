@@ -1,27 +1,21 @@
 @extends('cms.layout.master')
 @section('title',trans('dashboard_trans.Tags'))
 @section('style')
-    @if(App::getLocale()=='ar')
-        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
-    @else
-        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-    @endif
 @endsection
 @section('content')
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">New Target</h1>
+        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">{{trans('dashboard_trans.Add New Tag')}}</h1>
         <!--end::Heading-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
-            <li class="breadcrumb-item text-muted">Utilities</li>
-            <li class="breadcrumb-item text-muted">Modals</li>
-            <li class="breadcrumb-item text-muted">Forms</li>
-            <li class="breadcrumb-item text-dark">New Target</li>
+            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
+            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Products')}}</li>
+            <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.Tags')}}</li>
         </ul>
         <!--end::Breadcrumb-->
     </div>
