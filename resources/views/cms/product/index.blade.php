@@ -50,11 +50,11 @@
                         <div class="w-100 mw-150px">
                             <!--begin::Select2-->
                             <select class="form-select form-select-solid"  data-hide-search="true"  data-placeholder="status" data-kt-ecommerce-product-filter="status">
-                                <option disabled hidden selected>status</option>
-                                <option value="all">All</option>
-                                <option value="published">Published</option>
-                                <option value="scheduled">Scheduled</option>
-                                <option value="inactive">Inactive</option>
+                                <option disabled hidden selected>{{trans('dashboard_trans.Status')}}</option>
+                                <option value="all">{{trans('dashboard_trans.All')}}</option>
+                                <option value="published">{{trans('dashboard_trans.Published')}}</option>
+                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
+                                <option value="inactive">{{trans('dashboard_trans.InActive')}}</option>
                             </select>
                             <!--end::Select2-->
                         </div>
@@ -77,7 +77,7 @@
                                 </div>
                             </th>
                             <th class="min-w-200px">{{trans('dashboard_trans.Product')}}</th>
-                            <th class="text-end min-w-100px">SKU</th>
+                            <th class="text-end min-w-100px">{{trans('dashboard_trans.SKU')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.QTY')}}</th>
                             <th class="text-end min-w-100px">{{trans('dashboard_trans.Price')}}</th>
                             <th class="text-end min-w-100px">{{trans('dashboard_trans.Rating')}}</th>
