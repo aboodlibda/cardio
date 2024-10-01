@@ -136,13 +136,36 @@
                                 </div>
                                 <!--end:Menu item-->
                                 <!--begin:Menu item-->
+
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion "  >
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+										<span class="menu-icon">
+											<i class="ki-duotone ki-black-right fs-2"></i>
+										</span>
+										<span class="menu-title">{{trans('dashboard_trans.Categories')}}</span>
+										<span class="menu-arrow"></span>
+									</span>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link" href="https://preview.keenthemes.com/metronic8/demo3/layout-builder.html" title="Build your layout and export HTML for server side integration" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+                                    <a class="menu-link" href="{{ route('categories.index') }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                        <span class="menu-title">Layout Builder</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.All Categories')}}</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
@@ -150,14 +173,20 @@
                                 <!--begin:Menu item-->
                                 <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/getting-started/changelog" target="_blank">
+                                    <a class="menu-link" href="{{ route('categories.create') }}"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                        <span class="menu-title">Changelog v8.2.0</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Add new category')}}</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+
                                 <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
@@ -177,7 +206,7 @@
                     <div class="d-flex align-items-center">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-circle symbol-40px">
-                            <img src="assets/media/avatars/300-1.jpg" alt="photo" />
+                            <img src="{{asset('assets/media/avatars/300-1.jpg')}}" alt="photo" />
                         </div>
                         <!--end::Avatar-->
                         <!--begin::User info-->
@@ -207,7 +236,7 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="assets/media/avatars/300-1.jpg" />
+                                        <img alt="Logo" src="{{asset('assets/media/avatars/300-1.jpg')}}" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
@@ -225,13 +254,13 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="../../demo3/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                                <a href="../../demo3/dist/account/overview.html" class="menu-link px-5">{{trans('dashboard_trans.My Profile')}}</a>
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
                                 <a href="../../demo3/dist/apps/projects/list.html" class="menu-link px-5">
-                                    <span class="menu-text">My Projects</span>
+                                    <span class="menu-text">{{trans('dashboard_trans.My Products')}}</span>
                                     <span class="menu-badge">
 												<span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
 											</span>
@@ -239,61 +268,10 @@
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
-                            <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-end" data-kt-menu-offset="-15px, 0">
-                                <a href="#" class="menu-link px-5">
-                                    <span class="menu-title">My Subscription</span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <!--begin::Menu sub-->
-                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/referrals.html" class="menu-link px-5">Referrals</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/billing.html" class="menu-link px-5">Billing</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/statements.html" class="menu-link px-5">Payments</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/account/statements.html" class="menu-link d-flex flex-stack px-5">Statements
-                                            <span class="ms-2 lh-0" data-bs-toggle="tooltip" title="View your statements">
-													<i class="ki-duotone ki-information-5 fs-5">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-													</i>
-												</span></a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu separator-->
-                                    <div class="separator my-2"></div>
-                                    <!--end::Menu separator-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content px-3">
-                                            <label class="form-check form-switch form-check-custom form-check-solid">
-                                                <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications" />
-                                                <span class="form-check-label text-muted fs-7">Notifications</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu sub-->
-                            </div>
+
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <a href="../../demo3/dist/account/statements.html" class="menu-link px-5">My Statements</a>
-                            </div>
+
                             <!--end::Menu item-->
                             <!--begin::Menu separator-->
                             <div class="separator my-2"></div>
@@ -332,12 +310,12 @@
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5 my-1">
-                                <a href="../../demo3/dist/account/settings.html" class="menu-link px-5">Account Settings</a>
+                                <a href="../../demo3/dist/account/settings.html" class="menu-link px-5">{{trans('dashboard_trans.Account Settings')}}</a>
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="../../demo3/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">Sign Out</a>
+                                <a href="../../demo3/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">{{trans('dashboard_trans.Sign Out')}}</a>
                             </div>
                             <!--end::Menu item-->
                         </div>
