@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -18,6 +19,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::view('/','cms.dashboard')->name('dashboard');
         Route::resource('products',ProductController::class);
         Route::resource('categories',CategoryController::class);
+        Route::resource('tags',TagController::class);
 
 
 
