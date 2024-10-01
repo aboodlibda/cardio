@@ -372,6 +372,9 @@ return [
     'Please wait'=>'Please wait',
     'Edit Category'=>'Edit Category',
     'Edit Product'=>'Edit Product',
+    'Add New Tag'=>'Add New Tag',
+    'Click on the below buttons to launch'=>'Click on the below buttons to launch',
+    'Tag Name'=>'Tag Name',
 
 
 

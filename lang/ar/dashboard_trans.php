@@ -373,6 +373,11 @@ return [
     'Please wait'=>'الرجاء الانتظار',
     'Edit Category'=>'تعديل الفئة',
     'Edit Product'=>'تعديل المنتج',
+    'Add New Tag'=>'اضافة وسم جديد',
+    'Click on the below buttons to launch'=>'انقر على الأزرار أدناه لبدء التشغيل',
+    'Tag Name'=>'اسم الوسم',
+
+
 
 
 
