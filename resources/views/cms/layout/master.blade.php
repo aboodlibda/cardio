@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
 
+{{--    <link href="{{asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.css')}}" rel="stylesheet" type="text/css" />--}}
 
     @if(App::getLocale()=='ar')
         <!--AR files-->
@@ -3073,7 +3074,13 @@
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-
+{{--<script src="{{asset('assets/plugins/custom/vis-timeline/vis-timeline.bundle.js')}}"></script>--}}
+{{--<!--end::Vendors Javascript-->--}}
+{{--<!--begin::Custom Javascript(used for this page only)-->--}}
+{{--<script src="{{asset('assets/js/widgets.bundle.js')}}"></script>--}}
+{{--<script src="{{asset('assets/js/custom/widgets.js')}}"></script>--}}
+{{--<script src="{{asset('assets/js/custom/apps/chat/chat.js')}}"></script>--}}
+{{--<script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>--}}
 <!--end::Global Javascript Bundle-->
 @yield('script')
 
