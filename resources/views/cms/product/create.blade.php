@@ -12,7 +12,7 @@
                 <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
-            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Products')}}</li>
+            <li class="breadcrumb-item text-muted"><a class="text-muted text-hover-primary" href="{{ route('products.index') }}">{{trans('dashboard_trans.Products')}}</a></li>
             <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.Add new products')}}</li>
         </ul>
         <!--end::Breadcrumb-->
