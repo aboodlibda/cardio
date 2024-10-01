@@ -354,6 +354,29 @@ return [
     'Add another variation'=>'Add another variation',
     'Advanced'=>'Advanced',
     'All'=>'All',
+    'My Products'=>'My Products',
+    'Sign Out'=>'Sign Out',
+    'Account Settings'=>'Account Settings',
+    'My Profile'=>'My Profile',
+    'All Categories'=>'All Categories',
+    'Add new category'=>'Add new category',
+    'Category'=>'Category',
+    'Category Type'=>'Category Type',
+    'Add Category'=>'Add Category',
+    'Search Category'=>'Search Category',
+    'Unpublished'=>'Unpublished',
+    'Set the category status'=>'Set the category status',
+    'Category Name'=>'Category Name',
+    'A category name is required and recommended to be unique'=>'A category name is required and recommended to be unique',
+    'Set a description to the for better visibility'=>'Set a description to the for better visibility',
+    'Please wait'=>'Please wait',
+    'Edit Category'=>'Edit Category',
+    'Edit Product'=>'Edit Product',
+
+
+
+
+
 
 
 

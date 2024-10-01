@@ -354,6 +354,38 @@ return [
     'Add another variation'=>'أضف اختلافًا آخر',
     'Advanced'=>'متقدم',
     'All'=>'الكل',
+    'My Products'=>'منتجاتي',
+    'Sign Out'=>'تسجيل خروج',
+    'Account Settings'=>'اعدادات الحساب',
+    'My Profile'=>'ملفي الشخصي',
+    'All Categories'=>'كافة الفئات',
+    'Add new category'=>'اضافة فئة جديدة',
+    'Category'=>'الفئة',
+    'Category Type'=>'نوع الفئة',
+    'Add Category'=>'اضافة فئة',
+    'Search Category'=>'البحث عن الفئة',
+    'Set the thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted'=>'قم بتعيين الصورة المصغرة. يتم قبول ملفات الصور *.png و*.jpg و*.jpeg فقط',
+    'Unpublished'=>'غير منشور',
+    'Set the category status'=>'قم بتعيين حالة الفئة',
+    'Category Name'=>'اسم الفئة',
+    'A category name is required and recommended to be unique'=>'يجب أن يكون اسم الفئة فريدًا ومن المستحسن أن يكون فريدًا',
+    'Set a description to the for better visibility'=>'قم بتعيين وصف لرؤية أفضل',
+    'Please wait'=>'الرجاء الانتظار',
+    'Edit Category'=>'تعديل الفئة',
+    'Edit Product'=>'تعديل المنتج',
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
