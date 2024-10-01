@@ -388,7 +388,7 @@
                                 </i>
                                 <!--end::Icon-->
                                 <!--begin::Input-->
-                                <input type="text" class="form-control bg-transparent ps-13 fs-7 h-40px" name="search" value="" placeholder="Quick Search" data-kt-search-element="input" />
+                                <input type="text" class="form-control bg-transparent ps-13 fs-7 h-40px" name="search" value="" placeholder="{{trans('dashboard_trans.Quick Search')}}" data-kt-search-element="input" />
                                 <!--end::Input-->
                                 <!--begin::Spinner-->
                                 <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5" data-kt-search-element="spinner">
