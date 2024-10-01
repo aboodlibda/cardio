@@ -291,6 +291,116 @@ return [
     'Add Feature'=>'اضافة ميزة',
     'Technology'=>'التقنية',
     'Project not found'=>'المشروع غير موجود',
+    'Add Product'=>'اضافة منتج',
+    'Price'=>'السعر',
+    'QTY'=>'الكمية',
+    'Rating'=>'التقييم',
+    'Product'=>'المنتج',
+    'Product Details'=>'تفاصيل المنتج',
+    'Categories'=>'الفئات',
+    'Create new category'=>'اضافة فئة جديدة',
+    'Tags'=>'الوسوم',
+    'A product name is required and recommended to be unique'=>'يجب أن يكون اسم المنتج فريدًا ومن المستحسن أن يكون فريدًا',
+    'Set a description to the product for better visibility'=>'قم بتعيين وصف للمنتج لتحسين الرؤية',
+    'Media'=>'وسائط',
+    'Drop files here or click to upload'=>'قم بإسقاط الملفات هنا أو انقر للتحميل',
+    'Upload up to 10 files'=>'تحميل ما يصل إلى 10 ملفات',
+    'Set the product media gallery'=>'تعيين معرض الوسائط للمنتج',
+    'Pricing'=>'التسعير',
+    'Base Price'=>'السعر الاساسي',
+    'Product price'=>'سعر المنتج',
+    'Set the product price'=>'حدد سعر المنتج',
+    'Discount Type'=>'نوع الخصم',
+    'No Discount'=>'لا يوجد خصم',
+    'Percentage %'=>'نسبة مئوية ٪',
+    'Fixed Price'=>'سعر ثابت',
+    'Set Discount Percentage'=>'تعيين نسبة الخصم',
+    'Set a percentage discount to be applied on this product'=>'تعيين نسبة الخصم التي سيتم تطبيقها على هذا المنتج',
+    'Fixed Discounted Price'=>'سعر مخفض ثابت',
+    'Set the discounted product price. The product will be reduced at the determined fixed price'=>'حدد سعر المنتج المخفض، وسيتم تخفيض سعر المنتج بالسعر الثابت المحدد',
+    'Tax Class'=>'فئة الضريبة',
+    'Tax Free'=>'معفاة من الضرائب',
+    'Taxable Goods'=>'السلع الخاضعة للضريبة',
+    'Downloadable Product'=>'المنتج القابل للتنزيل',
+    'Select an option'=>'حدد خيارا',
+    'Set the product tax class'=>'تعيين فئة ضريبة المنتج',
+    'VAT Amount (%)'=>'مبلغ ضريبة القيمة المضافة (%)',
+    'Set the product VAT about'=>'تعيين ضريبة القيمة المضافة للمنتج',
+    'Product Name' => 'اسم المنتج',
+    'Add tags to a product'=>'إضافة وسوم إلى المنتج',
+    'Add product to a category'=>'إضافة المنتج إلى الفئة',
+    'Published'=>'تم النشر',
+    'Draft'=>'مسودة',
+    'Scheduled'=>'مجدول',
+    'Inactive'=>'غير نشط',
+    'Set the product status'=>'قم بتعيين حالة المنتج',
+    'Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted'=>'قم بتعيين صورة مصغرة للمنتج. يتم قبول ملفات الصور *.png و*.jpg و*.jpeg فقط',
+    'No data available. Sales data will begin capturing once product has been published'=>'لا توجد بيانات متاحة. سيتم البدء في تسجيل بيانات المبيعات بمجرد نشر المنتج',
+    'Weekly Sales'=>'المبيعات الاسبوعية',
+    'Inventory'=>'جرد',
+    'Enter the product SKU'=>'أدخل رقم المنتج'  ,
+    'SKU'=>'رقم المنتج',
+    'Barcode'=>'الباركود',
+    'Enter the product barcode number'=>'أدخل رقم الباركود الخاص بالمنتج',
+    'Enter the product quantity'=>'أدخل كمية المنتج',
+    'Allow Backorders'=>'السماح بالطلبات المؤجلة',
+    'Allow customers to purchase products that are out of stock'=>'السماح للعملاء بشراء المنتجات التي نفدت من المخزون',
+    'Variations'=>'التغيرات',
+    'Add Product Variations'=>'إضافة اختلافات المنتج',
+    'Color'=>'اللون',
+    'Size'=>'الحجم',
+    'Material'=>'المادة',
+    'Style'=>'الستايل',
+    'Add another variation'=>'أضف اختلافًا آخر',
+    'Advanced'=>'متقدم',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
