@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -16,6 +17,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::prefix('cms')->group(function (){
         Route::view('/','cms.dashboard')->name('dashboard');
         Route::resource('products',ProductController::class);
+        Route::resource('categories',CategoryController::class);
 
 
 
