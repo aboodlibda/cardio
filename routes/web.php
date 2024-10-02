@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('products',ProductController::class);
         Route::resource('categories',CategoryController::class);
         Route::resource('tags',TagController::class);
+        Route::resource('coupons',CouponController::class);
 
 
 
