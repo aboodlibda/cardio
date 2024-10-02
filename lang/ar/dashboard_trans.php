@@ -382,6 +382,32 @@ return [
     'User Management'=>'ادارة المستخدم',
     'Users List'=>'قائمة المستخدمين',
     'Roles List'=>'قائمة الادوار',
+    'Coupons'=>'الكوبونات',
+    'All Coupons'=>'كافة الكوبونات',
+    'Add new coupon'=>'اضافة كوبون جديد',
+    'Add Coupon'=>'اضافة كوبون',
+    'Coupon'=>'الكوبون',
+    'Times Used'=>'عدد المرات المستخدمة',
+    'Max Usage'=>'الحد الاقصى للاستخدام',
+    'Start Date'=>'تاريخ البداية',
+    'End Date'=>'تاريخ الانتهاء',
+    'Coupon Code'=>'كود الكوبون',
+    'A coupon code is required and recommended to be unique'=>'يجب أن يكون كود الكوبون فريدًا ومن المستحسن أن يكون فريدًا',
+    'Discount Value'=>'قيمة الخصم',
+    'Edit Coupon'=>'تعديل الكوبون',
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

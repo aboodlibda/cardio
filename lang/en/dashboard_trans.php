@@ -381,6 +381,19 @@ return [
     'User Management'=>'User Management',
     'Users List'=>'Users List',
     'Roles List'=>'Roles List',
+    'Coupons'=>'Coupons',
+    'All Coupons'=>'All Coupons',
+    'Add new coupon'=>'Add new coupon',
+    'Add Coupon'=>'Add Coupon',
+    'Coupon'=>'Coupon',
+    'Times Used'=>'Times Used',
+    'Max Usage'=>'Max Usage',
+    'Start Date'=>'Start Date',
+    'End Date'=>'End Date',
+    'Coupon Code'=>'Coupon Code',
+    'A coupon code is required and recommended to be unique'=>'A coupon code is required and recommended to be unique',
+    'Discount Value'=>'Discount Value',
+    'Edit Coupon'=>'Edit Coupon',
 
 
 
