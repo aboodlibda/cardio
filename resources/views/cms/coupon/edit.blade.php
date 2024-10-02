@@ -149,6 +149,7 @@
                             </div>
                             <!--end::Tab pane-->
                         </div>
+                    </div>
                         <!--end::Tab content-->
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
