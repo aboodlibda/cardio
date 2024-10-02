@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <!--end::Tab pane-->
-
+                        </div>
                     </div>
                     <!--end::Tab content-->
 
