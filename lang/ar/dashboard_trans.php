@@ -13,7 +13,7 @@ return [
     'Subcategory' => 'القسم',
     'Products' => 'المنتجات',
     'Slides' => 'الاعلانات',
-    'Users' => 'المستخدمون',
+    'Users' => 'المستخدمين',
     'Admins' => 'المدراء',
     'Industries' => 'المصانع',
     'Shipping Companies' => 'شركات الشحن',
@@ -24,7 +24,7 @@ return [
     'Mail' => 'البريد',
     'Settings' => ' الاعدادات',
     'Roles' => 'الأدوار',
-    'Permissions' => 'الأذونات',
+    'Permissions' => 'الصلاحيات',
     'Log Out' => 'تسجيل خروج',
     'Go to website ' => 'الذهاب الى الموقع الالكتروني',
     'Add' => 'إنشاء',
@@ -299,7 +299,7 @@ return [
     'Product Details'=>'تفاصيل المنتج',
     'Categories'=>'الفئات',
     'Create new category'=>'اضافة فئة جديدة',
-    'Tags'=>'الوسوم',
+    'Tags'=>'الاوسمة',
     'A product name is required and recommended to be unique'=>'يجب أن يكون اسم المنتج فريدًا ومن المستحسن أن يكون فريدًا',
     'Set a description to the product for better visibility'=>'قم بتعيين وصف للمنتج لتحسين الرؤية',
     'Media'=>'وسائط',
@@ -378,6 +378,14 @@ return [
     'Tag Name'=>'اسم الوسم',
     'Quick Search'=>'بحث سريع',
     'You have got new sales'=>'لقد حصلت على مبيعات جديدة',
+    'Apps'=>'التطبيقات',
+    'User Management'=>'ادارة المستخدم',
+    'Users List'=>'قائمة المستخدمين',
+    'Roles List'=>'قائمة الادوار',
+
+
+
+
 
 
 

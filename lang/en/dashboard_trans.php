@@ -377,6 +377,10 @@ return [
     'Tag Name'=>'Tag Name',
     'Quick Search'=>'Quick Search',
     'You have got new sales'=>'You have got new sales',
+    'Apps'=>'Apps',
+    'User Management'=>'User Management',
+    'Users List'=>'Users List',
+    'Roles List'=>'Roles List',
 
 
 
