@@ -392,7 +392,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link" href="../../demo3/dist/apps/user-management/permissions.html">
+                                            <a class="menu-link" href="{{ route('permissions.index') }}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
