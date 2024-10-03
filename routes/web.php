@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -22,6 +25,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('categories',CategoryController::class);
         Route::resource('tags',TagController::class);
         Route::resource('coupons',CouponController::class);
+        Route::resource('users',UserController::class);
+        Route::resource('roles',RoleController::class);
+        Route::resource('orders',OrderController::class);
+
+
+
+        Route::view('show-user','cms.user.show')->name('show-user');
+        Route::view('show-order','cms.order.show')->name('show-order');
+        Route::view('show-role','cms.user.role.show')->name('show-role');
 
 
 
