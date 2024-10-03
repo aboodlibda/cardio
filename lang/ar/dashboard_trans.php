@@ -477,6 +477,25 @@ return [
     'Total Cost'=>'التكلفة الاجمالية',
     'Qty Remaining'=>'الكمية المتبقية',
     'Save'=>'حفظ',
+    'Permissions List'=>'قائمة الصلاحيات',
+    'Assigned to'=>'مُخصص لـ',
+    'Created Date'=>'تاريخ الانشاء',
+    'Add Permission'=>'اضافة صلاحية',
+    'Permission Name'=>'اسم الصلاحية',
+    'Close'=>'اغلاق',
+    'Update Permission'=>'تحديث الصلاحية',
+    'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding'=>'من خلال تعديل اسم الإذن، قد تتسبب في تعطيل وظيفة أذونات النظام. يرجى التأكد من أنك متأكد تمامًا قبل المتابعة',
+    'Warning'=>'تحذير',
+    'Search Permissions'=>'بحث الصلاحيات',
+
+
+
+
+
+
+
+
+
 
 
 

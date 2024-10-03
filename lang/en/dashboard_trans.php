@@ -476,6 +476,17 @@ return [
     'Total Cost'=>'Total Cost',
     'Qty Remaining'=>'Qty Remaining',
     'Save'=>'Save',
+    'Permissions List'=>'Permissions List',
+    'Assigned to'=>'Assigned to',
+    'Created Date'=>'Created Date',
+    'Add Permission'=>'Add Permission',
+    'Permission Name'=>'Permission Name',
+    'Close'=>'Close',
+    'Update Permission'=>'Update Permission',
+    'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding'=>'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding',
+    'Warning'=>'Warning',
+    'Search Permissions'=>'Search Permissions',
+
 
 
 
