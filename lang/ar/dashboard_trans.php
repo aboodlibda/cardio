@@ -395,6 +395,157 @@ return [
     'A coupon code is required and recommended to be unique'=>'يجب أن يكون كود الكوبون فريدًا ومن المستحسن أن يكون فريدًا',
     'Discount Value'=>'قيمة الخصم',
     'Edit Coupon'=>'تعديل الكوبون',
+    'Filter Options'=>'خيارات الفلتر',
+    'Search User'=>'بحث المستخدم',
+    'Add User'=>'اضافة مستخدم',
+    'Export Users'=>'تصدير المستخدمين',
+    'Select Role'=>'حدد الدور',
+    'Select Export Format'=>'حدد تنسيق التصدير',
+    'User'=>'المستخدم',
+    'Last login'=>'اخر دخول',
+    'Joined Date'=>'تاريخ الانضمام',
+    'Export'=>'تصدير',
+    'Filter'=>'فلتر',
+    'View User Details'=>'عرض تفاصيل المستخدم',
+    'View User'=>'عرض المستخدم',
+    'View Role'=>'عرض الدور',
+    'Edit Role'=>'تعديل الدور',
+    'Add New Role'=>'اضافة دور جديد',
+    'View Role Details'=>'عرض تفاصيل الدور',
+    'Role name'=>'اسم الدور',
+    'Role Permissions'=>'صلاحيات الدور',
+    'View'=>'عرض',
+    'Search Users'=>'بحث المستخدمين',
+    'Update Role'=>'تحديث الدور',
+    'Sales'=>'المبيعات',
+    'Order list'=>'قائمة الطلبات',
+    'Add Order'=>'اضافة طلب',
+    'Order ID'=>'رقم الطلب',
+    'Customer'=>'العميل',
+    'Total'=>'الاجمالي',
+    'Date Added'=>'تاريخ الاضافة',
+    'Date Modified'=>'تاريخ التعديل',
+    'Search Order'=>'بحث الطلب',
+    'Cancelled'=>'ملغي',
+    'Completed'=>'مكتمل',
+    'Denied'=>'مرفوض',
+    'Expired'=>'منتهي',
+    'Failed'=>'فشل',
+    'Processing'=>'قيد المعالجة',
+    'Refunded'=>'مستردة',
+    'Delivered'=>'تم التسليم',
+    'Delivering'=>'جاري التسليم',
+    'Show Order'=>'عرض الطلب',
+    'Order Details'=>'تفاصيل الطلب',
+    'Edit Order'=>'تعديل الطلب',
+    'Add New Order'=>'اضافة طلب جديد',
+    'Customer Details'=>'تفاصيل العميل',
+    'Payment Method'=>'طريقة الدفع',
+    'Online'=>'متصل',
+    'Shipping Method'=>'طريقة الشحن',
+    'Flat Shipping Rate'=>'معدل الشحن الثابت',
+    'Documents'=>'وثائق',
+    'Shipping'=>'الشحن',
+    'Billing Address'=>'عنوان الفاتورة',
+    'Shipping Address'=>'عنوان الشحن',
+    'Order'=>'الطلب',
+    'Qty'=>'الكمية',
+    'Unit Price'=>'سعر الوحدة',
+    'Delivery Date'=>'تاريخ التوصيل',
+    'Subtotal'=>'المجموع الفرعي',
+    'VAT'=>'ضريبة القيمة المضافة',
+    'Shipping Rate'=>'معدل الشحن',
+    'Grand Total'=>'المجموع الكلي',
+    'Order History'=>'سجل الطلبات',
+    'Comment'=>'تعليق',
+    'Order Status'=>'حالة الطلب',
+    'Customer Notified'=>'تم اخطار العميل',
+    'Order Data'=>'بيانات الطلب',
+    'IP Address'=>'عنوان IP',
+    'Forwarded IP'=>'عنوان IP المُعاد توجيهه',
+    'User Agent'=>'وكيل المستخدم',
+    'Accept Language'=>'قبول اللغة',
+    'Reward Points'=>'نقاط المكافأة',
+    'Invoice'=>'الفاتورة',
+    'Order Summary'=>'ملخص الطلب',
+    'Sold out'=>'بيعت بالكامل',
+    'Set the date of the order to process'=>'حدد تاريخ الطلب المراد معالجته',
+    'Select Products'=>'اختار المنتجات',
+    'Select a date'=>'حدد تاريخاً',
+    'Add products to this order'=>'أضف المنتجات إلى هذا الطلب',
+    'Choose one or more products from the list below by ticking the checkbox'=>'اختر منتجًا واحدًا أو أكثر من القائمة أدناه عن طريق تحديد مربع الاختيار',
+    'Total Cost'=>'التكلفة الاجمالية',
+    'Qty Remaining'=>'الكمية المتبقية',
+    'Save'=>'حفظ',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
