@@ -247,6 +247,53 @@
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
+                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion "  >
+                            <!--begin:Menu link-->
+                            <span class="menu-link">
+										<span class="menu-icon">
+											<i class="ki-duotone ki-black-right fs-2"></i>
+										</span>
+										<span class="menu-title">{{trans('dashboard_trans.Sales')}}</span>
+										<span class="menu-arrow"></span>
+									</span>
+                            <!--end:Menu link-->
+                            <!--begin:Menu sub-->
+                            <div class="menu-sub menu-sub-accordion">
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link" href="{{ route('orders.index') }}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Order list')}}</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link" href="{{ route('orders.create') }}"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Add Order')}}</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+
+                                <!--end:Menu item-->
+                                <!--begin:Menu item-->
+
+                                <!--end:Menu item-->
+                            </div>
+                            <!--end:Menu sub-->
+                        </div>
+                        <!--end:Menu item-->
+                        <!--begin:Menu item-->
                         <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                             <!--begin:Menu link-->
                             <span class="menu-link">
@@ -288,7 +335,7 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="../../demo3/dist/apps/user-management/users/list.html">
+                                                    <a class="menu-link" href="{{ route('users.index') }}">
 																<span class="menu-bullet">
 																	<span class="bullet bullet-dot"></span>
 																</span>
@@ -300,11 +347,11 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="../../demo3/dist/apps/user-management/users/view.html">
+                                                    <a class="menu-link" href="{{ route('show-user') }}">
 																<span class="menu-bullet">
 																	<span class="bullet bullet-dot"></span>
 																</span>
-                                                        <span class="menu-title">View User</span>
+                                                        <span class="menu-title">{{trans('dashboard_trans.View User')}}</span>
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>
@@ -329,23 +376,11 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="../../demo3/dist/apps/user-management/roles/list.html">
+                                                    <a class="menu-link" href="{{ route('roles.index') }}">
 																<span class="menu-bullet">
 																	<span class="bullet bullet-dot"></span>
 																</span>
                                                         <span class="menu-title">{{trans('dashboard_trans.Roles List')}}</span>
-                                                    </a>
-                                                    <!--end:Menu link-->
-                                                </div>
-                                                <!--end:Menu item-->
-                                                <!--begin:Menu item-->
-                                                <div class="menu-item">
-                                                    <!--begin:Menu link-->
-                                                    <a class="menu-link" href="../../demo3/dist/apps/user-management/roles/view.html">
-																<span class="menu-bullet">
-																	<span class="bullet bullet-dot"></span>
-																</span>
-                                                        <span class="menu-title">View Role</span>
                                                     </a>
                                                     <!--end:Menu link-->
                                                 </div>
