@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
@@ -28,6 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('users',UserController::class);
         Route::resource('roles',RoleController::class);
         Route::resource('orders',OrderController::class);
+        Route::resource('permissions',PermissionController::class);
 
 
 
