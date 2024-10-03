@@ -72,8 +72,8 @@
                         <!--end::Card body-->
                         <!--begin::Card footer-->
                         <div class="card-footer flex-wrap pt-0">
-                            <a href="{{ route('show-role') }}" class="btn btn-light btn-active-primary my-1 me-2">{{trans('dashboard_trans.View Role')}}</a>
-                            <button type="button" class="btn btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">{{trans('dashboard_trans.Edit Role')}}</button>
+                            <a href="{{ route('show-role') }}" class="btn btn-light btn-active-primary my-1 me-2">{{trans('dashboard_trans.View')}}</a>
+                            <button type="button" class="btn btn-light btn-active-light-primary my-1" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">{{trans('dashboard_trans.Edit')}}</button>
                         </div>
                         <!--end::Card footer-->
                     </div>
@@ -881,10 +881,10 @@
                                 <!--end::Scroll-->
                                 <!--begin::Actions-->
                                 <div class="text-center pt-15">
-                                    <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">Discard</button>
+                                    <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
                                     <button type="submit" class="btn btn-primary" data-kt-roles-modal-action="submit">
-                                        <span class="indicator-label">Submit</span>
-                                        <span class="indicator-progress">Please wait...
+                                        <span class="indicator-label">{{trans('dashboard_trans.Add')}}</span>
+                                        <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div>
