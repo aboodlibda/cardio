@@ -23,7 +23,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-column flex-grow-1">
                                 <!--begin::Title-->
-                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">Earnings</a>
+                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">{{trans('dashboard_trans.Earnings')}}</a>
                                 <!--end::Title-->
                                 <!--begin::Chart-->
                                 <div class="mixed-widget-13-chart" style="height: 100px"></div>
@@ -58,7 +58,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-column flex-grow-1">
                                 <!--begin::Title-->
-                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">Contributors</a>
+                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">{{trans('dashboard_trans.Contributors')}}</a>
                                 <!--end::Title-->
                                 <!--begin::Chart-->
                                 <div class="mixed-widget-14-chart" style="height: 100px"></div>
@@ -89,7 +89,7 @@
                             <!--begin::Wrapper-->
                             <div class="d-flex flex-column mb-7">
                                 <!--begin::Title-->
-                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">Summary</a>
+                                <a href="#" class="text-dark text-hover-primary fw-bold fs-3">{{trans('dashboard_trans.Summary')}}</a>
                                 <!--end::Title-->
                             </div>
                             <!--end::Wrapper-->
@@ -204,7 +204,7 @@
                         <!--begin::Header-->
                         <div class="card-header align-items-center border-0 mt-4">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="fw-bold mb-2 text-dark">Activities</span>
+                                <span class="fw-bold mb-2 text-dark">{{trans('dashboard_trans.Activities')}}</span>
                                 <span class="text-muted fw-semibold fs-7">890,344 Sales</span>
                             </h3>
                             <div class="card-toolbar">
