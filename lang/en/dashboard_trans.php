@@ -513,6 +513,10 @@ return [
     'Subscriptions'=>'Subscriptions',
     'Subscriptions List'=>'Subscriptions List',
     'Add Subscription'=>'Add Subscription',
+    'Earnings'=>'Earnings',
+    'Contributors'=>'Contributors',
+    'Summary'=>'Summary',
+    'Activities'=>'Activities',
 
 
 

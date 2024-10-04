@@ -514,6 +514,14 @@ return [
     'Subscriptions'=>'الاشتراكات',
     'Subscriptions List'=>'قائمة الاشتراكات',
     'Add Subscription'=>'اضافة اشتراك',
+    'Earnings'=>'الارباح',
+    'Contributors'=>'المساهمين',
+    'Summary'=>'ملخص',
+    'Activities'=>'الانشطة',
+
+
+
+
 
 
 
