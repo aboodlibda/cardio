@@ -486,6 +486,36 @@ return [
     'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding'=>'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding',
     'Warning'=>'Warning',
     'Search Permissions'=>'Search Permissions',
+    'Customers'=>'Customers',
+    'Customers List'=>'Customers List',
+    'Payment Type'=>'Payment Type',
+    'Customer Name'=>'Customer Name',
+    'Company'=>'Company',
+    'Add Customer'=>'Add Customer',
+    'Address Line 1'=>'Address Line 1',
+    'Address Line 2'=>'Address Line 2',
+    'Town'=>'Town',
+    'Export Customers'=>'Export Customers',
+    'Month'=>'Month',
+    'Details'=>'Details',
+    'Overview'=>'Overview',
+    'Events & Logs'=>'Events & Logs',
+    'Statements'=>'Statements',
+    'Payments'=>'Payments',
+    'Create invoice'=>'Create invoice',
+    'Account'=>'Account',
+    'Reports'=>'Reports',
+    'Delete customer'=>'Delete customer',
+    'Invoices Manager'=>'Invoices Manager',
+    'View Invoice'=>'View Invoice',
+    'Invoices List'=>'Invoices List',
+    'Create Invoice'=>'Create Invoice',
+    'Subscriptions'=>'Subscriptions',
+    'Subscriptions List'=>'Subscriptions List',
+    'Add Subscription'=>'Add Subscription',
+
+
+
 
 
 

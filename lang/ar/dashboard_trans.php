@@ -487,6 +487,57 @@ return [
     'By editing the permission name, you might break the system permissions functionality. Please ensure you are absolutely certain before proceeding'=>'من خلال تعديل اسم الإذن، قد تتسبب في تعطيل وظيفة أذونات النظام. يرجى التأكد من أنك متأكد تمامًا قبل المتابعة',
     'Warning'=>'تحذير',
     'Search Permissions'=>'بحث الصلاحيات',
+    'Customers'=>'العملاء',
+    'Customers List'=>'قائمة العملاء',
+    'Payment Type'=>'نوع الدفع',
+    'Customer Name'=>'اسم العميل',
+    'Company'=>'الشركة',
+    'Add Customer'=>'اضافة عميل',
+    'Address Line 1'=>'Address Line 1',
+    'Address Line 2'=>'Address Line 2',
+    'Town'=>'المدينة',
+    'Export Customers'=>'تصدير العملاء',
+    'Month'=>'الشهر',
+    'Details'=>'التفاصيل',
+    'Overview'=>'نظرة عامة',
+    'Events & Logs'=>'الأحداث والسجلات',
+    'Statements'=>'البيانات',
+    'Payments'=>'المدفوعات',
+    'Create invoice'=>'انشاء فاتورة',
+    'Account'=>'الحساب',
+    'Reports'=>'التقارير',
+    'Delete customer'=>'حذف العميل',
+    'Invoices Manager'=>'ادارة الفواتير',
+    'View Invoice'=>'عرض الفاتورة',
+    'Invoices List'=>'قائمة الفواتير',
+    'Create Invoice'=>'انشاء فاتورة',
+    'Subscriptions'=>'الاشتراكات',
+    'Subscriptions List'=>'قائمة الاشتراكات',
+    'Add Subscription'=>'اضافة اشتراك',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
