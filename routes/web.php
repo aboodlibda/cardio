@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProductController;
@@ -30,12 +31,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('roles',RoleController::class);
         Route::resource('orders',OrderController::class);
         Route::resource('permissions',PermissionController::class);
+        Route::resource('customers',CustomerController::class);
 
 
 
         Route::view('show-user','cms.user.show')->name('show-user');
         Route::view('show-order','cms.order.show')->name('show-order');
         Route::view('show-role','cms.user.role.show')->name('show-role');
+        Route::view('show-customer','cms.customer.show')->name('show-customer');
 
 
 
