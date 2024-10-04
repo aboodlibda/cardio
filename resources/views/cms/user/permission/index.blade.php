@@ -77,7 +77,7 @@
                         <tr>
                             <td>User Management</td>
                             <td>
-                                <a href="../../demo3/dist/apps/user-management/roles/view.html" class="badge badge-light-primary fs-7 m-1">Administrator</a>
+                                <a href="{{ route('show-role') }}" class="badge badge-light-primary fs-7 m-1">Administrator</a>
                             </td>
                             <td>15 Apr 2023, 2:40 pm</td>
                             <td class="text-end">
