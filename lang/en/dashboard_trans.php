@@ -517,6 +517,9 @@ return [
     'Contributors'=>'Contributors',
     'Summary'=>'Summary',
     'Activities'=>'Activities',
+    'Revenue'=>'Revenue',
+    'Tasks'=>'Tasks',
+    'this week'=>'this week',
 
 
 

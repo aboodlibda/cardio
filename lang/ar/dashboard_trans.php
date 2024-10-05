@@ -518,6 +518,11 @@ return [
     'Contributors'=>'المساهمين',
     'Summary'=>'ملخص',
     'Activities'=>'الانشطة',
+    'Revenue'=>'الربح',
+    'Tasks'=>'المهام',
+    'this week'=>'هذا الاسبوع',
+
+
 
 
 
