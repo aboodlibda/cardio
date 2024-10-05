@@ -24,4 +24,9 @@ class Product extends Model
     {
         return $this->hasMany(Attribute::class);
     }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class);
+    }
 }
