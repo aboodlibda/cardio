@@ -1499,7 +1499,6 @@
                         </div>
                         <!--end::Theme mode-->
                         <!--begin::Sidebar Toggler-->
-           
                         <!--end::Sidebar Toggler-->
                     </div>
                     <!--end::Topbar-->
@@ -2299,6 +2298,345 @@
                             </div>
                             <!--end::Tab pane-->
                             <!--begin::Tab pane-->
+                            <div class="tab-pane fade show active" id="kt_sidebar_tab_3" role="tabpanel">
+                                <!--begin::Statistics Widget-->
+                                <div class="card card-flush card-p-0 shadow-none bg-transparent mb-10">
+                                    <!--begin::Header-->
+                                    <div class="card-header align-items-center border-0">
+                                        <!--begin::Title-->
+                                        <h3 class="card-title fw-bold text-white fs-3">Support Tickets</h3>
+                                        <!--end::Title-->
+                                        <!--begin::Toolbar-->
+                                        <div class="card-toolbar">
+                                            <button type="button" class="btn btn-icon btn-icon-white btn-active-color-primary me-n4" data-kt-menu-trigger="click" data-kt-menu-overflow="true" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-category fs-6">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                </i>
+                                            </button>
+                                            <!--begin::Menu 2-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">Quick Actions</div>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu separator-->
+                                                <div class="separator mb-3 opacity-75"></div>
+                                                <!--end::Menu separator-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">New Ticket</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">New Customer</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
+                                                    <!--begin::Menu item-->
+                                                    <a href="#" class="menu-link px-3">
+                                                        <span class="menu-title">New Group</span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <!--end::Menu item-->
+                                                    <!--begin::Menu sub-->
+                                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Admin Group</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Staff Group</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Member Group</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+                                                    <!--end::Menu sub-->
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">New Contact</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu separator-->
+                                                <div class="separator mt-3 opacity-75"></div>
+                                                <!--end::Menu separator-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <div class="menu-content px-3 py-3">
+                                                        <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
+                                                    </div>
+                                                </div>
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu 2-->
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::Header-->
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Row-->
+                                        <div class="row g-5">
+                                            <!--begin::Col-->
+                                            <div class="col-6">
+                                                <!--begin::Item-->
+                                                <div class="sidebar-border-dashed d-flex flex-column justify-content-center rounded p-3 p-xxl-5">
+                                                    <!--begin::Value-->
+                                                    <div class="text-white fs-2 fs-xxl-2x fw-bold mb-1" data-kt-countup="true" data-kt-countup-value="28" data-kt-countup-prefix="">0</div>
+                                                    <!--begin::Value-->
+                                                    <!--begin::Label-->
+                                                    <div class="sidebar-text-muted fs-6 fw-bold">Pending</div>
+                                                    <!--end::Label-->
+                                                </div>
+                                                <!--end::Item-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-6">
+                                                <!--begin::Item-->
+                                                <div class="sidebar-border-dashed d-flex flex-column justify-content-center rounded p-3 p-xxl-5">
+                                                    <!--begin::Value-->
+                                                    <div class="text-white fs-2 fs-xxl-2x fw-bold mb-1" data-kt-countup="true" data-kt-countup-value="204" data-kt-countup-prefix="">0</div>
+                                                    <!--begin::Value-->
+                                                    <!--begin::Label-->
+                                                    <div class="sidebar-text-muted fs-6 fw-bold">Completed</div>
+                                                    <!--end::Label-->
+                                                </div>
+                                                <!--end::Item-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-6">
+                                                <!--begin::Item-->
+                                                <div class="sidebar-border-dashed d-flex flex-column justify-content-center rounded p-3 p-xxl-5">
+                                                    <!--begin::Value-->
+                                                    <div class="text-white fs-2 fs-xxl-2x fw-bold mb-1" data-kt-countup="true" data-kt-countup-value="76" data-kt-countup-prefix="">0</div>
+                                                    <!--begin::Value-->
+                                                    <!--begin::Label-->
+                                                    <div class="sidebar-text-muted fs-6 fw-bold">On Hold</div>
+                                                    <!--end::Label-->
+                                                </div>
+                                                <!--end::Item-->
+                                            </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-6">
+                                                <!--begin::Item-->
+                                                <div class="sidebar-border-dashed d-flex flex-column justify-content-center rounded p-3 p-xxl-5">
+                                                    <!--begin::Value-->
+                                                    <div class="text-white fs-2 fs-xxl-2x fw-bold mb-1" data-kt-countup="true" data-kt-countup-value="9" data-kt-countup-prefix="">0</div>
+                                                    <!--begin::Value-->
+                                                    <!--begin::Label-->
+                                                    <div class="sidebar-text-muted fs-6 fw-bold">In Progress</div>
+                                                    <!--end::Label-->
+                                                </div>
+                                                <!--end::Item-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+                                        <!--end::Row-->
+                                    </div>
+                                    <!--end::Card Body-->
+                                </div>
+                                <!--end::Statistics Widget-->
+                                <!--begin::Best Sellers Widget-->
+                                <div class="card card-flush card-p-0 shadow-none bg-transparent mb-5">
+                                    <!--begin::Header-->
+                                    <div class="card-header align-items-center">
+                                        <!--begin::Title-->
+                                        <h3 class="card-title fw-bold text-white fs-3">Best Sellers</h3>
+                                        <!--end::Title-->
+                                        <!--begin::Toolbar-->
+                                        <div class="card-toolbar">
+                                            <button type="button" class="btn btn-icon btn-icon-white btn-active-color-primary me-n4" data-kt-menu-trigger="click" data-kt-menu-overflow="true" data-kt-menu-placement="bottom-end">
+                                                <i class="ki-duotone ki-category fs-6">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                </i>
+                                            </button>
+                                            <!--begin::Menu 3-->
+                                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+                                                <!--begin::Heading-->
+                                                <div class="menu-item px-3">
+                                                    <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">Payments</div>
+                                                </div>
+                                                <!--end::Heading-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Create Invoice</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link flex-stack px-3">Create Payment
+                                                        <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
+																<i class="ki-duotone ki-information fs-6">
+																	<span class="path1"></span>
+																	<span class="path2"></span>
+																	<span class="path3"></span>
+																</i>
+															</span></a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3">
+                                                    <a href="#" class="menu-link px-3">Generate Bill</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
+                                                    <a href="#" class="menu-link px-3">
+                                                        <span class="menu-title">Subscription</span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <!--begin::Menu sub-->
+                                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Plans</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Billing</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">Statements</a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator my-2"></div>
+                                                        <!--end::Menu separator-->
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content px-3">
+                                                                <!--begin::Switch-->
+                                                                <label class="form-check form-switch form-check-custom form-check-solid">
+                                                                    <!--begin::Input-->
+                                                                    <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications" />
+                                                                    <!--end::Input-->
+                                                                    <!--end::Label-->
+                                                                    <span class="form-check-label text-muted fs-6">Recuring</span>
+                                                                    <!--end::Label-->
+                                                                </label>
+                                                                <!--end::Switch-->
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+                                                    <!--end::Menu sub-->
+                                                </div>
+                                                <!--end::Menu item-->
+                                                <!--begin::Menu item-->
+                                                <div class="menu-item px-3 my-1">
+                                                    <a href="#" class="menu-link px-3">Settings</a>
+                                                </div>
+                                                <!--end::Menu item-->
+                                            </div>
+                                            <!--end::Menu 3-->
+                                        </div>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::Header-->
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Item-->
+                                        <div class="d-flex flex-nowrap align-items-center mb-7">
+                                            <!--begin::Image-->
+                                            <div class="symbol symbol-40px symbol-2by3 me-4">
+                                                <img src="assets/media/stock/600x400/img-1.jpg" alt="" class="mw-100" />
+                                            </div>
+                                            <!--end::Image-->
+                                            <!--begin::Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="#" class="text-white fw-semibold text-hover-primary fs-6">Spotify App</a>
+                                                <span class="sidebar-text-muted fw-semibold fs-7 my-1">HTML, SASS, Bootstrap</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Item-->
+                                        <!--begin::Item-->
+                                        <div class="d-flex flex-nowrap align-items-center mb-7">
+                                            <!--begin::Image-->
+                                            <div class="symbol symbol-40px symbol-2by3 me-4">
+                                                <img src="assets/media/stock/600x400/img-2.jpg" alt="" class="mw-100" />
+                                            </div>
+                                            <!--end::Image-->
+                                            <!--begin::Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="#" class="text-white fw-semibold text-hover-primary fs-6">Fitnes Drive</a>
+                                                <span class="sidebar-text-muted fw-semibold fs-7 my-1">Angular, Typescript, Bootstrap</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Item-->
+                                        <!--begin::Item-->
+                                        <div class="d-flex flex-nowrap align-items-center mb-7">
+                                            <!--begin::Image-->
+                                            <div class="symbol symbol-40px symbol-2by3 me-4">
+                                                <img src="assets/media/stock/600x400/img-3.jpg" alt="" class="mw-100" />
+                                            </div>
+                                            <!--end::Image-->
+                                            <!--begin::Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="#" class="text-white fw-semibold text-hover-primary fs-6">Taskify App</a>
+                                                <span class="sidebar-text-muted fw-semibold fs-7 my-1">HTML, CSS. jQuery</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Item-->
+                                        <!--begin::Item-->
+                                        <div class="d-flex flex-nowrap align-items-center mb-7">
+                                            <!--begin::Image-->
+                                            <div class="symbol symbol-40px symbol-2by3 me-4">
+                                                <img src="assets/media/stock/600x400/img-5.jpg" alt="" class="mw-100" />
+                                            </div>
+                                            <!--end::Image-->
+                                            <!--begin::Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="#" class="text-white fw-semibold text-hover-primary fs-6">Calendr App</a>
+                                                <span class="sidebar-text-muted fw-semibold fs-7 my-1">React, MangoDb. Node</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Item-->
+                                        <!--begin::Item-->
+                                        <div class="d-flex flex-nowrap align-items-center">
+                                            <!--begin::Image-->
+                                            <div class="symbol symbol-40px symbol-2by3 me-4">
+                                                <img src="assets/media/stock/600x400/img-6.jpg" alt="" class="mw-100" />
+                                            </div>
+                                            <!--end::Image-->
+                                            <!--begin::Title-->
+                                            <div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3">
+                                                <a href="#" class="text-white fw-semibold text-hover-primary fs-6">Stocked SaaS</a>
+                                                <span class="sidebar-text-muted fw-semibold fs-7 my-1">PHP, Laravel, Oracle</span>
+                                            </div>
+                                            <!--end::Title-->
+                                        </div>
+                                        <!--end::Item-->
+                                    </div>
+                                    <!--end: Card Body-->
+                                </div>
+                                <!--end::Best Sellers Widget-->
+                            </div>
                             <!--end::Tab pane-->
                             <!--begin::Tab pane-->
                             <div class="tab-pane fade" id="kt_sidebar_tab_4" role="tabpanel">
