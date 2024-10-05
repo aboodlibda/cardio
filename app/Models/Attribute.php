@@ -10,13 +10,9 @@ class Attribute extends Model
 {
     protected $guarded = [];
 
-    public function products(): BelongsToMany
-    {
-        return $this->belongsToMany(Product::class);
-    }
 
-    public function attribute_values(): HasMany
+    public function values(): HasMany
     {
-        return $this->hasMany(AttributeValues::class);
+        return $this->hasMany(AttributeValue::class);
     }
 }
