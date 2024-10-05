@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
+            $table->text('name');
+            $table->string('description');
             $table->timestamps();
         });
     }
