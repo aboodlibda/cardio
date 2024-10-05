@@ -580,10 +580,10 @@
                         <!--begin::User info-->
                         <div class="ms-2">
                             <!--begin::Name-->
-                            <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">Paul Melone</a>
+                            <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">Admin</a>
                             <!--end::Name-->
                             <!--begin::Major-->
-                            <span class="text-muted fw-semibold d-block fs-7 lh-1">Python Dev</span>
+                            <span class="text-muted fw-semibold d-block fs-7 lh-1">Admin</span>
                             <!--end::Major-->
                         </div>
                         <!--end::User info-->
@@ -609,9 +609,9 @@
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bold d-flex align-items-center fs-5">Max Smith
-                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">max@kt.com</a>
+                                        <div class="fw-bold d-flex align-items-center fs-5">Admin
+                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span></div>
+                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">admin@admin.com</a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -1532,19 +1532,20 @@
                     <!--begin::Copyright-->
                     <div class="text-dark order-2 order-md-1">
                         <span class="text-gray-400 fw-semibold me-1">Created by</span>
-                        <a href="https://keenthemes.com" target="_blank" class="text-muted text-hover-primary fw-semibold me-2 fs-6">Keenthemes</a>
+                        <a href="https://uplancerps.com" target="_blank" class="text-muted text-hover-primary fw-semibold me-2 fs-6">Up Lancer</a>
                     </div>
                     <!--end::Copyright-->
                     <!--begin::Menu-->
                     <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
                         <li class="menu-item">
-                            <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
+                            <a href="#" target="_blank" class="menu-link px-2">About</a>
                         </li>
                         <li class="menu-item">
-                            <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
+                            <a href="#" target="_blank" class="menu-link px-2">Support</a>
                         </li>
                         <li class="menu-item">
-                            <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
+                            <a href="#
+                            " target="_blank" class="menu-link px-2">Purchase</a>
                         </li>
                     </ul>
                     <!--end::Menu-->
