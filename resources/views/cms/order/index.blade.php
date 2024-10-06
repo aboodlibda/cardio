@@ -1,5 +1,5 @@
 @extends('cms.layout.master')
-@section('title',trans('dashboard_trans.Order list'))
+@section('title',trans('dashboard_trans.Orders List'))
 @section('style')
     @if(App::getLocale()=='ar')
         <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
@@ -11,17 +11,16 @@
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">Orders Listing</h1>
+        <h1 class="d-flex flex-column text-dark fw-bold my-0 fs-1">{{trans('dashboard_trans.Orders List')}}</h1>
         <!--end::Heading-->
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
-            <li class="breadcrumb-item text-muted">Apps</li>
-            <li class="breadcrumb-item text-muted">eCommerce</li>
-            <li class="breadcrumb-item text-muted">Sales</li>
-            <li class="breadcrumb-item text-dark">Orders Listing</li>
+            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
+            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Sales')}}</li>
+            <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.Orders List')}}</li>
         </ul>
         <!--end::Breadcrumb-->
     </div>
