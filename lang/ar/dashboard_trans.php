@@ -418,7 +418,7 @@ return [
     'Search Users'=>'بحث المستخدمين',
     'Update Role'=>'تحديث الدور',
     'Sales'=>'المبيعات',
-    'Order list'=>'قائمة الطلبات',
+    'Orders List'=>'قائمة الطلبات',
     'Add Order'=>'اضافة طلب',
     'Order ID'=>'رقم الطلب',
     'Customer'=>'العميل',
@@ -521,6 +521,7 @@ return [
     'Revenue'=>'الربح',
     'Tasks'=>'المهام',
     'this week'=>'هذا الاسبوع',
+
 
 
 

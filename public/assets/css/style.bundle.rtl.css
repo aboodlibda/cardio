@@ -54860,7 +54860,7 @@ body {
 
 @media (min-width: 1400px) {
     .sidebar-enabled .wrapper {
-        padding-left: 400px
+        padding-left: 100px
     }
 
     .sidebar-enabled .engage-toolbar {

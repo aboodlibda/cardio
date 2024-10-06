@@ -266,7 +266,7 @@
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                        <span class="menu-title">{{trans('dashboard_trans.Order list')}}</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Orders List')}}</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
@@ -1526,8 +1526,7 @@
                             <a href="#" target="_blank" class="menu-link px-2">Support</a>
                         </li>
                         <li class="menu-item">
-                            <a href="#
-                            " target="_blank" class="menu-link px-2">Purchase</a>
+                            <a href="#" target="_blank" class="menu-link px-2">Purchase</a>
                         </li>
                     </ul>
                     <!--end::Menu-->
@@ -1578,6 +1577,5 @@
 @yield('script')
 
 </body>
-
 <!--end::Body-->
 </html>

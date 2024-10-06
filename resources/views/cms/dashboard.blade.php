@@ -198,7 +198,7 @@
             <!--begin::Row-->
             <div class="row gy-5 g-xl-10">
                 <!--begin::Col-->
-                <div class="col-xxl-6">
+                <div class="col-xxl-12">
                     <!--begin::List Widget 5-->
                     <div class="card card-xl-stretch mb-xl-10">
                         <!--begin::Header-->
