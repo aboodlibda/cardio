@@ -54774,7 +54774,7 @@ body {
 
 @media (min-width: 1400px) {
     .sidebar-enabled .wrapper {
-        padding-right: 400px
+        padding-right: 100px
     }
 
     .sidebar-enabled .engage-toolbar {
