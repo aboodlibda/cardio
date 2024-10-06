@@ -417,7 +417,7 @@ return [
     'Search Users'=>'Search Users',
     'Update Role'=>'Update Role',
     'Sales'=>'Sales',
-    'Order list'=>'Order list',
+    'Orders List'=>'Orders List',
     'Add Order'=>'Add Order',
     'Order ID'=>'Order ID',
     'Customer'=>'Customer',
