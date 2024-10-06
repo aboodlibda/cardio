@@ -266,7 +266,7 @@
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-                                        <span class="menu-title">{{trans('dashboard_trans.Order list')}}</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Orders List')}}</span>
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
