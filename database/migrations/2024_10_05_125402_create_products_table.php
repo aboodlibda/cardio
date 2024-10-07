@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->string('price');
             $table->enum('status',['published','unpublished','draft'])->default('draft');
             $table->foreignId('user_id');
-            $table->text('slug')->unique();
+            $table->string('slug')->unique();
             $table->string('quantity');
             $table->string('SKU')->unique()->nullable();
             $table->timestamps();
