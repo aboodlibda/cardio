@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(Coupon::class);
     }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
