@@ -24,3 +24,8 @@ Homestead.json
 .phpunit.result.cache
 
 
+.idea/php.xml
+.idea/laravel-idea.xml
+.idea/cardio.iml
+.idea/blade.xml
+*.iml
