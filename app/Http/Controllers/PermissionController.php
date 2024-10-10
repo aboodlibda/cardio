@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
     public function index()
     {
-        return view('cms.user.permission.index');
+        $permissions = Permission::query()->with('role')->get();
+        $roles= Role::query()->with('users')->get();
+        return view('cms.user.permission.index',compact('permissions','roles'));
     }
 
     public function create()
@@ -19,6 +23,22 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+           'role_id' => 'required|int|exists:roles,id',
+           'name' => 'required|string',
+           'permissions' => 'nullable',
+        ]);
+        $data = $request->only(['name','permissions','role_id']);
+
+        $is_Saved = Permission::query()->create($data);
+
+        if ($is_Saved){
+            notify()->success(trans('dashboard_trans.Permissions created successfully'));
+            return redirect()->back();
+        }else{
+            notify()->error(trans('dashboard_trans.Failed to create permissions!'));
+            return redirect()->back();
+        }
     }
 
     public function show($id)
