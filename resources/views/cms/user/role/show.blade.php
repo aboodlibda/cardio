@@ -118,7 +118,7 @@
                                                         <!--begin::Table row-->
                                                         <tr>
                                                             <td class="text-gray-800">{{trans('dashboard_trans.Accessibility')}}
-                                                                <span class="ms-1" data-bs-toggle="tooltip" title="{{trans('')}}">
+                                                                <span class="ms-1" data-bs-toggle="tooltip" title="{{trans('dashboard_trans.Allows a full access to the system')}}">
 																					<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
 																						<span class="path1"></span>
 																						<span class="path2"></span>
