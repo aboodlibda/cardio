@@ -9,6 +9,7 @@
 <head>
     <base href="">
     <title>{{trans('dashboard_trans.Dashboard')}} | @yield('title')</title>
+    @notifyCss
     <meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free."/>
     <meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -1575,7 +1576,8 @@
 {{--<script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>--}}
 <!--end::Global Javascript Bundle-->
 @yield('script')
-
+<x-notify::notify />
+@notifyJs
 </body>
 <!--end::Body-->
 </html>
