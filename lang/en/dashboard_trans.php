@@ -533,6 +533,8 @@ return [
     'User created successfully'=>'User created successfully',
     'Failed to create user'=>'Failed to create user',
     'Total users with this role'=>'Total users with this role',
+    'Users Assigned'=>'Users Assigned',
+    'Accessibility'=>'Accessibility',
 
 
 

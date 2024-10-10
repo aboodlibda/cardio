@@ -534,6 +534,10 @@ return [
     'User created successfully'=>'تم انشاء المستخدم بنجاح',
     'Failed to create user'=>'لم يتم انشاء المستخدم',
     'Total users with this role'=>'إجمالي المستخدمين الذين لديهم هذا الدور',
+    'Users Assigned'=>'المستخدمون المعينون',
+    'Accessibility'=>'امكانية الوصول',
+
+
 
 
 
