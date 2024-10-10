@@ -328,6 +328,17 @@
                                                     <span class="text-danger"> {{ $message }}</span>
                                                     @enderror
                                                 </div>
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-semibold fs-6 mb-2">{{trans('dashboard_trans.Phone')}}</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="tel" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Phone')}}" value="{{old('Phone')}}" />
+                                                    <!--end::Input-->
+                                                    @error('phone_number')
+                                                    <span class="text-danger"> {{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                                 <!--end::Input group-->
                                                 <div class="row fv-row mb-7">
 
@@ -474,7 +485,7 @@
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                     <a href="#">
                                         <div class="symbol-label">
-                                            <img src="{{asset('assets/media/avatars/300-6.jpg')}}" alt="avatar" class="w-100" />
+                                            <img src="{{asset('images/users/'.$user->avatar)}}" alt="avatar" class="w-100" />
                                         </div>
                                     </a>
                                 </div>
