@@ -24,6 +24,17 @@
       'LaravelLocalization' => 'Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization',
     ),
   ),
+  'mckenziearts/laravel-notify' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Mckenziearts\\Notify\\LaravelNotifyServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Notify' => 'Mckenziearts\\Notify\\Facades\\LaravelNotify',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
