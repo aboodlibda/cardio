@@ -74,12 +74,13 @@
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
+                        @foreach($permissions as $permission)
                         <tr>
-                            <td>User Management</td>
+                            <td>{{$permission->name}}</td>
                             <td>
-                                <a href="{{ route('show-role') }}" class="badge badge-light-primary fs-7 m-1">Administrator</a>
+                                <a href="{{ route('show-role') }}" class="badge badge-light-primary fs-7 m-1">{{$permission->role->name}}</a>
                             </td>
-                            <td>15 Apr 2023, 2:40 pm</td>
+                            <td>{{$permission->created_at}}</td>
                             <td class="text-end">
                                 <button class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_update_permission">
                                     <i class="ki-duotone ki-setting-3 fs-3">
@@ -101,6 +102,7 @@
                                 </button>
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <!--end::Table-->
@@ -133,8 +135,31 @@
                         <!--begin::Modal body-->
                         <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                             <!--begin::Form-->
-                            <form id="kt_modal_add_permission_form" class="form" action="#">
+                            <form id="kt_modal_add_permission_form" class="form" action="{{route('permissions.store')}}" method="POST">
+                                @csrf
                                 <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">{{trans('dashboard_trans.Roles')}}</span>
+                                        <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Role names is required to be unique.">
+															<i class="ki-duotone ki-information fs-7">
+																<span class="path1"></span>
+																<span class="path2"></span>
+																<span class="path3"></span>
+															</i>
+														</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid" name="role_id" >
+                                    <option disabled selected hidden="">{{trans('dashboard_trans.Select an option')}}</option>
+                                       @foreach($roles as $role)
+                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
+                                  </select>
+                                    <!--end::Input-->
+                                </div>
                                 <div class="fv-row mb-7">
                                     <!--begin::Label-->
                                     <label class="fs-6 fw-semibold form-label mb-2">
@@ -149,29 +174,14 @@
                                     </label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="{{trans('dashboard_trans.Permission Name')}}" name="permission_name" />
+                                    <input class="form-control form-control-solid" placeholder="{{trans('dashboard_trans.Permission Name')}}" name="name" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
-                                <!--begin::Input group-->
-                                <div class="fv-row mb-7">
-                                    <!--begin::Checkbox-->
-                                    <label class="form-check form-check-custom form-check-solid me-9">
-                                        <input class="form-check-input" type="checkbox" value="" name="permissions_core" id="kt_permissions_core" />
-                                        <span class="form-check-label" for="kt_permissions_core">Set as core permission</span>
-                                    </label>
-                                    <!--end::Checkbox-->
-                                </div>
-                                <!--end::Input group-->
-                                <!--begin::Disclaimer-->
-                                <div class="text-gray-600">Permission set as a
-                                    <strong class="me-1">Core Permission</strong>will be locked and
-                                    <strong class="me-1">not editable</strong>in future</div>
-                                <!--end::Disclaimer-->
                                 <!--begin::Actions-->
                                 <div class="text-center pt-15">
                                     <button type="reset" class="btn btn-light me-3" data-kt-permissions-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
-                                    <button type="submit" class="btn btn-primary" data-kt-permissions-modal-action="submit">
+                                    <button type="submit" class="btn btn-primary" >
                                         <span class="indicator-label">{{trans('dashboard_trans.Add')}}</span>
                                         <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -240,6 +250,29 @@
                                 <div class="fv-row mb-7">
                                     <!--begin::Label-->
                                     <label class="fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">{{trans('dashboard_trans.Roles')}}</span>
+                                        <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Role names is required to be unique.">
+															<i class="ki-duotone ki-information fs-7">
+																<span class="path1"></span>
+																<span class="path2"></span>
+																<span class="path3"></span>
+															</i>
+														</span>
+                                    </label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <select class="form-select form-select-solid" name="role_id" >
+                                        <option disabled selected hidden="">{{trans('dashboard_trans.Select an option')}}</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <!--end::Input-->
+                                </div>
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold form-label mb-2">
                                         <span class="required">{{trans('dashboard_trans.Permission Name')}}</span>
                                         <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Permission names is required to be unique.">
 															<i class="ki-duotone ki-information fs-7">
@@ -259,7 +292,7 @@
                                 <div class="text-center pt-15">
                                     <button type="reset" class="btn btn-light me-3" data-kt-permissions-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
                                     <button type="submit" class="btn btn-primary" data-kt-permissions-modal-action="submit">
-                                        <span class="indicator-label">{{trans('dashboard_trans.Add')}}</span>
+                                        <span class="indicator-label">{{trans('dashboard_trans.Save Edit')}}</span>
                                         <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
