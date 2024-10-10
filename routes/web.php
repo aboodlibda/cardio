@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
@@ -34,23 +35,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('customers',CustomerController::class);
 
 
-
         Route::view('show-user','cms.user.show')->name('show-user');
         Route::view('show-order','cms.order.show')->name('show-order');
         Route::view('show-role','cms.user.role.show')->name('show-role');
         Route::view('show-customer','cms.customer.show')->name('show-customer');
 
 
-
-
-
-
-
-
-
-
-
-
-
     });
+    Route::post('sign-in',[LoginController::class,'login'])->name('login')->middleware('limit_request');
+    Route::get('sign-in',[LoginController::class,'showLogin'])->name('show-login');
+
 });
