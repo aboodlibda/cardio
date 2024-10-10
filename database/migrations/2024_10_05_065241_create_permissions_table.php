@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('role_id');
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
-            $table->text('name');
-            $table->string('description');
+            $table->string('name');
+            $table->text('permissions')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
