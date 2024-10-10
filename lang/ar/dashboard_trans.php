@@ -536,6 +536,8 @@ return [
     'Total users with this role'=>'إجمالي المستخدمين الذين لديهم هذا الدور',
     'Users Assigned'=>'المستخدمون المعينون',
     'Accessibility'=>'امكانية الوصول',
+    'Allows a full access to the system'=>'يسمح بالوصول الكامل إلى النظام',
+
 
 
 

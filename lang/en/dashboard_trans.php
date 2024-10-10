@@ -535,6 +535,7 @@ return [
     'Total users with this role'=>'Total users with this role',
     'Users Assigned'=>'Users Assigned',
     'Accessibility'=>'Accessibility',
+    'Allows a full access to the system'=>'Allows a full access to the system',
 
 
 
