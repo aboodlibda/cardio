@@ -1,1 +1,171 @@
-"use strict";var KTUsersList=function(){var e,t,n,r,o=document.getElementById("kt_table_users"),c=()=>{o.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((t=>{t.addEventListener("click",(function(t){t.preventDefault();const n=t.target.closest("tr"),r=n.querySelectorAll("td")[1].querySelectorAll("a")[1].innerText;Swal.fire({text:"Are you sure you want to delete "+r+"?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, delete!",cancelButtonText:"No, cancel",customClass:{confirmButton:"btn fw-bold btn-danger",cancelButton:"btn fw-bold btn-active-light-primary"}}).then((function(t){t.value?Swal.fire({text:"You have deleted "+r+"!.",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}}).then((function(){e.row($(n)).remove().draw()})).then((function(){a()})):"cancel"===t.dismiss&&Swal.fire({text:customerName+" was not deleted.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}})}))}))}))},l=()=>{const c=o.querySelectorAll('[type="checkbox"]');t=document.querySelector('[data-kt-user-table-toolbar="base"]'),n=document.querySelector('[data-kt-user-table-toolbar="selected"]'),r=document.querySelector('[data-kt-user-table-select="selected_count"]');const s=document.querySelector('[data-kt-user-table-select="delete_selected"]');c.forEach((e=>{e.addEventListener("click",(function(){setTimeout((function(){a()}),50)}))})),s.addEventListener("click",(function(){Swal.fire({text:"Are you sure you want to delete selected customers?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, delete!",cancelButtonText:"No, cancel",customClass:{confirmButton:"btn fw-bold btn-danger",cancelButton:"btn fw-bold btn-active-light-primary"}}).then((function(t){t.value?Swal.fire({text:"You have deleted all selected customers!.",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}}).then((function(){c.forEach((t=>{t.checked&&e.row($(t.closest("tbody tr"))).remove().draw()}));o.querySelectorAll('[type="checkbox"]')[0].checked=!1})).then((function(){a(),l()})):"cancel"===t.dismiss&&Swal.fire({text:"Selected customers was not deleted.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}})}))}))};const a=()=>{const e=o.querySelectorAll('tbody [type="checkbox"]');let c=!1,l=0;e.forEach((e=>{e.checked&&(c=!0,l++)})),c?(r.innerHTML=l,t.classList.add("d-none"),n.classList.remove("d-none")):(t.classList.remove("d-none"),n.classList.add("d-none"))};return{init:function(){o&&(o.querySelectorAll("tbody tr").forEach((e=>{const t=e.querySelectorAll("td"),n=t[3].innerText.toLowerCase();let r=0,o="minutes";n.includes("yesterday")?(r=1,o="days"):n.includes("mins")?(r=parseInt(n.replace(/\D/g,"")),o="minutes"):n.includes("hours")?(r=parseInt(n.replace(/\D/g,"")),o="hours"):n.includes("days")?(r=parseInt(n.replace(/\D/g,"")),o="days"):n.includes("weeks")&&(r=parseInt(n.replace(/\D/g,"")),o="weeks");const c=moment().subtract(r,o).format();t[3].setAttribute("data-order",c);const l=moment(t[5].innerHTML,"DD MMM YYYY, LT").format();t[5].setAttribute("data-order",l)})),(e=$(o).DataTable({info:!1,order:[],pageLength:10,lengthChange:!1,columnDefs:[{orderable:!1,targets:0},{orderable:!1,targets:6}]})).on("draw",(function(){l(),c(),a()})),l(),document.querySelector('[data-kt-user-table-filter="search"]').addEventListener("keyup",(function(t){e.search(t.target.value).draw()})),document.querySelector('[data-kt-user-table-filter="reset"]').addEventListener("click",(function(){document.querySelector('[data-kt-user-table-filter="form"]').querySelectorAll("select").forEach((e=>{$(e).val("").trigger("change")})),e.search("").draw()})),c(),(()=>{const t=document.querySelector('[data-kt-user-table-filter="form"]'),n=t.querySelector('[data-kt-user-table-filter="filter"]'),r=t.querySelectorAll("select");n.addEventListener("click",(function(){var t="";r.forEach(((e,n)=>{e.value&&""!==e.value&&(0!==n&&(t+=" "),t+=e.value)})),e.search(t).draw()}))})())}}}();KTUtil.onDOMContentLoaded((function(){KTUsersList.init()}));
+"use strict";
+
+// Core function to manage the users table
+var KTUsersList = function () {
+    var table, baseToolbar, selectedToolbar, selectedCount, dataTableElement = document.getElementById("kt_table_users");
+
+    // Setup event listeners for deleting a single row
+    const setupDeleteRowEventListeners = () => {
+        dataTableElement.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((deleteButton) => {
+            deleteButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                const row = event.target.closest("tr");
+                const userName = row.querySelectorAll("td")[1].querySelectorAll("a")[1].innerText;
+
+                showDeleteConfirmation(userName, () => {
+                    // Delete the row if confirmed
+                    table.row($(row)).remove().draw();
+                    updateSelectedRows();
+                });
+            });
+        });
+    };
+
+    // Show confirmation dialog for deleting a row or multiple rows
+    const showDeleteConfirmation = (userName, onConfirm) => {
+        Swal.fire({
+            text: `Are you sure you want to delete ${userName}?`,
+            icon: "warning",
+            showCancelButton: true,
+            buttonsStyling: false,
+            confirmButtonText: "Yes, delete!",
+            cancelButtonText: "No, cancel",
+            customClass: {
+                confirmButton: "btn fw-bold btn-danger",
+                cancelButton: "btn fw-bold btn-active-light-primary"
+            }
+        }).then((result) => {
+            if (result.value) {
+                onConfirm();
+                Swal.fire({
+                    text: `You have deleted ${userName}!`,
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                });
+            } else if (result.dismiss === "cancel") {
+                Swal.fire({
+                    text: `${userName} was not deleted.`,
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                });
+            }
+        });
+    };
+
+    // Setup event listeners for deleting multiple rows
+    const setupDeleteSelectedEventListener = () => {
+        const deleteSelectedButton = document.querySelector('[data-kt-user-table-select="delete_selected"]');
+        deleteSelectedButton.addEventListener("click", () => {
+            Swal.fire({
+                text: "Are you sure you want to delete selected customers?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, delete!",
+                cancelButtonText: "No, cancel",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-danger",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        text: "You have deleted all selected customers!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: { confirmButton: "btn fw-bold btn-primary" }
+                    }).then(() => {
+                        // Remove selected rows
+                        dataTableElement.querySelectorAll('tbody [type="checkbox"]').forEach((checkbox) => {
+                            if (checkbox.checked) {
+                                table.row($(checkbox.closest("tbody tr"))).remove().draw();
+                            }
+                        });
+                        // Uncheck header checkbox
+                        dataTableElement.querySelectorAll('[type="checkbox"]')[0].checked = false;
+                        updateSelectedRows();
+                    });
+                }
+            });
+        });
+    };
+
+    // Update visibility of toolbars based on selected rows
+    const updateSelectedRows = () => {
+        const checkboxes = dataTableElement.querySelectorAll('tbody [type="checkbox"]');
+        let selected = false, count = 0;
+
+        checkboxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                selected = true;
+                count++;
+            }
+        });
+
+        if (selected) {
+            selectedCount.innerHTML = count;
+            baseToolbar.classList.add("d-none");
+            selectedToolbar.classList.remove("d-none");
+        } else {
+            baseToolbar.classList.remove("d-none");
+            selectedToolbar.classList.add("d-none");
+        }
+    };
+
+    // Initialize the DataTable and event listeners
+    const initializeDataTable = () => {
+        table = $(dataTableElement).DataTable({
+            info: false,
+            order: [],
+            pageLength: 10,
+            lengthChange: false,
+            columnDefs: [
+                { orderable: false, targets: 0 },
+                { orderable: false, targets: 6 }
+            ]
+        });
+
+        // Setup event listeners for table actions
+        setupDeleteRowEventListeners();
+        setupDeleteSelectedEventListener();
+
+        // Setup search filter
+        document.querySelector('[data-kt-user-table-filter="search"]').addEventListener("keyup", (event) => {
+            table.search(event.target.value).draw();
+        });
+
+        // Setup reset filter
+        document.querySelector('[data-kt-user-table-filter="reset"]').addEventListener("click", () => {
+            document.querySelector('[data-kt-user-table-filter="form"]').querySelectorAll("select").forEach((select) => {
+                $(select).val("").trigger("change");
+            });
+            table.search("").draw();
+        });
+
+        // Update the selected rows count on draw
+        table.on("draw", () => {
+            updateSelectedRows();
+        });
+    };
+
+    return {
+        init: function () {
+            if (dataTableElement) {
+                baseToolbar = document.querySelector('[data-kt-user-table-toolbar="base"]');
+                selectedToolbar = document.querySelector('[data-kt-user-table-toolbar="selected"]');
+                selectedCount = document.querySelector('[data-kt-user-table-select="selected_count"]');
+                initializeDataTable();
+            }
+        }
+    };
+}();
+
+// Initialize the module when the DOM is fully loaded
+KTUtil.onDOMContentLoaded(() => {
+    KTUsersList.init();
+});
