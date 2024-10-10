@@ -520,6 +520,19 @@ return [
     'Revenue'=>'Revenue',
     'Tasks'=>'Tasks',
     'this week'=>'this week',
+    'Full Name'=>'Full Name',
+    'Active'=>'Active',
+    'Or'=>'Or',
+    'Sign Up'=>'Sign Up',
+    'Get unlimited access & earn money'=>'Get unlimited access & earn money',
+    'Not a Member yet'=>'Not a Member yet',
+    'Forgot Password'=>'Forgot Password',
+    'Sign in with Google'=>'Sign in with Google',
+    'Sign in with Facebook'=>'Sign in with Facebook',
+    'Or with email'=>'Or with email',
+    'User created successfully'=>'User created successfully',
+    'Failed to create user'=>'Failed to create user',
+    'Total users with this role'=>'Total users with this role',
 
 
 

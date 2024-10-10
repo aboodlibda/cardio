@@ -521,6 +521,32 @@ return [
     'Revenue'=>'الربح',
     'Tasks'=>'المهام',
     'this week'=>'هذا الاسبوع',
+    'Full Name'=>'الاسم بالكامل',
+    'Active'=>'فعال',
+    'Or'=>'أو',
+    'Sign Up'=>'تسجيل',
+    'Get unlimited access & earn money'=>'احصل على وصول غير محدود واكسب المال',
+    'Not a Member yet'=>'لست عضوا حتى الان',
+    'Forgot Password'=>'هل نسيت كلمة المرور',
+    'Sign in with Google'=>'تسجيل دخول باستخدام جوجل',
+    'Sign in with Facebook'=>'تسجيل دخول باستخدام فيسبوك',
+    'Or with email'=>'او باستخدام البريد الالكتروني',
+    'User created successfully'=>'تم انشاء المستخدم بنجاح',
+    'Failed to create user'=>'لم يتم انشاء المستخدم',
+    'Total users with this role'=>'إجمالي المستخدمين الذين لديهم هذا الدور',
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
