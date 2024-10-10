@@ -74,6 +74,8 @@ class UserController extends Controller
 
     public function show($id)
     {
+        $user = User::query()->findOrFail($id);
+        return view('cms.user.show',compact('user'));
     }
 
     public function edit($id)
@@ -82,6 +84,34 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->request->add(['id'=>$id]);
+        $request->validate([
+            'name'  => 'required|string|min:3|max:200,name,'.$id,
+            'email' => 'required|email|unique:users,'.$id,
+            'password'         => ['required',Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+            ],
+            'user_name' => 'required|string|min:3|max:15|not_regex:[!@#$%^&*()]|unique:users,'.$id,
+            'phone_number'  => 'required|numeric,phone_number,'.$id,
+            'gender'  => 'required|in:male,female',
+            'role_id'  => 'required|int|exists:roles,id',
+            'status'  => 'required|in:on',
+            'avatar'  => 'nullable|image',
+        ]);
+
+        $data = $request->only([
+            'name' , 'email' , 'phone_number', 'user_name', 'gender', 'role_id' ,'avatar'
+        ]);
+
+        $is_Updated = User::query()->find($id)->update($data);
+        if ($is_Updated){
+            notify()->success(trans('dashboard_trans.User Updated successfully'));
+        }
+
     }
 
     public function destroy($id)
