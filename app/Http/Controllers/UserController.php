@@ -41,19 +41,20 @@ class UserController extends Controller
             'gender'  => 'required|in:male,female',
             'role_id'  => 'required|int|exists:roles,id',
             'status'  => 'required|in:on',
-            'avatar'  => 'image',
+            'avatar'  => 'nullable|image',
           ]);
 
         $data = $request->only([
-            'name' , 'email' , 'phone_number', 'user_name', 'gender', 'role_id'
+            'name' , 'email' , 'phone_number', 'user_name', 'gender', 'role_id' ,'avatar'
         ]);
 
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
             $imageName = time() . '_' . $data['user_name'] . '.' . $image->getClientOriginalExtension();
             $image->move('images/users', $imageName);
+            $data['avatar'] = $imageName;
         }
-        $data['avatar'] = $imageName;
+
 
         $data['password'] = Hash::make($request->password);
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
