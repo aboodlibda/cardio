@@ -117,8 +117,8 @@
                                                         <tbody class="text-gray-600 fw-semibold">
                                                         <!--begin::Table row-->
                                                         <tr>
-                                                            <td class="text-gray-800">Administrator Access
-                                                                <span class="ms-1" data-bs-toggle="tooltip" title="Allows a full access to the system">
+                                                            <td class="text-gray-800">{{trans('dashboard_trans.Accessibility')}}
+                                                                <span class="ms-1" data-bs-toggle="tooltip" title="{{trans('')}}">
 																					<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
 																						<span class="path1"></span>
 																						<span class="path2"></span>
@@ -212,7 +212,7 @@
                         <div class="card-header pt-5">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2 class="d-flex align-items-center">Users Assigned
+                                <h2 class="d-flex align-items-center">{{trans('dashboard_trans.Users Assigned')}}
                                     <span class="text-gray-600 fs-6 ms-1">({{$role->users->count()}})</span></h2>
                             </div>
                             <!--end::Card title-->
@@ -256,20 +256,20 @@
                                 </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600">
-                                @foreach($role->users as $user)
+                                @foreach($role->users as $key=>$user)
                                 <tr>
                                     <td>
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
                                             <input class="form-check-input" type="checkbox" value="1" />
                                         </div>
                                     </td>
-                                    <td>ID8722</td>
+                                    <td>{{$key+1}}</td>
                                     <td class="d-flex align-items-center">
                                         <!--begin:: Avatar -->
                                         <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                             <a href="../../demo3/dist/apps/user-management/users/view.html">
                                                 <div class="symbol-label">
-                                                    <img src="{{asset('assets/media/avatars/300-6.jpg')}}" alt="Avatar" class="w-100" />
+                                                    <img src="{{asset('images/users/'.$user->avatar)}}" alt="Avatar" class="w-100" />
                                                 </div>
                                             </a>
                                         </div>
