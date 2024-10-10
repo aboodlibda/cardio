@@ -11,7 +11,7 @@
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.User Management')}}</li>
