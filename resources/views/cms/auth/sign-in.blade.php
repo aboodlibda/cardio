@@ -7,6 +7,7 @@
 <!--begin::Head-->
 <head><base href="../../../"/>
     <title>Cardio - {{trans('dashboard_trans.Sign In')}}</title>
+    @notifyCss
     <meta charset="utf-8" />
     <meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
     <meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
@@ -81,7 +82,7 @@
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  action="{{route('login')}}" method="POST" enctype="multipart/form-data">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  action="{{route('user-login')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
@@ -144,7 +145,7 @@
                             <!--end::Wrapper-->
                             <!--begin::Submit button-->
                             <div class="d-grid mb-10">
-                                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     <!--begin::Indicator label-->
                                     <span class="indicator-label">{{trans('dashboard_trans.Sign In')}}</span>
                                     <!--end::Indicator label-->
@@ -217,7 +218,8 @@
 <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
 <script src="{{asset('assets/js/custom/authentication/sign-in/i18n.js')}}"></script>
 <!--end::Custom Javascript-->
-
+<x-notify::notify />
+@notifyJs
 <!--end::Javascript-->
 </body>
 
