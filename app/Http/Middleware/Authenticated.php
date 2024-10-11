@@ -14,27 +14,34 @@ class Authenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next,$guard = null): Response
     {
-        if (Auth::guard('user')->check()){
-            $users = Auth::guard('user')->user();
-            if ($users->status == 'active'){
-                return redirect()->route('dashboard');
-            }else{
-                $request->session()->invalidate();
-                return redirect()->route('show-login');
-            }
-
-        }else{
-            $customers = Auth::guard('customer')->user();
-            if ($customers->status == 'active'){
-                return redirect()->route('dashboard');
-            }else{
-                $request->session()->invalidate();
-                return redirect()->route('show-login');
-            }
-
+        switch ($guard){
+            case 'user':
+                if (Auth::guard('user')->check()){
+                    $users = Auth::guard('user')->user();
+                    if ($users->status == 'active'){
+                        return redirect()->route('dashboard');
+                    }else{
+                        $request->session()->invalidate();
+                        return redirect()->route('show-login');
+                    }
         }
-        return $next($request);
+                break;
+
+            case 'customer' :
+               if (Auth::guard('customer')->check()){
+                   $customers = Auth::guard('customer')->user();
+                   if ($customers->status == 'active'){
+                       return redirect()->route('dashboard');
+                   }else{
+                       $request->session()->invalidate();
+                       return redirect()->route('show-login');
+                   }
+               }
+               break;
+        }
+//        return $next($request);
     }
+
 }
