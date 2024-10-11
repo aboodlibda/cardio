@@ -19,7 +19,7 @@ class LimitRequest
     {
         $executed = RateLimiter::attempt('send-message:',3,function (){});
         if (!$executed){
-            notify()->success('Too Many Requests');
+            notify()->error('Too Many Requests');
         }
         return $next($request);
     }
