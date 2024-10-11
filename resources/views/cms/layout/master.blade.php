@@ -348,7 +348,7 @@
                                                 <!--begin:Menu item-->
                                                 <div class="menu-item">
                                                     <!--begin:Menu link-->
-                                                    <a class="menu-link" href="{{ route('show-user') }}">
+                                                    <a class="menu-link" href="{{ route('users.show',Auth::user()->id) }}">
 																<span class="menu-bullet">
 																	<span class="bullet bullet-dot"></span>
 																</span>
