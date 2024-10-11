@@ -492,7 +492,7 @@
                                 <!--end::Avatar-->
                                 <!--begin::User details-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-gray-800 text-hover-primary mb-1">{{$user->name}}</a>
+                                    <a href="{{ route('users.show',$user->id) }}" class="text-gray-800 text-hover-primary mb-1">{{$user->name}}</a>
                                     <span>{{$user->email}}</span>
                                 </div>
                                 <!--begin::User details-->
