@@ -575,16 +575,16 @@
                     <div class="d-flex align-items-center">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-circle symbol-40px">
-                            <img src="{{asset('assets/media/avatars/300-1.jpg')}}" alt="photo" />
+                            <img src="{{asset('images/users/'.Auth::user()->avatar)}}" alt="photo" />
                         </div>
                         <!--end::Avatar-->
                         <!--begin::User info-->
                         <div class="ms-2">
                             <!--begin::Name-->
-                            <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">Admin</a>
+                            <a href="#" class="text-gray-800 text-hover-primary fs-6 fw-bold lh-1">{{Auth::user()->name}}</a>
                             <!--end::Name-->
                             <!--begin::Major-->
-                            <span class="text-muted fw-semibold d-block fs-7 lh-1">Admin</span>
+                            <span class="text-muted fw-semibold d-block fs-7 lh-1">{{Auth::user()->user_name}}</span>
                             <!--end::Major-->
                         </div>
                         <!--end::User info-->
@@ -605,14 +605,14 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="{{asset('assets/media/avatars/300-1.jpg')}}" />
+                                        <img alt="Logo" src="{{asset('images/users/'.Auth::user()->avatar)}}" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
                                     <div class="d-flex flex-column">
-                                        <div class="fw-bold d-flex align-items-center fs-5">Admin
-                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Admin</span></div>
-                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">admin@admin.com</a>
+                                        <div class="fw-bold d-flex align-items-center fs-5">{{Auth::user()->name}}
+                                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{Auth::user()->role->name}}</span></div>
+                                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
                                     </div>
                                     <!--end::Username-->
                                 </div>
@@ -623,12 +623,12 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="../../demo3/dist/account/overview.html" class="menu-link px-5">{{trans('dashboard_trans.My Profile')}}</a>
+                                <a href="{{ route('users.show',Auth::user()->id) }}" class="menu-link px-5">{{trans('dashboard_trans.My Profile')}}</a>
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
-                                <a href="../../demo3/dist/apps/projects/list.html" class="menu-link px-5">
+                                <a href="#" class="menu-link px-5">
                                     <span class="menu-text">{{trans('dashboard_trans.My Products')}}</span>
                                     <span class="menu-badge">
 												<span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
@@ -683,9 +683,11 @@
                             </div>
                             <!--end::Menu item-->
                             <!--begin::Menu item-->
-                            <div class="menu-item px-5">
-                                <a href="../../demo3/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">{{trans('dashboard_trans.Sign Out')}}</a>
-                            </div>
+                            @auth('user')
+                                <div class="menu-item px-5">
+                                    <a href="{{ route('user-logout') }}"  class="menu-link px-5">{{trans('dashboard_trans.Sign Out')}}</a>
+                                </div>
+                            @endauth
                             <!--end::Menu item-->
                         </div>
                         <!--end::User account menu-->
