@@ -22,27 +22,32 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
     /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
-    Route::prefix('cms')->group(function (){
+    Route::prefix('cms')->middleware(['auth:user,customer'])->group(function (){
         Route::view('/','cms.dashboard')->name('dashboard');
-        Route::resource('products',ProductController::class);
-        Route::resource('categories',CategoryController::class);
-        Route::resource('tags',TagController::class);
-        Route::resource('coupons',CouponController::class);
-        Route::resource('users',UserController::class);
-        Route::resource('roles',RoleController::class);
-        Route::resource('orders',OrderController::class);
-        Route::resource('permissions',PermissionController::class);
-        Route::resource('customers',CustomerController::class);
+        Route::resources([
+            'products' => ProductController::class,
+            'categories' => CategoryController::class,
+            'tags' => TagController::class,
+            'coupons' => CouponController::class,
+            'users' => UserController::class,
+            'roles' => RoleController::class,
+            'orders' => OrderController::class,
+            'permissions' => PermissionController::class,
+            'customers' => CustomerController::class,
+        ]);
 
 
-        Route::view('show-user','cms.user.show')->name('show-user');
         Route::view('show-order','cms.order.show')->name('show-order');
-        Route::view('show-role','cms.user.role.show')->name('show-role');
         Route::view('show-customer','cms.customer.show')->name('show-customer');
 
 
     });
-    Route::post('sign-in',[LoginController::class,'login'])->name('login')->middleware('limit_request');
-    Route::get('sign-in',[LoginController::class,'showLogin'])->name('show-login');
+
+    Route::prefix('cms')->middleware('auth:user')->group(function () {
+        Route::get('logout',[LoginController::class,'logout'])->name('user-logout');
+    });
+
+    Route::post('login',[LoginController::class,'login'])->name('user-login')->middleware('limit_request');
+    Route::get('login',[LoginController::class,'showLogin'])->name('show-login');
 
 });
