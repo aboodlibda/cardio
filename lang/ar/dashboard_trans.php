@@ -91,8 +91,8 @@ return [
     'You can browse the list of admin' => 'يمكنك تصفح قائمة المدراء من',
     'Gender' => 'الجنس',
     'Password' => 'كلمة المرور',
-    'Male' => 'أنثى',
-    'Female' => 'ذكر',
+    'Male' => 'ذكر',
+    'Female' => 'انثى',
     'General Information' => 'معلومات عامة',
     'Login Information' => 'معلومات تسجيل الدخول',
     'Industry Name' => 'اسم المصنع',
@@ -537,6 +537,24 @@ return [
     'Users Assigned'=>'المستخدمون المعينون',
     'Accessibility'=>'امكانية الوصول',
     'Allows a full access to the system'=>'يسمح بالوصول الكامل إلى النظام',
+    'Account ID'=>'معرف الحساب',
+    'Security'=>'الامان',
+    'Update User Details'=>'تحديث بيانات المستخدم',
+    'User Information'=>'معلومات المستخدم',
+    'Update Image'=>'تحديث الصورة',
+    'Update Email Address'=>'تحديث عنوان البريد الالكتروني',
+    'Error Credentials'=>'بيانات الاعتماد خاطئة',
+    'Sign in successfully'=>'تم تسجيل الدخول بنجاح',
+    'This User InActive'=>'هذا المستخدم غير فعال',
+
+
+
+
+
+
+
+
+
 
 
 

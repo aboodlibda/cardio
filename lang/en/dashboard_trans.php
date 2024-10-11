@@ -536,6 +536,15 @@ return [
     'Users Assigned'=>'Users Assigned',
     'Accessibility'=>'Accessibility',
     'Allows a full access to the system'=>'Allows a full access to the system',
+    'Account ID'=>'Account ID',
+    'Security'=>'Security',
+    'Update User Details'=>'Update User Details',
+    'User Information'=>'User Information',
+    'Update Image'=>'Update Image',
+    'Update Email Address'=>'Update Email Address',
+    'Error Credentials'=>'Error Credentials',
+    'Sign in successfully'=>'Sign in successfully',
+    'This User InActive'=>'This User InActive',
 
 
 
