@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Authenticated;
 use App\Http\Middleware\LimitRequest;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -11,24 +12,22 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+
     ->withMiddleware(function (Middleware $middleware) {
-        //
         $middleware->alias([
-
-            'limit_request'=>LimitRequest::class,
-            'authenticated'=>\App\Http\Middleware\Authenticated::class,
-
+            'limit_request' => LimitRequest::class,
+            'authenticated' => Authenticated::class,
         ]);
-//        $middleware->redirectGuestsTo(function ($request) {
-//            if (!$request->expectsJson()) {
-//                if (in_array('auth:user', $request->route()->middleware())) {
-//                    if (!auth('user')->check()) {
-//                        return route('sign-in');
-//                    }
-//                }
-//            }
-//        });
+
+        $middleware->redirectTo(function ($request){
+            if (!$request->expectsJson()) {
+                if (auth()->guard('user')) {
+                    return route('show-login');
+                }
+            }
+        });
     })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
 
