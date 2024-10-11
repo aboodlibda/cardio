@@ -44,38 +44,27 @@ class UserController extends Controller
             'avatar'  => 'nullable|image',
           ]);
 
-        $data = $request->only([
-            'name' , 'email' , 'phone_number', 'user_name', 'gender', 'role_id' ,'avatar'
-        ]);
-
-        if ($request->hasFile('avatar')) {
-            $image = $request->file('avatar');
-            $imageName = time() . '_' . $data['user_name'] . '.' . $image->getClientOriginalExtension();
-            $image->move('images/users', $imageName);
-            $data['avatar'] = $imageName;
-        }
+        $data = $this->getData($request);
 
 
-        $data['password'] = Hash::make($request->password);
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
+
 
 
         $is_Saved = User::query()->create($data);
 
         if ($is_Saved){
             notify()->success(trans('dashboard_trans.User created successfully'));
-            return redirect()->back();
         }else{
             notify()->error(trans('dashboard_trans.Failed to create user'));
-            return redirect()->back();
-
         }
+        return redirect()->back();
     }
 
     public function show($id)
     {
         $user = User::query()->findOrFail($id);
-        return view('cms.user.show',compact('user'));
+        $roles = Role::query()->get();
+        return view('cms.user.show',compact('user','roles'));
     }
 
     public function edit($id)
@@ -87,34 +76,56 @@ class UserController extends Controller
         $request->request->add(['id'=>$id]);
         $request->validate([
             'name'  => 'required|string|min:3|max:200,name,'.$id,
-            'email' => 'required|email|unique:users,'.$id,
-            'password'         => ['required',Password::min(8)
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password'         => ['required','current_password:user',Password::min(8)
                 ->letters()
                 ->mixedCase()
                 ->numbers()
                 ->symbols()
                 ->uncompromised()
             ],
-            'user_name' => 'required|string|min:3|max:15|not_regex:[!@#$%^&*()]|unique:users,'.$id,
-            'phone_number'  => 'required|numeric,phone_number,'.$id,
+            'user_name' => 'required|string|min:3|max:15|not_regex:[!@#$%^&*()]|unique:users,user_name,'.$id,
+            'phone_number'  => 'required|numeric',
             'gender'  => 'required|in:male,female',
             'role_id'  => 'required|int|exists:roles,id',
-            'status'  => 'required|in:on',
+            'status'  => 'in:on',
             'avatar'  => 'nullable|image',
         ]);
 
-        $data = $request->only([
-            'name' , 'email' , 'phone_number', 'user_name', 'gender', 'role_id' ,'avatar'
-        ]);
+        $data = $this->getData($request);
 
         $is_Updated = User::query()->find($id)->update($data);
+
         if ($is_Updated){
             notify()->success(trans('dashboard_trans.User Updated successfully'));
+        }else{
+            notify()->error(trans('dashboard_trans.Failed to update this user!'));
+
         }
+        return redirect()->back();
 
     }
 
     public function destroy($id)
     {
+    }
+
+
+    public function getData(Request $request)
+    {
+        $data = $request->only([
+            'name', 'email', 'phone_number', 'user_name', 'gender', 'role_id', 'avatar'
+        ]);
+
+        $data['password'] = Hash::make($request->password);
+        $data['status'] = $request->has('status') ? 'active' : 'inactive';
+
+        if ($request->hasFile('avatar')) {
+            $image = $request->file('avatar');
+            $imageName = time() . '_' . $data['name'] . '.' . $image->getClientOriginalExtension();
+            $image->move('images/users', $imageName);
+            $data['avatar'] = $imageName;
+        }
+        return $data;
     }
 }
