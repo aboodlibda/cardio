@@ -36,6 +36,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
             'customers' => CustomerController::class,
         ]);
 
+        Route::put('update-email/{id}',[UserController::class,'updateEmail'])->name('update-email');
+        Route::put('update-password/{id}',[UserController::class,'updatePassword'])->name('update-password');
+
 
         Route::view('show-order','cms.order.show')->name('show-order');
         Route::view('show-customer','cms.customer.show')->name('show-customer');
