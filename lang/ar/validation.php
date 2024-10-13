@@ -169,6 +169,7 @@ return [
     'attributes' => [
         'name'                  => 'الاسم',
         'username'              => 'اسم المُستخدم',
+        'user_name'              => 'اسم المُستخدم',
         'email'                 => 'البريد الالكتروني',
         'first_name'            => 'الاسم',
         'last_name'             => 'اسم العائلة',
