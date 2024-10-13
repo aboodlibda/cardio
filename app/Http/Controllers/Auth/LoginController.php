@@ -36,7 +36,7 @@ class LoginController extends Controller
             }
 
         }else{
-            notify()->error(trans('dashboard_trans.Error Credentials'));
+            notify()->error(trans('dashboard_trans.Error Credentials!'));
             return redirect()->back()->withInput();
         }
 
