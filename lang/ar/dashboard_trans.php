@@ -87,7 +87,7 @@ return [
     'Designation' => 'التعيين',
     'Status' => 'الحالة',
     'Role' => 'الدور',
-    'Actions' => 'العمليات',
+    'Actions' => 'الاجراءات',
     'You can browse the list of admin' => 'يمكنك تصفح قائمة المدراء من',
     'Gender' => 'الجنس',
     'Password' => 'كلمة المرور',
@@ -546,6 +546,14 @@ return [
     'Error Credentials'=>'بيانات الاعتماد خاطئة',
     'Sign in successfully'=>'تم تسجيل الدخول بنجاح',
     'This User InActive'=>'هذا المستخدم غير فعال',
+    'Email Updated Successfully'=>'تم تحديث البريد الالكتروني بنجاح',
+    'Failed to update email'=>'لم يتم تحديث الايميل',
+    'Password Updated Successfully'=>'تم تحديث كلمة المرور بنجاح',
+    'Failed to update password'=>'لم يتم تحديث كلمة المرور',
+
+
+
+
 
 
 
