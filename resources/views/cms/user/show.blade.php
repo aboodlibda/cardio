@@ -1,6 +1,7 @@
 @extends('cms.layout.master')
 @section('title',trans('dashboard_trans.View User'))
 @section('style')
+    <meta name="user_id" content="{{$user->id}}">
 @endsection
 @section('content')
     <!--begin::Page title-->
@@ -659,8 +660,9 @@
                 <div class="modal-dialog modal-dialog-centered mw-650px">
                     <!--begin::Modal content-->
                     <div class="modal-content">
+                        <div id="error-messages"></div>
                         <!--begin::Form-->
-                        <form class="form" action="{{ route('users.update',$user->id) }}" method="POST" enctype="multipart/form-data" id="kt_modal_update_user_form">
+                        <form class="form" action="" method="POST" enctype="multipart/form-data" id="kt_modal_update_user_form">
                        @method('PUT')
                             @csrf
                             <!--begin::Modal header-->
@@ -754,11 +756,9 @@
                                             <label class="required fw-semibold fs-6 mb-2">{{trans('dashboard_trans.Full Name')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Full Name')}}" value="{{$user->name}}" />
+                                            <input type="text" name="name" id="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Full Name')}}" value="{{$user->name}}" />
                                             <!--end::Input-->
-                                            @error('name')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="name-error" class="error-message"></div>
                                         </div>
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
@@ -767,9 +767,7 @@
                                             <!--begin::Input-->
                                             <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.User Name')}}" value="{{$user->user_name}}" />
                                             <!--end::Input-->
-                                            @error('user_name')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="user_name-error" class="error-message"></div>
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -780,23 +778,9 @@
                                             <!--begin::Input-->
                                             <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" value="{{$user->email}}" />
                                             <!--end::Input-->
-                                            @error('email')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="email-error" class="error-message"></div>
                                         </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">{{trans('dashboard_trans.Password')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Password')}}" />
-                                            <!--end::Input-->
-                                            @error('password')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
-                                        </div>
+
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
                                             <label class="required fw-semibold fs-6 mb-2">{{trans('dashboard_trans.Phone')}}</label>
@@ -804,9 +788,8 @@
                                             <!--begin::Input-->
                                             <input type="tel" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Phone')}}" value="{{$user->phone_number}}" />
                                             <!--end::Input-->
-                                            @error('phone_number')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="phone_number-error" class="error-message"></div>
+
                                         </div>
                                         <!--end::Input group-->
                                         <div class="row fv-row mb-7">
@@ -831,9 +814,8 @@
                                                     <!--end::Radio-->
                                                 </div>
                                             </div>
-                                            @error('gender')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="gender-error" class="error-message"></div>
+
                                         </div>
                                         <div class="fv-row mb-7">
                                             <!--begin::Wrapper-->
@@ -857,41 +839,40 @@
                                                 <!--end::Switch-->
                                             </div>
                                             <!--begin::Wrapper-->
-                                            @error('status')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
+                                            <div id="status-error" class="error-message"></div>
+
                                         </div>
                                         <!--begin::Input group-->
-                                        <div class="mb-5">
-                                            <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-5">{{trans('dashboard_trans.Role')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Roles-->
-                                            <!--begin::Input row-->
-                                            @foreach($roles as $role)
-                                                <div class="d-flex fv-row">
-                                                    <!--begin::Radio-->
-                                                    <div class="form-check form-check-custom form-check-solid">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input me-3" name="role_id" type="radio" value="{{$role->id}}" id="kt_modal_update_role_option_0" @checked($user->role_id == $role->id) />
-                                                        <!--end::Input-->
-                                                        <!--begin::Label-->
-                                                        <label class="form-check-label" for="kt_modal_update_role_option_0">
-                                                            <div class="fw-bold text-gray-800">{{$role->name}}</div>
-                                                            <div class="text-gray-600">{{$role->description}}</div>
-                                                        </label>
-                                                        <!--end::Label-->
-                                                    </div>
-                                                    <!--end::Radio-->
-                                                </div>
-                                                <!--end::Input row-->
-                                                <div class='separator separator-dashed my-5'></div>
-                                            @endforeach
-                                            <!--end::Roles-->
-                                            @error('role_id')
-                                            <span class="text-danger"> {{ $message }}</span>
-                                            @enderror
-                                        </div>
+{{--                                        <div class="mb-5">--}}
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <label class="required fw-semibold fs-6 mb-5">{{trans('dashboard_trans.Role')}}</label>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                            <!--begin::Roles-->--}}
+{{--                                            <!--begin::Input row-->--}}
+{{--                                            @foreach($roles as $role)--}}
+{{--                                                <div class="d-flex fv-row">--}}
+{{--                                                    <!--begin::Radio-->--}}
+{{--                                                    <div class="form-check form-check-custom form-check-solid">--}}
+{{--                                                        <!--begin::Input-->--}}
+{{--                                                        <input class="form-check-input me-3" name="role_id" type="radio" value="{{$role->id}}" id="kt_modal_update_role_option_0" @checked($user->role_id == $role->id) />--}}
+{{--                                                        <!--end::Input-->--}}
+{{--                                                        <!--begin::Label-->--}}
+{{--                                                        <label class="form-check-label" for="kt_modal_update_role_option_0">--}}
+{{--                                                            <div class="fw-bold text-gray-800">{{$role->name}}</div>--}}
+{{--                                                            <div class="text-gray-600">{{$role->description}}</div>--}}
+{{--                                                        </label>--}}
+{{--                                                        <!--end::Label-->--}}
+{{--                                                    </div>--}}
+{{--                                                    <!--end::Radio-->--}}
+{{--                                                </div>--}}
+{{--                                                <!--end::Input row-->--}}
+{{--                                                <div class='separator separator-dashed my-5'></div>--}}
+{{--                                            @endforeach--}}
+{{--                                            <!--end::Roles-->--}}
+{{--                                            @error('role_id')--}}
+{{--                                            <span class="text-danger"> {{ $message }}</span>--}}
+{{--                                            @enderror--}}
+{{--                                        </div>--}}
                                         <!--end::Input group-->
                                 </div>
                                 <!--end::Scroll-->
@@ -903,7 +884,7 @@
                                 <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
                                 <!--end::Button-->
                                 <!--begin::Button-->
-                                <button type="submit" class="btn btn-primary" >
+                                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit" >
                                     <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
                                     <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -943,8 +924,8 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_email_form" method="POST" class="form" action="{{ route('users.update',$user->id) }}" enctype="multipart/form-data">
-                            @method('PATCH')
+                        <form id="kt_modal_update_email_form" method="POST" class="form" action="{{ route('update-email',$user->id) }}" enctype="multipart/form-data">
+                            @method('PUT')
                             @csrf
                             <!--begin::Notice-->
                             <!--begin::Notice-->
@@ -1027,7 +1008,9 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_password_form" class="form" action="#">
+                        <form id="kt_modal_update_password_form" class="form" method="POST" action="#">
+                            @method('PUT')
+                            @csrf
                             <!--begin::Input group=-->
                             <div class="fv-row mb-10">
                                 <label class="required form-label fs-6 mb-2">Current Password</label>
@@ -1043,7 +1026,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input wrapper-->
                                     <div class="position-relative mb-3">
-                                        <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="new_password" autocomplete="off" />
+                                        <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password" autocomplete="off" />
                                         <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
 																<i class="ki-duotone ki-eye-slash fs-1">
 																	<span class="path1"></span>
@@ -1078,13 +1061,14 @@
                             <div class="fv-row mb-10">
                                 <label class="form-label fw-semibold fs-6 mb-2">Confirm New Password</label>
                                 <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="confirm_password" autocomplete="off" />
+
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Actions-->
                             <div class="text-center pt-15">
                                 <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
-                                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                    <span class="indicator-label">Submit</span>
+                                <button type="submit" class="btn btn-primary"  data-kt-users-modal-action="submit">
+                                    <span class="indicator-label" >Submit</span>
                                     <span class="indicator-progress">Please wait...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
@@ -1424,8 +1408,6 @@
 @section('script')
     <script src="{{asset('assets/js/custom/apps/user-management/users/view/view.js')}}"></script>
     <script src="{{asset('assets/js/custom/apps/user-management/users/view/update-details.js')}}"></script>
-    <script src="{{asset('assets/js/custom/apps/user-management/users/view/add-schedule.js')}}"></script>
-    <script src="{{asset('assets/js/custom/apps/user-management/users/view/add-task.js')}}"></script>
     <script src="{{asset('assets/js/custom/apps/user-management/users/view/update-email.js')}}"></script>
     <script src="{{asset('assets/js/custom/apps/user-management/users/view/update-password.js')}}"></script>
     <script src="{{asset('assets/js/custom/apps/user-management/users/view/update-role.js')}}"></script>
@@ -1434,4 +1416,5 @@
     <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
     <script src="{{asset('assets/js/custom/widgets.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+{{--    <script src="{{asset('/assets/js/axios.js')}}"></script>--}}
 @endsection
