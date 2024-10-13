@@ -545,6 +545,10 @@ return [
     'Error Credentials'=>'Error Credentials',
     'Sign in successfully'=>'Sign in successfully',
     'This User InActive'=>'This User InActive',
+    'Email Updated Successfully'=>'Email Updated Successfully',
+    'Failed to update email'=>'Failed to update email',
+    'Password Updated Successfully'=>'Password Updated Successfully',
+    'Failed to update password'=>'Failed to update password',
 
 
 
