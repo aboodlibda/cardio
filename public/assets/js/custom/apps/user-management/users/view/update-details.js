@@ -2,7 +2,9 @@
 var user_id = $('meta[name="user_id"]').attr('content');
 var root = window.location.protocol + '//' + window.location.host;
 
-var GET_USERS_URL = root + '/cms/users/' +user_id;
+var lang = $('html').attr('lang'); // Get language from HTML lang attribute (e.g., "ar")
+var baseURL = window.location.protocol + '//' + window.location.host + '/' + lang + '/cms/users/' + user_id;
+
 
 // alert("url: " + GET_USERS_URL);
 var KTUsersUpdateDetails = function () {
@@ -78,28 +80,26 @@ var KTUsersUpdateDetails = function () {
 
                     // Perform AJAX request for form submission
                     $.ajax({
-                        url: GET_USERS_URL, // Replace with your actual route
+                        url: baseURL, // Replace with the correct URL
                         method: 'PUT',
                         data: $(e).serialize(), // Serialize form data
                         success: function (data) {
                             o.removeAttribute("data-kt-indicator");
                             o.disabled = false;
 
-                            if (data) {
-                                Swal.fire({
-                                    text: data.text,
-                                    icon: data.icon,
-                                    buttonsStyling: !1,
-                                    confirmButtonText: data.confirmButtonText,
-                                    customClass: { confirmButton: "btn btn-primary" }
-                                }).then((function (t) {
-                                    if (t.isConfirmed) {
-                                        n.hide();
-                                        location.reload();
-                                        // Optional: Refresh data or perform other actions here
-                                    }
-                                }));
-                            }
+                            // Check if the response is a JSON object (use the returned values for Swal)
+                            Swal.fire({
+                                text: data.text,
+                                icon: data.icon,
+                                buttonsStyling: false,
+                                confirmButtonText: data.confirmButtonText,
+                                customClass: { confirmButton: "btn btn-primary" }
+                            }).then((function (result) {
+                                if (result.isConfirmed) {
+                                    n.hide(); // Hide the modal
+                                    location.reload(); // Refresh the page or data if needed
+                                }
+                            }));
                         },
                         error: function (xhr) {
                             o.removeAttribute("data-kt-indicator");
@@ -117,7 +117,7 @@ var KTUsersUpdateDetails = function () {
                                 Swal.fire({
                                     text: "Please correct the errors and try again.",
                                     icon: "error",
-                                    buttonsStyling: !1,
+                                    buttonsStyling: false,
                                     confirmButtonText: "Ok, got it!",
                                     customClass: { confirmButton: "btn btn-primary" }
                                 });
@@ -125,7 +125,7 @@ var KTUsersUpdateDetails = function () {
                                 Swal.fire({
                                     text: "An unexpected error occurred. Please try again later.",
                                     icon: "error",
-                                    buttonsStyling: !1,
+                                    buttonsStyling: false,
                                     confirmButtonText: "Ok, got it!",
                                     customClass: { confirmButton: "btn btn-primary" }
                                 });
@@ -133,6 +133,7 @@ var KTUsersUpdateDetails = function () {
                         }
                     });
                 });
+
             })();
         }
     };
