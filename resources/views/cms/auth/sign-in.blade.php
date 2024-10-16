@@ -82,7 +82,7 @@
                     <!--begin::Wrapper-->
                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"  action="{{route('user-login')}}" method="POST" enctype="multipart/form-data">
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{route('dashboard')}}"  action="{{route('user-login')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
@@ -121,18 +121,14 @@
                                 <!--begin::Email-->
                                 <input type="text" placeholder="{{trans('dashboard_trans.Email')}}" name="email" autocomplete="off" class="form-control bg-transparent" />
                                 <!--end::Email-->
-                                @error('email')
-                                  <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                               <span id="email-error" class="error-message"></span>
                             </div>
                             <!--end::Input group=-->
                             <div class="fv-row mb-3">
                                 <!--begin::Password-->
                                 <input type="password" placeholder="{{trans('dashboard_trans.Password')}}" name="password" autocomplete="off" class="form-control bg-transparent" />
                                 <!--end::Password-->
-                                @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <span id="password-error" class="error-message"></span>
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Wrapper-->
@@ -145,7 +141,7 @@
                             <!--end::Wrapper-->
                             <!--begin::Submit button-->
                             <div class="d-grid mb-10">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="kt_sign_in_submit" >
                                     <!--begin::Indicator label-->
                                     <span class="indicator-label">{{trans('dashboard_trans.Sign In')}}</span>
                                     <!--end::Indicator label-->
