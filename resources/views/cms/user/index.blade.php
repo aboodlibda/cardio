@@ -74,27 +74,16 @@
                                         <label class="form-label fs-6 fw-semibold">{{trans('dashboard_trans.Role')}}:</label>
                                         <select class="form-select form-select-solid fw-bold" data-kt-select2="false" data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
                                             <option disabled hidden selected>{{trans('dashboard_trans.Select an option')}}</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="Analyst">Analyst</option>
-                                            <option value="Developer">Developer</option>
-                                            <option value="Support">Support</option>
-                                            <option value="Trial">Trial</option>
-                                        </select>
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="mb-10">
-                                        <label class="form-label fs-6 fw-semibold">Two Step Verification:</label>
-                                        <select class="form-select form-select-solid fw-bold" data-kt-select2="false" data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" data-kt-user-table-filter="two-step" data-hide-search="true">
-                                            <option disabled hidden selected>{{trans('dashboard_trans.Select an option')}}</option>
-                                            <option value="Enabled">Enabled</option>
+                                        @foreach($roles as $role)
+                                                <option value="{{$role->name}}">{{ $role->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <!--end::Input group-->
                                     <!--begin::Actions-->
                                     <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Reset</button>
-                                        <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">Apply</button>
+                                        <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">{{trans('dashboard_trans.Reset')}}</button>
+                                        <button type="submit" class="btn btn-primary fw-semibold px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="filter">{{trans('dashboard_trans.Apply')}}</button>
                                     </div>
                                     <!--end::Actions-->
                                 </div>
@@ -155,11 +144,9 @@
                                                 <!--begin::Input-->
                                                 <select name="role"  data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-hide-search="true" class="form-select form-select-solid fw-bold">
                                                     <option selected hidden="" disabled>{{trans('dashboard_trans.Select an option')}}</option>
-                                                    <option value="Administrator">Administrator</option>
-                                                    <option value="Analyst">Analyst</option>
-                                                    <option value="Developer">Developer</option>
-                                                    <option value="Support">Support</option>
-                                                    <option value="Trial">Trial</option>
+                                                    @foreach($roles as $role)
+                                                        <option value="{{$role->name}}">{{ $role->name}}</option>
+                                                    @endforeach
                                                 </select>
                                                 <!--end::Input-->
                                             </div>
@@ -174,17 +161,15 @@
                                                     <option hidden="" disabled selected>{{trans('dashboard_trans.Select an option')}}</option>
                                                     <option value="excel">Excel</option>
                                                     <option value="pdf">PDF</option>
-                                                    <option value="cvs">CVS</option>
-                                                    <option value="zip">ZIP</option>
                                                 </select>
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
                                             <!--begin::Actions-->
                                             <div class="text-center">
-                                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Discard')}}</button>
                                                 <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                                    <span class="indicator-label">Submit</span>
+                                                    <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
                                                     <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 																	<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                                 </button>
@@ -224,7 +209,7 @@
                                     <!--begin::Modal body-->
                                     <div class="modal-body px-5 my-7">
                                         <!--begin::Form-->
-                                        <form id="kt_modal_add_user_form" class="form" action="{{route('users.store')}}" enctype="multipart/form-data" method="POST">
+                                        <form id="kt_modal_add_user_form" class="form" action="#" enctype="multipart/form-data" method="POST">
                                             @csrf
                                             <!--begin::Scroll-->
                                             <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
@@ -248,7 +233,7 @@
                                                                 <span class="path2"></span>
                                                             </i>
                                                             <!--begin::Inputs-->
-                                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                                            <input type="file" name="avatar" id="avatar" accept=".png, .jpg, .jpeg" />
                                                             <input type="hidden" name="avatar_remove" />
                                                             <!--end::Inputs-->
                                                         </label>
@@ -274,9 +259,7 @@
                                                     <!--begin::Hint-->
                                                     <div class="form-text">{{trans('dashboard_trans.Allowed file types')}}: png, jpg, jpeg.</div>
                                                     <!--end::Hint-->
-                                                    @error('avatar')
-                                                      <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="avatar-error" class="error-message"></div>
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
@@ -287,9 +270,8 @@
                                                     <!--begin::Input-->
                                                     <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Full Name')}}" value="{{old('name')}}" />
                                                     <!--end::Input-->
-                                                    @error('name')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="name-error" class="error-message"></div>
+
                                                 </div>
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
@@ -298,9 +280,8 @@
                                                     <!--begin::Input-->
                                                     <input type="text" name="user_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.User Name')}}" value="{{old('user_name')}}" />
                                                     <!--end::Input-->
-                                                    @error('user_name')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="user_name-error" class="error-message"></div>
+
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
@@ -311,9 +292,7 @@
                                                     <!--begin::Input-->
                                                     <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" value="{{old('email')}}" />
                                                     <!--end::Input-->
-                                                    @error('email')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="email-error" class="error-message"></div>
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
@@ -324,9 +303,8 @@
                                                     <!--begin::Input-->
                                                     <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Password')}}" value="{{old('password')}}" />
                                                     <!--end::Input-->
-                                                    @error('password')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="password-error" class="error-message"></div>
+
                                                 </div>
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
@@ -335,13 +313,11 @@
                                                     <!--begin::Input-->
                                                     <input type="tel" name="phone_number" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="{{trans('dashboard_trans.Phone')}}" value="{{old('Phone')}}" />
                                                     <!--end::Input-->
-                                                    @error('phone_number')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="phone_number-error" class="error-message"></div>
+
                                                 </div>
                                                 <!--end::Input group-->
                                                 <div class="row fv-row mb-7">
-
                                                         <!--begin::Label-->
                                                         <label class="required fw-semibold fs-6 mb-2">
                                                             <span>{{trans('dashboard_trans.Gender')}}:</span>
@@ -362,9 +338,7 @@
                                                             <!--end::Radio-->
                                                         </div>
                                                     </div>
-                                                    @error('gender')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="gender-error" class="error-message"></div>
                                                 </div>
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Wrapper-->
@@ -388,9 +362,8 @@
                                                         <!--end::Switch-->
                                                     </div>
                                                     <!--begin::Wrapper-->
-                                                    @error('status')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="status-error" class="error-message"></div>
+
                                                 </div>
                                                 <!--begin::Input group-->
                                                 <div class="mb-5">
@@ -419,9 +392,8 @@
                                                     <div class='separator separator-dashed my-5'></div>
                                                     @endforeach
                                                     <!--end::Roles-->
-                                                    @error('role_id')
-                                                    <span class="text-danger"> {{ $message }}</span>
-                                                    @enderror
+                                                    <div id="role_id-error" class="error-message"></div>
+
                                                 </div>
                                                 <!--end::Input group-->
                                             </div>
@@ -429,13 +401,10 @@
                                             <!--begin::Actions-->
                                             <div class="text-center pt-10">
                                                 <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
-                                                <button type="hidden" class="btn btn-primary" data-kt-users-modal-action="submit" hidden="">
+                                                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                                                     <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
                                                     <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 																	<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                                </button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
                                                 </button>
                                             </div>
                                             <!--end::Actions-->
@@ -484,9 +453,15 @@
                                 <!--begin:: Avatar -->
                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                     <a href="#">
+                                        @if($user->avatar)
                                         <div class="symbol-label">
-                                            <img src="{{asset('images/users/'.$user->avatar)}}" alt="avatar" class="w-100" />
+                                            <img src="{{asset('storage/'.$user->avatar)}}" alt="avatar" class="w-100" />
                                         </div>
+                                        @else
+                                            <div class="symbol-label">
+                                                <img src="{{asset('assets/media/avatars/blank.png')}}" alt="avatar" class="w-100" />
+                                            </div>
+                                        @endif
                                     </a>
                                 </div>
                                 <!--end::Avatar-->
