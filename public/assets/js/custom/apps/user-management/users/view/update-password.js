@@ -1,30 +1,47 @@
 "use strict";
+var user_id = $('meta[name="user_id"]').attr('content');
+var root = window.location.protocol + '//' + window.location.host;
+
+var lang = $('html').attr('lang'); // Get language from HTML lang attribute (e.g., "ar")
+var URL = root + '/' + lang + '/cms/update-password/' + user_id;
+
 var KTUsersUpdatePassword = function () {
     const t = document.getElementById("kt_modal_update_password"),
-        e = t.querySelector("#kt_modal_update_password_form"), n = new bootstrap.Modal(t);
+        e = t.querySelector("#kt_modal_update_password_form"),
+        n = new bootstrap.Modal(t);
+
+    // Setup CSRF token for all AJAX requests
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     return {
         init: function () {
             (() => {
                 var o = FormValidation.formValidation(e, {
                     fields: {
-                        current_password: {validators: {notEmpty: {message: "Current password is required"}}},
+                        current_password: { validators: { notEmpty: { message: "Current password is required" }}},
                         new_password: {
                             validators: {
-                                notEmpty: {message: "The password is required"},
+                                notEmpty: { message: "The password is required" },
                                 callback: {
-                                    message: "Please enter valid password", callback: function (t) {
-                                        if (t.value.length > 0) return validatePassword()
+                                    message: "Please enter a valid password",
+                                    callback: function (t) {
+                                        if (t.value.length > 0) return validatePassword();
                                     }
                                 }
                             }
                         },
                         confirm_password: {
                             validators: {
-                                notEmpty: {message: "The password confirmation is required"},
+                                notEmpty: { message: "The password confirmation is required" },
                                 identical: {
                                     compare: function () {
-                                        return e.querySelector('[name="password"]').value
-                                    }, message: "The password and its confirm are not the same"
+                                        return e.querySelector('[name="password"]').value;
+                                    },
+                                    message: "The password and its confirm are not the same"
                                 }
                             }
                         }
@@ -38,63 +55,113 @@ var KTUsersUpdatePassword = function () {
                         })
                     }
                 });
-                t.querySelector('[data-kt-users-modal-action="close"]').addEventListener("click", (t => {
-                    t.preventDefault(), Swal.fire({
+
+                // Close and Cancel button handlers
+                t.querySelector('[data-kt-users-modal-action="close"]').addEventListener("click", (event) => {
+                    event.preventDefault();
+                    Swal.fire({
                         text: "Are you sure you would like to cancel?",
                         icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
+                        showCancelButton: true,
+                        buttonsStyling: false,
                         confirmButtonText: "Yes, cancel it!",
                         cancelButtonText: "No, return",
-                        customClass: {confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light"}
-                    }).then((function (t) {
-                        t.value ? (e.reset(), n.hide()) : "cancel" === t.dismiss && Swal.fire({
-                            text: "Your form has not been cancelled!.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {confirmButton: "btn btn-primary"}
-                        })
-                    }))
-                })), t.querySelector('[data-kt-users-modal-action="cancel"]').addEventListener("click", (t => {
-                    t.preventDefault(), Swal.fire({
+                        customClass: { confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light" }
+                    }).then((result) => {
+                        if (result.value) {
+                            e.reset();
+                            n.hide();
+                        }
+                    });
+                });
+
+                t.querySelector('[data-kt-users-modal-action="cancel"]').addEventListener("click", (event) => {
+                    event.preventDefault();
+                    Swal.fire({
                         text: "Are you sure you would like to cancel?",
                         icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
+                        showCancelButton: true,
+                        buttonsStyling: false,
                         confirmButtonText: "Yes, cancel it!",
                         cancelButtonText: "No, return",
-                        customClass: {confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light"}
-                    }).then((function (t) {
-                        t.value ? (e.reset(), n.hide()) : "cancel" === t.dismiss && Swal.fire({
-                            text: "Your form has not been cancelled!.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {confirmButton: "btn btn-primary"}
-                        })
-                    }))
-                }));
+                        customClass: { confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light" }
+                    }).then((result) => {
+                        if (result.value) {
+                            e.reset();
+                            n.hide();
+                        }
+                    });
+                });
+
+                // Submit button handler
                 const a = t.querySelector('[data-kt-users-modal-action="submit"]');
-                a.addEventListener("click", (function (t) {
-                    t.preventDefault(), o && o.validate().then((function (t) {
-                        console.log("validated!"), "Valid" == t && (a.setAttribute("data-kt-indicator", "on"), a.disabled = !0, setTimeout((function () {
-                            a.removeAttribute("data-kt-indicator"), a.disabled = !1, Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
-                                buttonsStyling: !1,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {confirmButton: "btn btn-primary"}
-                            }).then((function (t) {
-                                t.isConfirmed && n.hide()
-                            }))
-                        }), 2e3))
-                    }))
-                }))
-            })()
+                a.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    o && o.validate().then((result) => {
+                        if (result === "Valid") {
+                            a.setAttribute("data-kt-indicator", "on");
+                            a.disabled = true;
+
+                            // Perform AJAX request for form submission
+                            $.ajax({
+                                url: URL, // Replace with the correct route
+                                method: 'PUT',
+                                data: $(e).serialize(),
+                                success: function(data) {
+                                    a.removeAttribute("data-kt-indicator");
+                                    a.disabled = false;
+
+                                    Swal.fire({
+                                        text: data.text,
+                                        icon: data.icon,
+                                        buttonsStyling: false,
+                                        confirmButtonText: data.confirmButtonText,
+                                        customClass: { confirmButton: "btn btn-primary" }
+                                    }).then((function (result) {
+                                        if (result.isConfirmed) {
+                                            n.hide(); // Hide the modal
+                                            location.reload(); // Refresh the page or data if needed
+                                        }
+                                    }));
+                                },
+                                error: function(xhr) {
+                                    a.removeAttribute("data-kt-indicator");
+                                    a.disabled = false;
+
+                                    if (xhr.status === 422) {
+                                        let errors = xhr.responseJSON.errors;
+                                        $('.error-message').empty(); // Clear previous error messages
+
+                                        // Display validation errors under each input
+                                        $.each(errors, function(key, error) {
+                                            $('#' + key + '-error').html('<p style="color:red;">' + error[0] + '</p>');
+                                        });
+
+                                        Swal.fire({
+                                            text: "Please correct the errors and try again.",
+                                            icon: "error",
+                                            buttonsStyling: false,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: { confirmButton: "btn btn-primary" }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            text: "An unexpected error occurred. Please try again later.",
+                                            icon: "error",
+                                            buttonsStyling: false,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: { confirmButton: "btn btn-primary" }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            })();
         }
-    }
+    };
 }();
-KTUtil.onDOMContentLoaded((function () {
-    KTUsersUpdatePassword.init()
-}));
+KTUtil.onDOMContentLoaded(function () {
+    KTUsersUpdatePassword.init();
+});
