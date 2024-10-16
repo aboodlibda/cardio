@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use App\Services\ImageUploadService;
+
+
 
 class UserController extends Controller
 {
+    protected ImageUploadService $imageUploadService;
+
+    public function __construct(ImageUploadService $imageUploadService)
+    {
+        $this->imageUploadService = $imageUploadService;
+    }
+
     public function index()
     {
         $users = User::query()->with('role')->get();
@@ -26,8 +37,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request);
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'  => 'required|string|min:3|max:200',
             'email' => 'required|email|unique:users',
             'password'         => ['required',Password::min(8)
@@ -41,25 +51,46 @@ class UserController extends Controller
             'phone_number'  => 'required|numeric',
             'gender'  => 'required|in:male,female',
             'role_id'  => 'required|int|exists:roles,id',
-            'status'  => 'required|in:on',
+            'status'  => 'in:on',
             'avatar'  => 'nullable|image',
           ]);
 
-        $data = $this->getData($request);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $data = $request->only([
+            'name', 'email', 'phone_number', 'user_name', 'gender', 'role_id',
+        ]);
+
+
+        $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['password'] = Hash::make($request->password);
+
+        $avatar = $this->imageUploadService->upload($request, 'avatar', 'images/users');
+        $data['avatar'] = $avatar;
+
         $is_Saved = User::query()->create($data);
 
         if ($is_Saved){
-            notify()->success(trans('dashboard_trans.User created successfully'));
+            return response()->json([
+                'icon' => 'success',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.User created successfully'),
+            ]);
         }else{
-            notify()->error(trans('dashboard_trans.Failed to create user'));
+            return response()->json([
+                'icon' => 'error',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Failed to create user'),
+            ]);
         }
-        return redirect()->back();
     }
 
     public function show($id)
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->with(['role','sessions'])->findOrFail($id);
         $roles = Role::query()->get();
         return view('cms.user.show',compact('user','roles'));
     }
@@ -70,49 +101,59 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->request->add(['id'=>$id]);
+        $request->request->add(['id' => $id]);
 
+        // Validation
         $validator = Validator::make($request->all(), [
-            'name'  => 'required|string|min:3|max:200,name,'.$id,
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password'         => ['current_password:user',Password::min(8)
+            'name' => 'required|string|min:3|max:200,name,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => ['current_password:user', Password::min(8)
                 ->letters()
                 ->mixedCase()
                 ->numbers()
                 ->symbols()
                 ->uncompromised()
             ],
-            'user_name' => 'required|string|min:3|max:15|not_regex:[!@#$%^&*()]|unique:users,user_name,'.$id,
-            'phone_number'  => 'required|numeric',
-            'gender'  => 'required|in:male,female',
-            'role_id'  => 'int|exists:roles,id',
-            'status'  => 'in:on',
-            'avatar'  => 'nullable|image',
+            'user_name' => 'required|string|min:3|max:15|not_regex:[!@#$%^&*()]|unique:users,user_name,' . $id,
+            'phone_number' => 'required|numeric',
+            'gender' => 'required|in:male,female',
+            'role_id' => 'int|exists:roles,id',
+            'status' => 'in:on',
+            'avatar' => 'nullable|image',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $data = $this->getData($request);
+        $user = User::findOrFail($id);
 
-        $is_Updated = User::query()->find($id)->update($data);
+        $data = $request->only([
+            'name', 'email', 'phone_number', 'user_name', 'gender', 'role_id',
+        ]);
 
-        if ($is_Updated){
-//            notify()->success(trans('dashboard_trans.User Updated successfully'));
+        $data['status'] = $request->has('status') ? 'active' : 'inactive';
+
+        $avatar = $this->imageUploadService->upload($request, 'avatar', 'images/users');
+        $data['avatar'] = $avatar;
+
+        $isUpdated = $user->update($data);
+
+        if ($isUpdated) {
             return response()->json([
                 'icon' => 'success',
-                'confirmButtonText'=>'Ok, got it!',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
                 'text' => trans('dashboard_trans.User Updated successfully'),
             ]);
-        }else{
-//            notify()->error(trans('dashboard_trans.Failed to update this user!'));
-            return response()->json(['error' => 'Something went wrong'], 500);
-
+        } else {
+            return response()->json([
+                'icon' => 'error',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Failed to update this user!'),
+            ]);
         }
-//        return redirect()->back();
-
     }
+
 
     public function destroy($id)
     {
@@ -135,23 +176,6 @@ class UserController extends Controller
     }
 
 
-    public function getData(Request $request)
-    {
-        $data = $request->only([
-            'name', 'email', 'phone_number', 'user_name', 'gender', 'role_id', 'avatar'
-        ]);
-
-
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
-
-        if ($request->hasFile('avatar')) {
-            $image = $request->file('avatar');
-            $imageName = time() . '_' . $data['name'] . '.' . $image->getClientOriginalExtension();
-            $image->move('images/users', $imageName);
-            $data['avatar'] = $imageName;
-        }
-        return $data;
-    }
 
     public function updateEmail(Request $request,$id){
 
@@ -165,18 +189,23 @@ class UserController extends Controller
         if ($is_Updated){
             return response()->json([
                 'icon' => 'success',
-                'confirmButtonText'=>'Ok, got it!',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
                 'text' => trans('dashboard_trans.Email Updated Successfully'),
             ]);
         }else{
-            notify()->error(trans('dashboard_trans.Failed to update email'));
+            return response()->json([
+                'icon' => 'error',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Failed to update email'),
+            ]);
         }
-        return redirect()->back();
     }
+
+
     public function updatePassword(Request $request,$id){
 
         $request->request->add(['id'=>$id]);
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'password'         => ['required',Password::min(8)
                 ->letters()
                 ->mixedCase()
@@ -191,15 +220,12 @@ class UserController extends Controller
                 ->symbols()
                 ->uncompromised()
             ],
-            'confirm_password'         => ['required','confirmed:password',Password::min(8)
-                ->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()
-            ],
+            'confirm_password'         => ['required','confirmed:password',],
 
         ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $is_Updated =  User::find($id);
 
@@ -209,20 +235,28 @@ class UserController extends Controller
         if ($is_Updated){
             return response()->json([
                 'icon' => 'success',
-                'confirmButtonText'=>'Ok, got it!',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
                 'text' => trans('dashboard_trans.Password Updated Successfully'),
             ]);
         }else{
             return response()->json([
                 'icon' => 'error',
-                'confirmButtonText'=>'Ok, got it!',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
                 'text' => trans('dashboard_trans.Failed to update password'),
             ]);
         }
     }
+
     public function updateRole(Request $request,$id){
 
         $request->request->add(['id'=>$id]);
+        $validator = Validator::make($request->all(), [
+            'role_id'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $is_Updated =  User::find($id);
 
@@ -230,10 +264,18 @@ class UserController extends Controller
             'role_id' => $request->role_id,
         ]);
         if ($is_Updated){
-            notify()->success(trans('dashboard_trans.Email Updated Successfully'));
+            return response()->json([
+                'icon' => 'success',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Role updated successfully'),
+            ]);
         }else{
-            notify()->error(trans('dashboard_trans.Failed to update email'));
+            return response()->json([
+                'icon' => 'error',
+                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Failed to updated role!'),
+            ]);
         }
-        return redirect()->back();
+
     }
 }
