@@ -28,16 +28,27 @@ class LoginController extends Controller
         if (Auth::guard('user')->attempt($credentials)) {
             $user = Auth::guard('user')->user();
             if ($user->status == 'active') {
-                notify()->success(trans('dashboard_trans.Sign in successfully'));
-                return redirect()->route('dashboard');
-            } else {
-                notify()->error(trans('dashboard_trans.This User InActive'));
-                return redirect()->back()->withInput();
-            }
+                return  response()->json([
+                    'icon' => 'success',
+                    'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                    'text' => trans('dashboard_trans.Sign in successfully'),
 
+                ]);
+            }else{
+                return  response()->json([
+                    'icon' => 'warning',
+                    'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                    'text' => trans('dashboard_trans.This User InActive'),
+
+                ]);
+            }
         }else{
-            notify()->error(trans('dashboard_trans.Error Credentials!'));
-            return redirect()->back()->withInput();
+            return  response()->json([
+                'icon' => 'error',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
+                'text' => trans('dashboard_trans.Error Credentials!'),
+
+            ]);
         }
 
     }
