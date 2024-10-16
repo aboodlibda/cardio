@@ -332,7 +332,7 @@ return [
     'Published'=>'تم النشر',
     'Draft'=>'مسودة',
     'Scheduled'=>'مجدول',
-    'Inactive'=>'غير نشط',
+    'Inactive'=>'غير فعال',
     'Set the product status'=>'قم بتعيين حالة المنتج',
     'Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted'=>'قم بتعيين صورة مصغرة للمنتج. يتم قبول ملفات الصور *.png و*.jpg و*.jpeg فقط',
     'No data available. Sales data will begin capturing once product has been published'=>'لا توجد بيانات متاحة. سيتم البدء في تسجيل بيانات المبيعات بمجرد نشر المنتج',
@@ -550,6 +550,56 @@ return [
     'Failed to update email'=>'لم يتم تحديث الايميل',
     'Password Updated Successfully'=>'تم تحديث كلمة المرور بنجاح',
     'Failed to update password'=>'لم يتم تحديث كلمة المرور',
+    'Update Password'=>'تحديث كلمة المرور',
+    'Current Password'=>'كلمة المرور الحالية',
+    'New Password'=>'كلمة مرور جديدة',
+    'Use 8 or more characters with a mix of letters, numbers & symbols'=>'استخدم 8 أحرف أو أكثر مع مزيج من الحروف والأرقام والرموز',
+    'Confirm New Password'=>'تأكيد كلمة المرور الجديدة',
+    'Please note that a valid email address is required to complete the email verification'=>'يرجى ملاحظة أنه مطلوب عنوان بريد إلكتروني صالح لاستكمال التحقق من البريد الإلكتروني',
+    'Update User Role'=>'تحديث دور المستخدم',
+    'Please note that reducing a user role rank, that user will lose all privileges that was assigned to the previous role'=>'يرجى ملاحظة أنه عند خفض رتبة دور المستخدم، سيفقد هذا المستخدم جميع الامتيازات التي تم تعيينها للدور السابق',
+    'Select a user role'=>'حدد دور المستخدم',
+    'Ok, got it!'=>'حسناً، فهمت !',
+    'Login Sessions'=>'جلسات تسجيل الدخول',
+    'Sign out all sessions'=>'تسجيل خروج من كافة الجلسات',
+    'Location'=>'الموقع',
+    'Device'=>'الجهاز',
+    'Time'=>'الوقت',
+    'Apply'=>'تطبيق',
+    'Reset'=>'ضبط',
+    'Discard'=>'تجاهل',
+    'Search Product'=>'بحث عن منتج',
+    'Failed to create product'=>'لم يتم انشاء المنتج',
+    'Category created successfully'=>'تم انشاء الفئة بنحاح',
+    'Failed to create category!'=>'لم يتم انشاء الفئة!',
+    'Category updated successfully'=>'تم تحديث الفئة بنجاح',
+    'Failed to update category!'=>'لم يتم تحديث الفئة!',
+    'Category Deleted Successfully'=>'تم حذف الفئة بنجاح',
+    'Failed to delete this category!'=>'لم يتم حذف هذه الفئة!',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
