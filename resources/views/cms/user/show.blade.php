@@ -16,7 +16,8 @@
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.User Management')}}</li>
-            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Users')}}</li>
+            <li class="breadcrumb-item text-muted">
+                <a href="{{ route('users.index') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Users')}}</a></li>
             <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.View User')}}</li>
         </ul>
         <!--end::Breadcrumb-->
@@ -179,9 +180,16 @@
                                         <!--begin::User Info-->
                                         <div class="d-flex flex-center flex-column py-5">
                                             <!--begin::Avatar-->
-                                            <div class="symbol symbol-100px symbol-circle mb-7">
-                                                <img src="{{asset('images/users/'.$user->avatar)}}" alt="image" />
-                                            </div>
+                                            @if(isset($user->avatar))
+                                                <div class="symbol symbol-100px symbol-circle mb-7">
+                                                    <img src="{{asset('storage/'.$user->avatar)}}" alt="image" />
+                                                </div>
+                                            @else
+                                                <div class="symbol symbol-100px symbol-circle mb-7">
+                                                    <img src="{{asset('assets/media/svg/avatars/blank.svg')}}" alt="image" />
+                                                </div>
+                                            @endif
+
                                             <!--end::Avatar-->
                                             <!--begin::Name-->
                                             <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-3">{{$user->name}}</a>
@@ -411,7 +419,7 @@
                                 <div class="card-header border-0">
                                     <!--begin::Card title-->
                                     <div class="card-title">
-                                        <h2>Login Sessions</h2>
+                                        <h2>{{trans('dashboard_trans.Login Sessions')}}</h2>
                                     </div>
                                     <!--end::Card title-->
                                     <!--begin::Card toolbar-->
@@ -421,7 +429,7 @@
                                             <i class="ki-duotone ki-entrance-right fs-3">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
-                                            </i>Sign out all sessions</button>
+                                            </i>{{trans('dashboard_trans.Sign out all sessions')}}</button>
                                         <!--end::Filter-->
                                     </div>
                                     <!--end::Card toolbar-->
@@ -435,37 +443,25 @@
                                         <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
                                             <thead class="border-bottom border-gray-200 fs-7 fw-bold">
                                             <tr class="text-start text-muted text-uppercase gs-0">
-                                                <th class="min-w-100px">Location</th>
-                                                <th>Device</th>
-                                                <th>IP Address</th>
-                                                <th class="min-w-125px">Time</th>
-                                                <th class="min-w-70px">Actions</th>
+                                                <th class="min-w-100px">#</th>
+                                                <th class="min-w-100px">{{trans('dashboard_trans.Location')}}</th>
+                                                <th>{{trans('dashboard_trans.Device')}}</th>
+                                                <th>{{trans('dashboard_trans.IP Address')}}</th>
+                                                <th class="min-w-125px">{{trans('dashboard_trans.Time')}}</th>
+                                                <th class="min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                                             </tr>
                                             </thead>
                                             <tbody class="fs-6 fw-semibold text-gray-600">
+                                            @foreach($user->sessions as $session)
                                             <tr>
-                                                <td>Australia</td>
-                                                <td>Chome - Windows</td>
-                                                <td>207.28.31.260</td>
-                                                <td>23 seconds ago</td>
+                                                <td>{{$session->user_id}}</td>
+                                                <td>Location</td>
+                                                <td>{{$session->user_agent}}</td>
+                                                <td>{{$session->ip_address}}</td>
+                                                <td>{{$session->last_activity}}</td>
                                                 <td>Current session</td>
                                             </tr>
-                                            <tr>
-                                                <td>Australia</td>
-                                                <td>Safari - iOS</td>
-                                                <td>207.10.30.79</td>
-                                                <td>3 days ago</td>
-                                                <td>
-                                                    <a href="#" data-kt-users-sign-out="single_user">Sign out</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Australia</td>
-                                                <td>Chrome - Windows</td>
-                                                <td>207.38.44.70</td>
-                                                <td>last week</td>
-                                                <td>Expired</td>
-                                            </tr>
+                                            @endforeach
                                             </tbody>
                                         </table>
                                         <!--end::Table-->
@@ -654,6 +650,7 @@
             </div>
             <!--end::Layout-->
             <!--begin::Modals-->
+
             <!--begin::Modal - Update user details-->
             <div class="modal fade" id="kt_modal_update_details" tabindex="-1" aria-hidden="true">
                 <!--begin::Modal dialog-->
@@ -714,7 +711,7 @@
                                                 <!--begin::Image input-->
                                                 <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
                                                     <!--begin::Preview existing avatar-->
-                                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{asset('images/users/'.$user->avatar)}}"></div>
+                                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{asset('storage/'.$user->avatar)}}"></div>
                                                     <!--end::Preview existing avatar-->
                                                     <!--begin::Edit-->
                                                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -723,7 +720,7 @@
                                                             <span class="path2"></span>
                                                         </i>
                                                         <!--begin::Inputs-->
-                                                        <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                                        <input type="file" name="avatar" id="avatar" accept=".png, .jpg, .jpeg" />
                                                         <input type="hidden" name="avatar_remove" />
                                                         <!--end::Inputs-->
                                                     </label>
@@ -924,7 +921,7 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_email_form" method="POST" class="form" action="{{ route('update-email',$user->id) }}" enctype="multipart/form-data">
+                        <form id="kt_modal_update_email_form" method="POST" class="form" action="#" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
                             <!--begin::Notice-->
@@ -940,8 +937,8 @@
                                 <!--begin::Wrapper-->
                                 <div class="d-flex flex-stack flex-grow-1">
                                     <!--begin::Content-->
-                                    <div class="fw-semibold">
-                                        <div class="fs-6 text-gray-700">Please note that a valid email address is required to complete the email verification.</div>
+                                    <div class="fw-semibold">{{trans('dashboard_trans.Please note that a valid email address is required to complete the email verification')}}
+                                        <div class="fs-6 text-gray-700">.</div>
                                     </div>
                                     <!--end::Content-->
                                 </div>
@@ -967,9 +964,9 @@
                             <!--begin::Actions-->
                             <div class="text-center pt-15">
                                 <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
-                                <button type="submit" class="btn btn-primary" >
+                                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit" >
                                     <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
-                                    <span class="indicator-progress">Please wait...
+                                    <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
@@ -993,7 +990,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bold">Update Password</h2>
+                        <h2 class="fw-bold">{{trans('dashboard_trans.Update Password')}}</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -1008,13 +1005,15 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_password_form" class="form" method="POST" action="#">
+                        <form id="kt_modal_update_password_form" class="form" method="POST" action="">
                             @method('PUT')
                             @csrf
                             <!--begin::Input group=-->
                             <div class="fv-row mb-10">
-                                <label class="required form-label fs-6 mb-2">Current Password</label>
-                                <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="current_password" autocomplete="off" />
+                                <label class="required form-label fs-6 mb-2">{{trans('dashboard_trans.Current Password')}}</label>
+                                <input class="form-control form-control-lg form-control-solid" id="current_password" type="password" placeholder="" name="current_password" autocomplete="off" />
+                                <div id="current_password-error" class="error-message"></div>
+
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Input group-->
@@ -1022,7 +1021,7 @@
                                 <!--begin::Wrapper-->
                                 <div class="mb-1">
                                     <!--begin::Label-->
-                                    <label class="form-label fw-semibold fs-6 mb-2">New Password</label>
+                                    <label class="form-label fw-semibold fs-6 mb-2">{{trans('dashboard_trans.New Password')}}</label>
                                     <!--end::Label-->
                                     <!--begin::Input wrapper-->
                                     <div class="position-relative mb-3">
@@ -1053,23 +1052,25 @@
                                 </div>
                                 <!--end::Wrapper-->
                                 <!--begin::Hint-->
-                                <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
+                                <div class="text-muted">{{trans('dashboard_trans.Use 8 or more characters with a mix of letters, numbers & symbols')}}.</div>
                                 <!--end::Hint-->
+                                <div id="password-error" class="error-message"></div>
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Input group=-->
                             <div class="fv-row mb-10">
-                                <label class="form-label fw-semibold fs-6 mb-2">Confirm New Password</label>
+                                <label class="form-label fw-semibold fs-6 mb-2">{{trans('dashboard_trans.Confirm New Password')}}</label>
                                 <input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="confirm_password" autocomplete="off" />
+                                <div id="confirm_password-error" class="error-message"></div>
 
                             </div>
                             <!--end::Input group=-->
                             <!--begin::Actions-->
                             <div class="text-center pt-15">
-                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
                                 <button type="submit" class="btn btn-primary"  data-kt-users-modal-action="submit">
-                                    <span class="indicator-label" >Submit</span>
-                                    <span class="indicator-progress">Please wait...
+                                    <span class="indicator-label" >{{trans('dashboard_trans.Submit')}}</span>
+                                    <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
@@ -1085,7 +1086,7 @@
         </div>
         <!--end::Modal - Update password-->
         <!--begin::Modal - Update role-->
-        <div class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
+        <div class="modal fade"  id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
             <!--begin::Modal dialog-->
             <div class="modal-dialog modal-dialog-centered mw-650px">
                 <!--begin::Modal content-->
@@ -1093,7 +1094,7 @@
                     <!--begin::Modal header-->
                     <div class="modal-header">
                         <!--begin::Modal title-->
-                        <h2 class="fw-bold">Update User Role</h2>
+                        <h2 class="fw-bold">{{trans('dashboard_trans.Update User Role')}}</h2>
                         <!--end::Modal title-->
                         <!--begin::Close-->
                         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -1108,7 +1109,9 @@
                     <!--begin::Modal body-->
                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                         <!--begin::Form-->
-                        <form id="kt_modal_update_role_form" class="form" action="#">
+                        <form id="kt_modal_update_role_form" class="form" action="#" method="POST">
+                            @method('PUT')
+                            @csrf
                             <!--begin::Notice-->
                             <!--begin::Notice-->
                             <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
@@ -1123,7 +1126,7 @@
                                 <div class="d-flex flex-stack flex-grow-1">
                                     <!--begin::Content-->
                                     <div class="fw-semibold">
-                                        <div class="fs-6 text-gray-700">Please note that reducing a user role rank, that user will lose all priviledges that was assigned to the previous role.</div>
+                                        <div class="fs-6 text-gray-700">{{trans('dashboard_trans.Please note that reducing a user role rank, that user will lose all privileges that was assigned to the previous role')}}.</div>
                                     </div>
                                     <!--end::Content-->
                                 </div>
@@ -1135,20 +1138,21 @@
                             <div class="fv-row mb-7">
                                 <!--begin::Label-->
                                 <label class="fs-6 fw-semibold form-label mb-5">
-                                    <span class="required">Select a user role</span>
+                                    <span class="required">{{trans('dashboard_trans.Select a user role')}}</span>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input row-->
+                                @foreach($roles as $role)
                                 <div class="d-flex">
                                     <!--begin::Radio-->
                                     <div class="form-check form-check-custom form-check-solid">
                                         <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio" value="0" id="kt_modal_update_role_option_0" checked='checked' />
+                                        <input class="form-check-input me-3" name="role_id" value="{{$user->role_id}}" type="radio"  id="role_id" @checked($user->role_id == $role->id) />
                                         <!--end::Input-->
                                         <!--begin::Label-->
                                         <label class="form-check-label" for="kt_modal_update_role_option_0">
-                                            <div class="fw-bold text-gray-800">Administrator</div>
-                                            <div class="text-gray-600">Best for business owners and company administrators</div>
+                                            <div class="fw-bold text-gray-800">{{$role->name}}</div>
+                                            <div class="text-gray-600">{{$role->description}}</div>
                                         </label>
                                         <!--end::Label-->
                                     </div>
@@ -1156,85 +1160,15 @@
                                 </div>
                                 <!--end::Input row-->
                                 <div class='separator separator-dashed my-5'></div>
-                                <!--begin::Input row-->
-                                <div class="d-flex">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio" value="1" id="kt_modal_update_role_option_1" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_1">
-                                            <div class="fw-bold text-gray-800">Developer</div>
-                                            <div class="text-gray-600">Best for developers or people primarily using the API</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-                                <div class='separator separator-dashed my-5'></div>
-                                <!--begin::Input row-->
-                                <div class="d-flex">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio" value="2" id="kt_modal_update_role_option_2" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_2">
-                                            <div class="fw-bold text-gray-800">Analyst</div>
-                                            <div class="text-gray-600">Best for people who need full access to analytics data, but don't need to update business settings</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-                                <div class='separator separator-dashed my-5'></div>
-                                <!--begin::Input row-->
-                                <div class="d-flex">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio" value="3" id="kt_modal_update_role_option_3" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_3">
-                                            <div class="fw-bold text-gray-800">Support</div>
-                                            <div class="text-gray-600">Best for employees who regularly refund payments and respond to disputes</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
-                                <div class='separator separator-dashed my-5'></div>
-                                <!--begin::Input row-->
-                                <div class="d-flex">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" name="user_role" type="radio" value="4" id="kt_modal_update_role_option_4" />
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_4">
-                                            <div class="fw-bold text-gray-800">Trial</div>
-                                            <div class="text-gray-600">Best for people who need to preview content data, but don't need to make any updates</div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
-                                </div>
-                                <!--end::Input row-->
+                                @endforeach
                             </div>
                             <!--end::Input group-->
                             <!--begin::Actions-->
                             <div class="text-center pt-15">
-                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">{{trans('dashboard_trans.Close')}}</button>
                                 <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                    <span class="indicator-label">Submit</span>
-                                    <span class="indicator-progress">Please wait...
+                                    <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
+                                    <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
                             </div>
