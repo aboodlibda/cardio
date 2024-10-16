@@ -9,7 +9,7 @@
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
             <li class="breadcrumb-item text-muted"><a class="text-muted text-hover-primary" href="{{ route('products.index') }}">{{trans('dashboard_trans.Products')}}</a></li>
@@ -23,7 +23,8 @@
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
             <!--begin::Form-->
-            <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/products.html">
+            <form id="kt_ecommerce_add_product_form" action="{{route('products.store')}}" method="POST" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="#" >
+               @csrf
                 <!--begin::Aside column-->
                 <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                     <!--begin::Thumbnail settings-->
@@ -80,6 +81,9 @@
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted')}}</div>
                             <!--end::Description-->
+                            @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Card body-->
                     </div>
@@ -107,8 +111,8 @@
                                 <option disabled selected hidden>{{trans('dashboard_trans.Status')}}</option>
                                 <option value="published" selected="selected">{{trans('dashboard_trans.Published')}}</option>
                                 <option value="draft">{{trans('dashboard_trans.Draft')}}</option>
-                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
-                                <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
+{{--                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>--}}
+                                <option value="unpublished">{{trans('dashboard_trans.Unpublished')}}</option>
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
@@ -136,24 +140,17 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body pt-0">
+                        <div class="card-body pt-0" data-select2-id="select2-data-122-hf29">
                             <!--begin::Input group-->
                             <!--begin::Label-->
                             <label class="form-label">{{trans('dashboard_trans.Categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
-                            <select class="form-select mb-2" data-control="select2" data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple">
+                            <select class="form-select mb-2 select2-hidden-accessible" data-control="select2" data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  tabindex="-1" aria-hidden="true" >
                                 <option></option>
-                                <option value="Computers">Computers</option>
-                                <option value="Watches">Watches</option>
-                                <option value="Headphones">Headphones</option>
-                                <option value="Footwear">Footwear</option>
-                                <option value="Cameras">Cameras</option>
-                                <option value="Shirts">Shirts</option>
-                                <option value="Household">Household</option>
-                                <option value="Handbags">Handbags</option>
-                                <option value="Wines">Wines</option>
-                                <option value="Sandals">Sandals</option>
+                                @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
@@ -161,7 +158,7 @@
                             <!--end::Description-->
                             <!--end::Input group-->
                             <!--begin::Button-->
-                            <a href="../../demo3/dist/apps/ecommerce/catalog/add-category.html" class="btn btn-light-primary btn-sm mb-10">
+                            <a href="#" class="btn btn-light-primary btn-sm mb-10">
                                 <i class="ki-duotone ki-plus fs-2"></i>{{trans('dashboard_trans.Create new category')}}</a>
                             <!--end::Button-->
                             <!--begin::Input group-->
@@ -231,32 +228,39 @@
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
-                                    <div class="card-body pt-0">
+                                    <div class="row card-body pt-0">
                                         <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
+                                        @foreach(config('lang') as $key => $lang)
+                                        <div class="col-md-6 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{trans('dashboard_trans.Product Name')}}</label>
+                                            <label class="required form-label">{{trans('dashboard_trans.Product Name')}} ({{$lang}})</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="product_name" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="" />
+                                            <input type="text" name="title[{{$key}}]" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('title.'.$key)}}" />
                                             <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.A product name is required and recommended to be unique')}}.</div>
-                                            <!--end::Description-->
                                         </div>
+                                        @endforeach
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7 mb-10">{{trans('dashboard_trans.A product name is required and recommended to be unique')}}.</div>
+                                        <!--end::Description-->
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div>
-                                            <!--begin::Label-->
-                                            <label class="form-label">{{trans('dashboard_trans.Description')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Editor-->
-                                            <div id="kt_ecommerce_add_product_description" name="description" class="min-h-200px mb-2"></div>
-                                            <!--end::Editor-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Set a description to the product for better visibility')}}.</div>
-                                            <!--end::Description-->
-                                        </div>
+                                        @foreach(config('lang') as $key => $lang)
+                                            <div class="fv-row mb-5">
+                                                <!--begin::Label-->
+                                                <label class="form-label">{{trans('dashboard_trans.Description')}} ({{$lang}})</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <div>
+                                                    <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{old('description.'.$key)}}</textarea>
+                                                </div>
+                                                <!--end::Editor-->
+                                                <div id="description.{{$key}}-error" class="error-message"></div>
+                                            </div>
+                                        @endforeach
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7 mb-10">{{trans('dashboard_trans.Set a description to the for better visibility')}}.</div>
+                                        <!--end::Description-->
                                         <!--end::Input group-->
                                     </div>
                                     <!--end::Card header-->
@@ -609,12 +613,6 @@
                                     <!--end::Card header-->
                                 </div>
                                 <!--end::Variations-->
-                                <!--begin::Shipping-->
-
-                                <!--end::Shipping-->
-                                <!--begin::Meta options-->
-
-                                <!--end::Meta options-->
                             </div>
                         </div>
                         <!--end::Tab pane-->
@@ -622,12 +620,12 @@
                     <!--end::Tab content-->
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{route('products.index')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
+                        <a href="{{ route('products.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
                             <span class="indicator-label">{{trans('dashboard_trans.Create')}}</span>
-                            <span class="indicator-progress">Please wait...
+                            <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
                         <!--end::Button-->
@@ -646,8 +644,11 @@
     <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
     <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-product.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
+    <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
+    <script src="{{asset('assets/js/custom/widgets.js')}}"></script>
     <!--end::Custom Javascript-->
 
 @endsection
