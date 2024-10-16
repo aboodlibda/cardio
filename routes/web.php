@@ -14,30 +14,28 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
-
-//Route::get('/', function () {
-//    return view('cms.dashboard');
-//})->name('dashboard');
-
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
     /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
     Route::prefix('cms')->middleware(['auth:user,customer'])->group(function (){
         Route::view('/','cms.dashboard')->name('dashboard');
+
         Route::resources([
-            'products' => ProductController::class,
-            'categories' => CategoryController::class,
-            'tags' => TagController::class,
-            'coupons' => CouponController::class,
-            'users' => UserController::class,
-            'roles' => RoleController::class,
-            'orders' => OrderController::class,
+            'products'    => ProductController::class,
+            'categories'  => CategoryController::class,
+            'tags'        => TagController::class,
+            'coupons'     => CouponController::class,
+            'users'       => UserController::class,
+            'roles'       => RoleController::class,
+            'orders'      => OrderController::class,
             'permissions' => PermissionController::class,
-            'customers' => CustomerController::class,
+            'customers'   => CustomerController::class,
         ]);
+
 
         Route::put('update-email/{id}',[UserController::class,'updateEmail'])->name('update-email');
         Route::put('update-password/{id}',[UserController::class,'updatePassword'])->name('update-password');
+        Route::put('update-role/{id}',[UserController::class,'updateRole'])->name('update-role');
 
 
         Route::view('show-order','cms.order.show')->name('show-order');
