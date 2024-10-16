@@ -19,7 +19,9 @@
                 <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Categories')}}</li>
-            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.All Categories')}}</li>
+            <li class="breadcrumb-item text-muted">
+                <a href="{{ route('categories.index') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.All Categories')}}</a>
+            </li>
             <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.Edit Category')}}</li>
         </ul>
         <!--end::Breadcrumb-->
@@ -29,7 +31,9 @@
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
-            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/categories.html">
+            <form id="kt_ecommerce_edit_category_form" class="form d-flex flex-column flex-lg-row" method="POST" action="{{ route('categories.update',$category->id) }}" data-kt-redirect="{{route('categories.edit',$category->id)}}">
+               @csrf
+                @method('PUT')
                 <!--begin::Aside column-->
                 <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                     <!--begin::Thumbnail settings-->
@@ -52,7 +56,7 @@
                             <!--begin::Image input-->
                             <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3" data-kt-image-input="true">
                                 <!--begin::Preview existing avatar-->
-                                <div class="image-input-wrapper w-150px h-150px"></div>
+                                <div class="image-input-wrapper w-150px h-150px" style="background-image: url({{asset('storage/'.$category->image)}}"></div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
@@ -63,7 +67,7 @@
                                     </i>
                                     <!--end::Icon-->
                                     <!--begin::Inputs-->
-                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
@@ -104,7 +108,7 @@
                             <!--end::Card title-->
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
-                                <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_category_status"></div>
+                                <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_edit_category_status"></div>
                             </div>
                             <!--begin::Card toolbar-->
                         </div>
@@ -112,22 +116,15 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Select2-->
-                            <select class="form-select mb-2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_category_status_select">
-                                <option disabled selected hidden="">{{trans('dashboard_trans.Select an option')}}</option>
-                                <option value="published" selected="selected">{{trans('dashboard_trans.Published')}}</option>
-                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
-                                <option value="unpublished">{{trans('dashboard_trans.Unpublished')}}</option>
+                            <select class="form-select mb-2" name="status"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_edit_category_status_select">
+                                <option disabled selected hidden>{{trans('dashboard_trans.Select an option')}}</option>
+                                <option value="active" @selected($category->status == 'active')>{{trans('dashboard_trans.Active')}}</option>
+                                <option value="inactive" @selected($category->status == 'inactive')>{{trans('dashboard_trans.Inactive')}}</option>
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
                             <!--end::Description-->
-                            <!--begin::Datepicker-->
-                            <div class="d-none mt-10">
-                                <label for="kt_ecommerce_add_category_status_datepicker" class="form-label">Select publishing date and time</label>
-                                <input class="form-control" id="kt_ecommerce_add_category_status_datepicker" placeholder="Pick date & time" />
-                            </div>
-                            <!--end::Datepicker-->
                         </div>
                         <!--end::Card body-->
                     </div>
@@ -149,32 +146,40 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body pt-0">
+                        <div class="row card-body pt-0">
                             <!--begin::Input group-->
-                            <div class="mb-10 fv-row">
+                            @foreach(config('lang') as $key => $lang)
+                            <div class="col-md-6 mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">{{trans('dashboard_trans.Category Name')}}</label>
+                                <label class="required form-label">{{trans('dashboard_trans.Category Name')}} ({{$lang}})</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="text" name="category_name" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Category Name')}}" value="" />
+                                <input type="text" name="name[{{$key}}]" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Category Name')}}" value="{{$category->getTranslation('name',$key)}}" />
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <div class="text-muted fs-7">{{trans('dashboard_trans.A category name is required and recommended to be unique')}}.</div>
                                 <!--end::Description-->
                             </div>
+                            @endforeach
                             <!--end::Input group-->
                             <!--begin::Input group-->
-                            <div>
-                                <!--begin::Label-->
-                                <label class="form-label">{{trans('dashboard_trans.Description')}}</label>
-                                <!--end::Label-->
-                                <!--begin::Editor-->
-                                <div id="kt_ecommerce_add_category_description" name="description" class="min-h-200px mb-2"></div>
-                                <!--end::Editor-->
-                                <!--begin::Description-->
-                                <div class="text-muted fs-7">{{trans('dashboard_trans.Set a description to the for better visibility')}}.</div>
-                                <!--end::Description-->
-                            </div>
+                            @foreach(config('lang') as $key => $lang)
+                                <div class="mb-10 fv-row">
+                                    <!--begin::Label-->
+                                    <label class="form-label">{{trans('dashboard_trans.Description')}} ({{$lang}})</label>
+                                    <!--end::Label-->
+                                    <!--begin::Editor-->
+                                    <div>
+                                        <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{$category->getTranslation('description',$key)}}</textarea>
+                                    </div>
+                                    <!--end::Editor-->
+                                    <!--begin::Description-->
+                                    <div class="text-muted fs-7">{{trans('dashboard_trans.Set a description to the for better visibility')}}.</div>
+                                    <!--end::Description-->
+                                    <div id="description.{{$key}}-error" class="error-message"></div>
+
+                                </div>
+                            @endforeach
                             <!--end::Input group-->
                         </div>
                         <!--end::Card header-->
@@ -188,11 +193,11 @@
                     <!--end::Automation-->
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{ route('categories.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
+                        <a href="{{ route('categories.index') }}" id="kt_ecommerce_edit_category_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
-                        <button type="submit" id="kt_ecommerce_add_category_submit" class="btn btn-primary">
-                            <span class="indicator-label">{{trans('dashboard_trans.Create')}}</span>
+                        <button type="submit" id="kt_ecommerce_edit_category_submit" class="btn btn-primary">
+                            <span class="indicator-label">{{trans('dashboard_trans.Save Edit')}}</span>
                             <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                         </button>
@@ -208,6 +213,6 @@
 @endsection
 @section('script')
     <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-category.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/edit-category.js')}}"></script>
 
 @endsection
