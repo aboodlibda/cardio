@@ -29,7 +29,8 @@
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
-            <form id="kt_ecommerce_add_category_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/categories.html">
+            <form id="kt_ecommerce_add_category_form" action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('categories.create')}}">
+              @csrf
                 <!--begin::Aside column-->
                 <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
                     <!--begin::Thumbnail settings-->
@@ -63,7 +64,7 @@
                                     </i>
                                     <!--end::Icon-->
                                     <!--begin::Inputs-->
-                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                    <input type="file" name="image" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
@@ -112,22 +113,17 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Select2-->
-                            <select class="form-select mb-2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_category_status_select">
-                                <option disabled selected hidden="">{{trans('dashboard_trans.Select an option')}}</option>
-                                <option value="published" selected="selected">{{trans('dashboard_trans.Published')}}</option>
-                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
-                                <option value="unpublished">{{trans('dashboard_trans.Unpublished')}}</option>
+                            <select class="form-select mb-2" name="status"   data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_category_status_select">
+                                <option disabled selected hidden=>{{trans('dashboard_trans.Select an option')}}</option>
+                                <option value="active">{{trans('dashboard_trans.Active')}}</option>
+                                <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
                             <!--end::Description-->
-                            <!--begin::Datepicker-->
-                            <div class="d-none mt-10">
-                                <label for="kt_ecommerce_add_category_status_datepicker" class="form-label">Select publishing date and time</label>
-                                <input class="form-control" id="kt_ecommerce_add_category_status_datepicker" placeholder="Pick date & time" />
-                            </div>
-                            <!--end::Datepicker-->
+                            <div id="status-error" class="error-message"></div>
+
                         </div>
                         <!--end::Card body-->
                     </div>
@@ -149,32 +145,41 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body pt-0">
+                        <div class="row card-body pt-0">
+                            @foreach(config('lang') as $key => $lang)
                             <!--begin::Input group-->
-                            <div class="mb-10 fv-row">
+                            <div class="col-md-6 mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="required form-label">{{trans('dashboard_trans.Category Name')}}</label>
+                                <label class="required form-label">{{trans('dashboard_trans.Category Name')}} ({{$lang}})</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="text" name="category_name" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Category Name')}}" value="" />
+                                <input type="text"   name="name[{{$key}}]" value="{{old('name.'.$key)}}" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Category Name')}}"  />
                                 <!--end::Input-->
                                 <!--begin::Description-->
                                 <div class="text-muted fs-7">{{trans('dashboard_trans.A category name is required and recommended to be unique')}}.</div>
                                 <!--end::Description-->
+                                <div id="name.{{$key}}-error" class="error-message"></div>
                             </div>
+                            @endforeach
                             <!--end::Input group-->
                             <!--begin::Input group-->
-                            <div>
+                                @foreach(config('lang') as $key => $lang)
+                            <div class="mb-10 fv-row">
                                 <!--begin::Label-->
-                                <label class="form-label">{{trans('dashboard_trans.Description')}}</label>
+                                <label class="form-label">{{trans('dashboard_trans.Description')}} ({{$lang}})</label>
                                 <!--end::Label-->
                                 <!--begin::Editor-->
-                                <div id="kt_ecommerce_add_category_description" name="description" class="min-h-200px mb-2"></div>
+                                <div>
+                                    <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{old('description.'.$key)}}</textarea>
+                                </div>
                                 <!--end::Editor-->
                                 <!--begin::Description-->
                                 <div class="text-muted fs-7">{{trans('dashboard_trans.Set a description to the for better visibility')}}.</div>
                                 <!--end::Description-->
+                                <div id="description.{{$key}}-error" class="error-message"></div>
+
                             </div>
+                                @endforeach
                             <!--end::Input group-->
                         </div>
                         <!--end::Card header-->
