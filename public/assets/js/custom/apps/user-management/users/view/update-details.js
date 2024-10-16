@@ -1,12 +1,9 @@
 "use strict";
 var user_id = $('meta[name="user_id"]').attr('content');
 var root = window.location.protocol + '//' + window.location.host;
-
 var lang = $('html').attr('lang'); // Get language from HTML lang attribute (e.g., "ar")
 var baseURL = window.location.protocol + '//' + window.location.host + '/' + lang + '/cms/users/' + user_id;
 
-
-// alert("url: " + GET_USERS_URL);
 var KTUsersUpdateDetails = function () {
     const t = document.getElementById("kt_modal_update_details"),
         e = t.querySelector("#kt_modal_update_user_form"),
@@ -21,8 +18,8 @@ var KTUsersUpdateDetails = function () {
                     Swal.fire({
                         text: "Are you sure you would like to cancel?",
                         icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
+                        showCancelButton: true,
+                        buttonsStyling: false,
                         confirmButtonText: "Yes, cancel it!",
                         cancelButtonText: "No, return",
                         customClass: { confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light" }
@@ -34,34 +31,7 @@ var KTUsersUpdateDetails = function () {
                             Swal.fire({
                                 text: "Your form has not been cancelled!",
                                 icon: "error",
-                                buttonsStyling: !1,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: { confirmButton: "btn btn-primary" }
-                            });
-                        }
-                    }));
-                }));
-
-                // Cancel button event listener
-                t.querySelector('[data-kt-users-modal-action="cancel"]').addEventListener("click", (t => {
-                    t.preventDefault();
-                    Swal.fire({
-                        text: "Are you sure you would like to cancel?",
-                        icon: "warning",
-                        showCancelButton: !0,
-                        buttonsStyling: !1,
-                        confirmButtonText: "Yes, cancel it!",
-                        cancelButtonText: "No, return",
-                        customClass: { confirmButton: "btn btn-primary", cancelButton: "btn btn-active-light" }
-                    }).then((function (t) {
-                        if (t.value) {
-                            e.reset();
-                            n.hide();
-                        } else if ("cancel" === t.dismiss) {
-                            Swal.fire({
-                                text: "Your form has not been cancelled!",
-                                icon: "error",
-                                buttonsStyling: !1,
+                                buttonsStyling: false,
                                 confirmButtonText: "Ok, got it!",
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
@@ -78,16 +48,20 @@ var KTUsersUpdateDetails = function () {
                     o.setAttribute("data-kt-indicator", "on");
                     o.disabled = true;
 
+                    // Create FormData object to handle file uploads
+                    let formData = new FormData(e);
+
                     // Perform AJAX request for form submission
                     $.ajax({
                         url: baseURL, // Replace with the correct URL
-                        method: 'PUT',
-                        data: $(e).serialize(), // Serialize form data
+                        method: 'POST',
+                        data: formData,
+                        contentType: false, // Prevent jQuery from setting the content type header
+                        processData: false, // Prevent jQuery from processing the data
                         success: function (data) {
                             o.removeAttribute("data-kt-indicator");
                             o.disabled = false;
 
-                            // Check if the response is a JSON object (use the returned values for Swal)
                             Swal.fire({
                                 text: data.text,
                                 icon: data.icon,
@@ -111,7 +85,8 @@ var KTUsersUpdateDetails = function () {
 
                                 // Display validation errors
                                 $.each(errors, function (key, error) {
-                                    $('#' + key + '-error').html('<p style="color:red;">' + error[0] + '</p>');
+                                    let inputKey = key.replace(/\./g, '_');
+                                    $('#' + inputKey + '-error').html('<p style="color:red;">' + error[0] + '</p>');
                                 });
 
                                 Swal.fire({
@@ -133,11 +108,11 @@ var KTUsersUpdateDetails = function () {
                         }
                     });
                 });
-
             })();
         }
     };
 }();
+
 KTUtil.onDOMContentLoaded(function () {
     KTUsersUpdateDetails.init();
 });
