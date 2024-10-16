@@ -40,7 +40,7 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            <input type="text" data-kt-ecommerce-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Product" />
+                            <input type="text" data-kt-ecommerce-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="{{trans('dashboard_trans.Search Product')}}" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -49,7 +49,7 @@
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <div class="w-100 mw-150px">
                             <!--begin::Select2-->
-                            <select class="form-select form-select-solid"  data-hide-search="true"  data-placeholder="status" data-kt-ecommerce-product-filter="status">
+                            <select class="form-select form-select-solid"  data-hide-search="true" data-placeholder="status" data-kt-ecommerce-product-filter="status">
                                 <option disabled hidden selected>{{trans('dashboard_trans.Status')}}</option>
                                 <option value="all">{{trans('dashboard_trans.All')}}</option>
                                 <option value="published">{{trans('dashboard_trans.Published')}}</option>
@@ -86,6 +86,7 @@
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
+                        @foreach($products as $product)
                         <tr>
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -94,25 +95,34 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
+                                    @if($products->images)
+                                        @foreach($products as $image)
                                     <!--begin::Thumbnail-->
-                                    <a href="../../demo3/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{url('assets/media//stock/ecommerce/1.png')}});"></span>
+                                    <a href="#" class="symbol symbol-50px">
+                                        <span class="symbol-label" style="background-image:url({{url('images/products/',$image)}});"></span>
                                     </a>
+                                        @endforeach
+                                    @else
+                                        <a href="#" class="symbol symbol-50px">
+                                            <span class="symbol-label" style="background-image:url({{asset('assets/media/svg/files/blank-image.svg')}});"></span>
+                                        </a>
+                                    @endif
+
                                     <!--end::Thumbnail-->
                                     <div class="ms-5">
                                         <!--begin::Title-->
-                                        <a href="../../demo3/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">Product 1</a>
+                                        <a href="{{ route('products.show',$product->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">{{ $product->name }}</a>
                                         <!--end::Title-->
                                     </div>
                                 </div>
                             </td>
                             <td class="text-end pe-0">
-                                <span class="fw-bold">04517009</span>
+                                <span class="fw-bold">{{ $product->SKU }}</span>
                             </td>
                             <td class="text-end pe-0" data-order="16">
-                                <span class="fw-bold ms-3">16</span>
+                                <span class="fw-bold ms-3">{{$product->quantity}}</span>
                             </td>
-                            <td class="text-end pe-0">238</td>
+                            <td class="text-end pe-0">{{$product->price}}</td>
                             <td class="text-end pe-0" data-order="rating-5">
                                 <div class="rating justify-content-end">
                                     <div class="rating-label checked">
@@ -132,10 +142,20 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end pe-0" data-order="Scheduled">
-                                <!--begin::Badges-->
-                                <div class="badge badge-light-primary">Scheduled</div>
-                                <!--end::Badges-->
+                            <td class="text-end pe-0" data-order="{{$product->status}}">
+                                @if($product->status == 'published')
+                                    <!--begin::Badges-->
+                                    <div class="badge badge-light-primary">{{trans('dashboard_trans.Published')}}</div>
+                                    <!--end::Badges-->
+                                @elseif($product->status == 'draft')
+                                    <!--begin::Badges-->
+                                    <div class="badge badge-light-info">{{trans('dashboard_trans.Draft')}}</div>
+                                    <!--end::Badges-->
+                                    @else
+                                    <!--begin::Badges-->
+                                    <div class="badge badge-light-danger">{{trans('dashboard_trans.Unpublished')}}</div>
+                                    <!--end::Badges-->
+                                    @endif
                             </td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
@@ -156,6 +176,7 @@
                                 <!--end::Menu-->
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <!--end::Table-->
