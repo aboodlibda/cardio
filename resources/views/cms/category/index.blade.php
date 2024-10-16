@@ -1,6 +1,9 @@
 @extends('cms.layout.master')
 @section('title',trans('dashboard_trans.Categories'))
 @section('style')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     @if(App::getLocale()=='ar')
         <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
     @else
@@ -67,38 +70,51 @@
                                 </div>
                             </th>
                             <th class="min-w-250px">{{trans('dashboard_trans.Category')}}</th>
-                            <th class="min-w-150px">{{trans('dashboard_trans.Category Type')}}</th>
+                            <th class="min-w-150px">{{trans('dashboard_trans.Status')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                        <tr>
+                        @foreach($categories as $category)
+                        <tr data-category-id="{{ $category->id }}">
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
                                 </div>
                             </td>
-                            <td>
+                            <td class="min-w-20px">
                                 <div class="d-flex">
+                                    @if($category->image)
                                     <!--begin::Thumbnail-->
                                     <a href="#" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{asset('assets/media//stock/ecommerce/68.png')}});"></span>
+                                        <span class="symbol-label" style="background-image:url({{asset('storage/'.$category->image )}});"></span>
                                     </a>
+                                    @else
+                                        <a href="#" class="symbol symbol-50px">
+                                            <span class="symbol-label" style="background-image:url({{asset('assets/media/svg/files/blank-image.svg' )}});"></span>
+                                        </a>
+                                    @endif
                                     <!--end::Thumbnail-->
                                     <div class="ms-5">
                                         <!--begin::Title-->
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">Computers</a>
+                                        <a href="{{ route('categories.edit',$category->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">{{ $category->name }}</a>
                                         <!--end::Title-->
                                         <!--begin::Description-->
-                                        <div class="text-muted fs-7 fw-bold">Our computers and tablets include all the big brands.</div>
+                                        <div class="text-muted fs-7 fw-bold">{{ $category->description }}</div>
                                         <!--end::Description-->
                                     </div>
                                 </div>
                             </td>
                             <td>
+                                @if($category->status == 'active')
                                 <!--begin::Badges-->
-                                <div class="badge badge-light-success">Automated</div>
+                                <div class="badge badge-light-success">{{trans('dashboard_trans.Active')}}</div>
                                 <!--end::Badges-->
+                                @else
+                                    <!--begin::Badges-->
+                                    <div class="badge badge-light-danger">{{trans('dashboard_trans.Inactive')}}</div>
+                                    <!--end::Badges-->
+                                @endif
                             </td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
@@ -107,19 +123,20 @@
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
+                                        <a href="{{ route('categories.edit',$category->id) }}" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
+                                    <div class="menu-item px-3" >
                                         <a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
+
                                     </div>
                                     <!--end::Menu item-->
                                 </div>
                                 <!--end::Menu-->
                             </td>
                         </tr>
-
+                        @endforeach
                         </tbody>
                         <!--end::Table body-->
                     </table>
