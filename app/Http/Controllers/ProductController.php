@@ -50,9 +50,9 @@ class ProductController extends Controller
 
         $data['status'] = $request->input('status') === 'draft' ? 'draft' : ($request->has('status') ? 'published' : 'unpublished');
 
-        $avatar = $this->imageUploadService->upload($request, 'images', 'images/products');
+        $image = $this->imageUploadService->upload($request, 'image', 'images/products');
 
-        $data['images'] = $avatar;
+        $data['image'] = $image;
 
         $isSaved = Product::query()->create($data);
 
@@ -86,5 +86,22 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
+    }
+
+    public function uploadImage(Request $request)
+    {
+        // Validate if the file is an image
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240' // max size 10MB
+        ]);
+
+        // Upload the image using the imageUploadService
+        $imagePath = $this->imageUploadService->uploadImages($request, 'image', 'images/products');
+
+        // Return a response with the path to the uploaded image
+        return response()->json([
+            'path' => $imagePath,
+            'message' => 'Image uploaded successfully'
+        ]);
     }
 }
