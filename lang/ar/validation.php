@@ -168,6 +168,8 @@ return [
 
     'attributes' => [
         'name'                  => 'الاسم',
+        'title.ar'              => 'الاسم بالعربي',
+        'title.en'              => 'الاسم بالانجليزي',
         'username'              => 'اسم المُستخدم',
         'user_name'             => 'اسم المُستخدم',
         'phone_number'          => 'رقم الهاتف',
