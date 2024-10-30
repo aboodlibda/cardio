@@ -36,6 +36,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::put('update-email/{id}',[UserController::class,'updateEmail'])->name('update-email');
         Route::put('update-password/{id}',[UserController::class,'updatePassword'])->name('update-password');
         Route::put('update-role/{id}',[UserController::class,'updateRole'])->name('update-role');
+        Route::post('/upload-image', [ProductController::class, 'uploadImage']);
+
 
 
         Route::view('show-order','cms.order.show')->name('show-order');
