@@ -140,13 +140,13 @@
                         </div>
                         <!--end::Card header-->
                         <!--begin::Card body-->
-                        <div class="card-body pt-0" data-select2-id="select2-data-122-hf29">
+                        <div class="card-body pt-0">
                             <!--begin::Input group-->
                             <!--begin::Label-->
                             <label class="form-label">{{trans('dashboard_trans.Categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
-                            <select class="form-select mb-2 select2-hidden-accessible" data-control="select2" data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  tabindex="-1" aria-hidden="true" >
+                            <select class="form-select mb-2 select2-hidden-accessible" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
                                 <option></option>
                                 @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -238,7 +238,7 @@
                                             <!--begin::Input-->
                                             <input type="text" name="title[{{$key}}]" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('title.'.$key)}}" />
                                             <!--end::Input-->
-                                        </div>
+                                            <div id="title-{{ $key }}-error" class="error-message"></div>                                        </div>
                                         @endforeach
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7 mb-10">{{trans('dashboard_trans.A product name is required and recommended to be unique')}}.</div>
@@ -255,7 +255,7 @@
                                                     <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{old('description.'.$key)}}</textarea>
                                                 </div>
                                                 <!--end::Editor-->
-                                                <div id="description.{{$key}}-error" class="error-message"></div>
+                                                <div id="description-{{$key}}-error" class="error-message"></div>
                                             </div>
                                         @endforeach
                                         <!--begin::Description-->
@@ -329,6 +329,7 @@
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the product price')}}.</div>
                                             <!--end::Description-->
+                                            <div id="price-error" class="error-message"></div>
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -428,7 +429,7 @@
                                             <label class="form-label">{{trans('dashboard_trans.Fixed Discounted Price')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="dicsounted_price" class="form-control mb-2" placeholder="Discounted price" />
+                                            <input type="text" name="discounted_price" class="form-control mb-2" placeholder="Discounted price" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the discounted product price. The product will be reduced at the determined fixed price')}}</div>
