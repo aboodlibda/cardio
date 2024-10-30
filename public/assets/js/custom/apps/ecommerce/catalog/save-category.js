@@ -153,9 +153,16 @@ var KTAppEcommerceSaveCategory = function () {
                                         // Display validation errors under each input field
                                         let errors = xhr.responseJSON.errors;
                                         $.each(errors, function (key, error) {
-                                            let input = $(t).find('[name="' + key + '"]');
+                                            const [field, subfield] = key.split('.');
+                                            let input = $(t).find(`[name="${field}[${subfield}]"]`);
                                             if (input.length) {
                                                 input.after('<div class="error-message" style="color:red;">' + error[0] + '</div>');
+                                            }else {
+                                                // Handle inputs with simple names, such as "price"
+                                                let input = $(t).find(`[name="${key}"]`);
+                                                if (input.length) {
+                                                    input.after('<div class="error-message" style="color:red;">' + error[0] + '</div>');
+                                                }
                                             }
                                         });
 
