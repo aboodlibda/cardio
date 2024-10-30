@@ -2,8 +2,6 @@
 @section('title',trans('dashboard_trans.Categories'))
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
     @if(App::getLocale()=='ar')
         <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
     @else
