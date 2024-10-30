@@ -19,7 +19,6 @@
     <meta property="og:title" content="Cardio"/>
     <meta property="og:url" content="https://uplancerps.com"/>
     <meta property="og:site_name" content="Cardio"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="canonical" href="Https://https://uplancerps.com"/>
     <link rel="shortcut icon" href="{{asset('assets/media/logos/favicon.ico')}}"/>
     <!--begin::Fonts-->
@@ -576,7 +575,7 @@
                     <div class="d-flex align-items-center">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-circle symbol-40px">
-                            <img src="{{asset('storage/'.Auth::user()->avatar)}}" alt="photo" />
+                            <img src="{{asset('images/users/'.Auth::user()->avatar)}}" alt="photo" />
                         </div>
                         <!--end::Avatar-->
                         <!--begin::User info-->
@@ -606,7 +605,7 @@
                                 <div class="menu-content d-flex align-items-center px-3">
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-50px me-5">
-                                        <img alt="Logo" src="{{asset('storage/'.Auth::user()->avatar)}}" />
+                                        <img alt="Logo" src="{{asset('images/users/'.Auth::user()->avatar)}}" />
                                     </div>
                                     <!--end::Avatar-->
                                     <!--begin::Username-->
