@@ -23,8 +23,8 @@ var KTAppEcommerceSaveProduct = function () {
     const initDropzone = () => {
         let uploadedFiles = [];
         const myDropzone = new Dropzone("#kt_ecommerce_add_product_media", {
-            url: "/upload", // Update this to your server-side upload handler
-            paramName: "file",
+            url: "/upload-image", // Update this to your server-side upload handler
+            paramName: "images",
             maxFiles: 10,
             maxFilesize: 10, // MB
             addRemoveLinks: true,
