@@ -160,14 +160,14 @@ class UserController extends Controller
         $is_Deleted = User::destroy($id);
         if ($is_Deleted){
             return response()->json([
-                'title'=>'success',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
                 'icon'=>'success',
                 'text'=>trans('dashboard_trans.User deleted successfully'),
             ]);
 
         }else{
             return response()->json([
-                'title'=>'error',
+                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
                 'icon'=>'error',
                 'text'=>trans('dashboard_trans.Failed to delete this user!'),
 
