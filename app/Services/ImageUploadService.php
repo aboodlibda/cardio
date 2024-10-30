@@ -21,4 +21,18 @@ class ImageUploadService
         }
 
     }
+    public function uploadImages(Request $request, $fileKey  , $directory)
+    {
+        if ($request->hasFile($fileKey)) {
+            $images = $request->file($fileKey);
+            $imageName = time() . '_' . uniqid() . '.' . $images->getClientOriginalExtension();
+            $path = $images->storeAs($directory, $imageName, 'public');
+            return $path;
+        }else{
+            return null;
+
+        }
+
+    }
+
 }
