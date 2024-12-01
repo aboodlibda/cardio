@@ -585,6 +585,14 @@ return [
     'Create new tag'=>'Create new tag',
     'Tag Created Successfully'=>'Tag Created Successfully',
     'Failed to Create Tag'=>'Failed to Create Tag',
+    'Please correct the highlighted errors and try again'=>'Please correct the highlighted errors and try again',
+    'Success'=>'Success',
+    'Tag Deleted Successfully'=>'Tag Deleted Successfully',
+    'Failed to Delete Tag'=>'Failed to Delete Tag',
+    'Error'=>'Error',
+    'Tag Updated Successfully'=>'Tag Updated Successfully',
+    'Failed to Update Tag'=>'Failed to Update Tag',
+
 
 
 
