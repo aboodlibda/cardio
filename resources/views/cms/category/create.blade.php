@@ -113,8 +113,8 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Select2-->
-                            <select class="form-select mb-2" name="status"   data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_category_status_select">
-                                <option disabled selected hidden=>{{trans('dashboard_trans.Select an option')}}</option>
+                            <select class="form-select mb-2" name="status" data-control="select2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_category_status_select">
+                                <option></option>
                                 <option value="active">{{trans('dashboard_trans.Active')}}</option>
                                 <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
                             </select>
