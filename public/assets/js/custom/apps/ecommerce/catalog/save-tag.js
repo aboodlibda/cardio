@@ -7,14 +7,11 @@ var KTUsersAddTag = function () {
         const closeButton = document.querySelector('[data-kt-tags-modal-action="close"]');
         const modal = new bootstrap.Modal(document.getElementById("kt_modal_add_tag"));
 
-        // مستمعات الأزرار
         submitButton.addEventListener("click", function (e) {
-            e.preventDefault();  // منع إرسال النموذج مباشرة
+            e.preventDefault();
 
-            // Create FormData object
             const formData = new FormData(form);
 
-            // Disable the submit button and show loading indicator
             submitButton.setAttribute("data-kt-indicator", "on");
             submitButton.disabled = true;
 
@@ -33,7 +30,7 @@ var KTUsersAddTag = function () {
                         title: response.title,
                         text: response.text,
                         icon: response.icon,
-                        confirmButtonText: "حسناً"
+                        confirmButtonText: response.confirmButtonText
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Redirect to specified URL or reload the page
@@ -42,43 +39,44 @@ var KTUsersAddTag = function () {
                     });
                 },
                 error: function (xhr) {
-                    o.removeAttribute("data-kt-indicator");
-                    o.disabled = false;
+                    submitButton.removeAttribute("data-kt-indicator");
+                    submitButton.disabled = false;
 
                     if (xhr.status === 422) {
                         // Clear previous error messages
-                        $(t).find('.error-message').remove();
+                        $(form).find('.error-message').remove();
 
                         // Display validation errors under each input field
                         let errors = xhr.responseJSON.errors;
                         $.each(errors, function (key, error) {
                             const [field, subfield] = key.split('.');
-                            let input = $(t).find(`[name="${field}[${subfield}]"]`);
+                            let input = $(form).find(`[name="${field}[${subfield}]"]`);
                             if (input.length) {
                                 input.after('<div class="error-message" style="color:red;">' + error[0] + '</div>');
-                            }else {
+                            } else {
                                 // Handle inputs with simple names, such as "price"
-                                let input = $(t).find(`[name="${key}"]`);
+                                let input = $(form).find(`[name="${key}"]`);
                                 if (input.length) {
                                     input.after('<div class="error-message" style="color:red;">' + error[0] + '</div>');
                                 }
                             }
                         });
 
+                        // Show dynamic error message from the server response
                         Swal.fire({
-                            text: "Please correct the highlighted errors and try again.",
-                            icon: "error",
-                            buttonsStyling: !1,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {confirmButton: "btn btn-primary"}
+                            text: xhr.responseJSON.text,
+                            icon: xhr.responseJSON.icon,
+                            buttonsStyling: false,
+                            confirmButtonText:xhr.responseJSON.confirmButtonText ,
+                            customClass: { confirmButton: "btn btn-primary" }
                         });
                     } else {
                         Swal.fire({
                             text: "An error occurred. Please try again later.",
                             icon: "error",
-                            buttonsStyling: !1,
+                            buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
-                            customClass: {confirmButton: "btn btn-primary"}
+                            customClass: { confirmButton: "btn btn-primary" }
                         });
                     }
                 }
@@ -107,9 +105,10 @@ var KTUsersAddTag = function () {
             });
         });
 
+        // إغلاق النافذة عند الضغط على زر الإغلاق
         closeButton.addEventListener("click", (e) => {
             e.preventDefault();
-            modal.hide();  // إغلاق النافذة
+            modal.hide(); // إغلاق النافذة
         });
     };
 
@@ -120,6 +119,7 @@ var KTUsersAddTag = function () {
     };
 }();
 
+// Initialize the script when the DOM content is loaded
 KTUtil.onDOMContentLoaded(function () {
     KTUsersAddTag.init();
 });
