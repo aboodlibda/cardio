@@ -576,6 +576,26 @@ return [
     'Failed to update category!'=>'لم يتم تحديث الفئة!',
     'Category Deleted Successfully'=>'تم حذف الفئة بنجاح',
     'Failed to delete this category!'=>'لم يتم حذف هذه الفئة!',
+    'Coupon created successfully'=>'تم انشاء الكوبون بنجاح',
+    'Failed to create coupon'=>'لم يتم انشاء الكوبون',
+    'Failed to update coupon'=>'لم يتم تحديث الكوبون',
+    'Percentage'=>'نسبة مئوية',
+    'Fixed'=>'محدد',
+    'The tag name is required'=>'اسم الوسم مطلوب',
+    'Enter the name of tag'=>'ادخل اسم الوسم',
+    'Create new tag'=>'اضافة وسم جديد',
+    'Tag Created Successfully'=>'تم اضافة الوسم بنجاح',
+    'Failed to Create Tag'=>'لم يتم اضافة الوسم',
+
+
+
+
+
+
+
+
+
+
 
 
 
