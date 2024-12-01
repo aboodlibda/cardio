@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::query()->get();
-        return view('cms.product.create',compact('categories'));
+        $tags = Tag::query()->latest()->get(['id','name']);
+        return view('cms.product.create',compact('categories','tags'));
     }
 
     public function store(Request $request)
@@ -40,6 +42,11 @@ class ProductController extends Controller
             'slug'        => 'required|string',
             'quantity'    => 'required|numeric',
             'SKU'         => 'required|string|min:5|max:30',
+            'category_id' => 'required|int|exists:categories,id',
+            'discount_type'=>'required|in:no_discount,percentage,fixed_price',
+            'tax_type'     =>'required|in:free,taxable_goods,downloadable_product',
+            'vat_amount'   =>'required|numeric',
+            'images'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -48,15 +55,18 @@ class ProductController extends Controller
             'title' , 'description' , 'price' , 'status' , 'user_id' , 'slug' , 'quantity' , 'SKU'
         ]);
 
+        $data['user_id'] = auth()->user()->id;
+
         $data['status'] = $request->input('status') === 'draft' ? 'draft' : ($request->has('status') ? 'published' : 'unpublished');
 
         $image = $this->imageUploadService->upload($request, 'image', 'images/products');
-
         $data['image'] = $image;
 
-        $isSaved = Product::query()->create($data);
+        $product = Product::query()->create($data);
 
-        if ($isSaved){
+        $product->categories()->attach($request->category_id);
+
+        if ($product){
             return response()->json([
                 'icon' => 'success',
                 'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
