@@ -586,6 +586,20 @@ return [
     'Create new tag'=>'اضافة وسم جديد',
     'Tag Created Successfully'=>'تم اضافة الوسم بنجاح',
     'Failed to Create Tag'=>'لم يتم اضافة الوسم',
+    'Please correct the highlighted errors and try again'=>'يرجى تصحيح الأخطاء ثم المحاولة مرة أخرى',
+    'Success'=>'نجاح',
+    'Tag Deleted Successfully'=>'تم حذف الوسم بنجاح',
+    'Failed to Delete Tag'=>'لم يتم حذف الوسم',
+    'Error'=>'خطأ',
+    'Tag Updated Successfully'=>'تم تعديل الوسم بنجاح',
+    'Failed to Update Tag'=>'لم يتم تعديل الوسم',
+
+
+
+
+
+
+
 
 
 
