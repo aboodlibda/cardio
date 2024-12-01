@@ -23,13 +23,15 @@
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
             <!--begin::Form-->
-            <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/products.html">
+            <form id="kt_ecommerce_add_coupon_form" action="{{route('coupons.store')}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/products.html">
+             @csrf
+                @method('POST')
                 <!--begin::Main column-->
                 <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                     <!--begin::Tab content-->
                     <div class="tab-content">
                         <!--begin::Tab pane-->
-                        <div class="tab-pane fade show active" id="kt_ecommerce_add_product_general" role="tab-panel">
+                        <div class="tab-pane fade show active" id="kt_ecommerce_add_coupon_general" role="tab-panel">
                             <div class="d-flex flex-column gap-7 gap-lg-10">
                                 <!--begin::General options-->
                                 <div class="card card-flush py-4">
@@ -53,20 +55,40 @@
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.A coupon code is required and recommended to be unique')}}.</div>
                                             <!--end::Description-->
+                                            <div id="code-error" class="error-message" style="color: red;"></div>
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
-                                            <label class="form-label">{{trans('dashboard_trans.Description')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Editor-->
-                                            <div id="kt_ecommerce_add_product_description" name="description" class="min-h-200px mb-2"></div>
-                                            <!--end::Editor-->
-                                        </div>
+                                        @foreach(config('lang') as $key => $lang)
+                                            <div class="col-md-12 mb-5 fv-row">
+                                                <!--begin::Label-->
+                                                <label class="form-label">{{trans('dashboard_trans.Description')}} ({{$lang}})</label>
+                                                <!--end::Label-->
+                                                <!--begin::Editor-->
+                                                <div>
+                                                    <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{old('description.'.$key)}}</textarea>
+                                                </div>
+                                                <!--end::Editor-->
+                                                <div id="description-{{$key}}-error" class="error-message"></div>
+                                            </div>
+                                        @endforeach
                                         <!--end::Input group-->
                                         <!--begin::Tax-->
                                         <div class="d-flex flex-wrap gap-5">
+                                            <!--begin::Input group-->
+                                            <div class="fv-row w-100 flex-md-root">
+                                                <!--begin::Label-->
+                                                <label class="required form-label">{{trans('dashboard_trans.Discount Type')}}</label>
+                                                <!--end::Label-->
+                                                <!--begin::Input-->
+                                                <select class="form-select mb-2" name="discount_type" data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}">
+                                                    <option disabled selected hidden=>{{trans('dashboard_trans.Select an option')}}</option>
+                                                    <option value="percentage">{{trans('dashboard_trans.Percentage')}}</option>
+                                                    <option value="fixed">{{trans('dashboard_trans.Fixed')}}</option>
+                                                </select>
+                                                <!--end::Input-->
+                                            </div>
+                                            <!--end::Input group-->
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
@@ -77,16 +99,7 @@
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row w-100 flex-md-root">
-                                                <!--begin::Label-->
-                                                <label class="required form-label">{{trans('dashboard_trans.Discount Type')}}</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <input type="text" name="discount_type" placeholder="{{trans('dashboard_trans.Discount Type')}}" class="form-control mb-2" value="" />
-                                                <!--end::Input-->
-                                            </div>
-                                            <!--end::Input group-->
+
                                         </div>
                                         <!--end:Tax-->
                                         <!--begin::Tax-->
@@ -137,6 +150,39 @@
                                 </div>
                                 <!--end::General options-->
                             </div>
+                                <!--begin::Status-->
+                                <div class="card card-flush py-4">
+                                    <!--begin::Card header-->
+                                    <div class="card-header">
+                                        <!--begin::Card title-->
+                                        <div class="card-title">
+                                            <h2>{{trans('dashboard_trans.Status')}}</h2>
+                                        </div>
+                                        <!--end::Card title-->
+                                        <!--begin::Card toolbar-->
+                                        <div class="card-toolbar">
+                                            <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_coupon_status"></div>
+                                        </div>
+                                        <!--begin::Card toolbar-->
+                                    </div>
+                                    <!--end::Card header-->
+                                    <!--begin::Card body-->
+                                    <div class="card-body pt-0">
+                                        <!--begin::Select2-->
+                                        <select class="form-select mb-2" name="status"   data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_coupon_status_select">
+                                            <option disabled selected hidden=>{{trans('dashboard_trans.Select an option')}}</option>
+                                            <option value="active">{{trans('dashboard_trans.Active')}}</option>
+                                            <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
+                                        </select>
+                                        <!--end::Select2-->
+                                        <!--begin::Description-->
+                                        <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
+                                        <!--end::Description-->
+                                    </div>
+                                    <div id="status-error" class="error-message"></div>
+                                    <!--end::Card body-->
+                                </div>
+                                <!--end::Status-->
                         </div>
                         <!--end::Tab pane-->
                         </div>
@@ -145,10 +191,10 @@
 
                     <div class="d-flex justify-content-end">
                         <!--begin::Button-->
-                        <a href="{{route('coupons.index')}}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
+                        <a href="{{route('coupons.index')}}" id="kt_ecommerce_add_coupon_cancel" class="btn btn-light me-5">{{trans('dashboard_trans.Cancel')}}</a>
                         <!--end::Button-->
                         <!--begin::Button-->
-                        <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                        <button type="submit" id="kt_ecommerce_add_coupon_submit" class="btn btn-primary">
                             <span class="indicator-label">{{trans('dashboard_trans.Create')}}</span>
                             <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
 											<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
@@ -169,7 +215,7 @@
     <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-product.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-coupon.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
     <!--end::Custom Javascript-->
 
