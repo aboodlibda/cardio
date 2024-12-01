@@ -1,6 +1,7 @@
 @extends('cms.layout.master')
 @section('title',trans('dashboard_trans.Users'))
 @section('style')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(App::getLocale()=='ar')
                 <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
     @else
@@ -443,7 +444,7 @@
                         </thead>
                         <tbody class="text-gray-600 fw-semibold">
                         @foreach($users as $user)
-                        <tr>
+                        <tr data-user-id="{{ $user->id }}">
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
