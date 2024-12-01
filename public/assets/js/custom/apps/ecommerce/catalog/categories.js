@@ -51,12 +51,12 @@ var KTAppEcommerceCategories = function () {
                                     e.row($(n)).remove().draw(); // Remove the row from the DataTable
                                 });
                             },
-                            error: function () {
+                            error: function (response) {
                                 Swal.fire({
-                                    text: "Failed to delete the category. Please try again.",
-                                    icon: "error",
+                                    text: response.text,
+                                    icon: response.icon,
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: response.confirmButtonText,
                                     customClass: { confirmButton: "btn fw-bold btn-primary" }
                                 });
                             }
