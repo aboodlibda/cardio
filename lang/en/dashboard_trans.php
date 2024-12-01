@@ -575,6 +575,17 @@ return [
     'Failed to update category!'=>'Failed to update category!',
     'Category Deleted Successfully'=>'Category Deleted Successfully',
     'Failed to delete this category!'=>'Failed to delete this category!',
+    'Coupon created successfully'=>'Coupon created successfully',
+    'Failed to create coupon'=>'Failed to create coupon',
+    'Coupon updated successfully'=>'Coupon updated successfully',
+    'Percentage'=>'Percentage',
+    'Fixed'=>'Fixed',
+    'The tag name is required'=>'The tag name is required',
+    'Enter the name of tag'=>'Enter the name of tag',
+    'Create new tag'=>'Create new tag',
+    'Tag Created Successfully'=>'Tag Created Successfully',
+    'Failed to Create Tag'=>'Failed to Create Tag',
+
 
 
 
