@@ -107,9 +107,9 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Select2-->
-                            <select class="form-select mb-2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_product_status_select">
-                                <option disabled selected hidden>{{trans('dashboard_trans.Status')}}</option>
-                                <option value="published" selected="selected">{{trans('dashboard_trans.Published')}}</option>
+                            <select class="form-select mb-2" data-control="select2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_product_status_select">
+                                <option></option>
+                                <option value="published">{{trans('dashboard_trans.Published')}}</option>
                                 <option value="draft">{{trans('dashboard_trans.Draft')}}</option>
 {{--                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>--}}
                                 <option value="unpublished">{{trans('dashboard_trans.Unpublished')}}</option>
@@ -146,7 +146,7 @@
                             <label class="form-label">{{trans('dashboard_trans.Categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
-                            <select class="form-select mb-2 select2-hidden-accessible" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                            <select class="form-select mb-2 select2-hidden-accessible" name="category_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
                                 <option></option>
                                 @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -166,7 +166,12 @@
                             <label class="form-label d-block">{{trans('dashboard_trans.Tags')}}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input id="kt_ecommerce_add_product_tags" name="kt_ecommerce_add_product_tags" class="form-control mb-2" value="" />
+                            <select class="form-select mb-2 select2-hidden-accessible" name="tags" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                                <option></option>
+                                @foreach($tags as $tag)
+                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
                             <!--end::Input-->
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Add tags to a product')}}.</div>
@@ -238,7 +243,8 @@
                                             <!--begin::Input-->
                                             <input type="text" name="title[{{$key}}]" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('title.'.$key)}}" />
                                             <!--end::Input-->
-                                            <div id="title-{{ $key }}-error" class="error-message"></div>                                        </div>
+                                            <div id="title-{{ $key }}-error" class="error-message"></div>
+                                        </div>
                                         @endforeach
                                         <!--begin::Description-->
                                         <div class="text-muted fs-7 mb-10">{{trans('dashboard_trans.A product name is required and recommended to be unique')}}.</div>
@@ -444,7 +450,7 @@
                                                 <label class="required form-label">{{trans('dashboard_trans.Tax Class')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
-                                                <select class="form-select mb-2" name="tax"  data-hide-search="true" data-placeholder="Select an option">
+                                                <select class="form-select mb-2" data-control="select2" name="tax"  data-hide-search="true" data-placeholder="Select an option">
                                                     <option disabled hidden selected>{{trans('dashboard_trans.Select an option')}}</option>
                                                     <option value="0">{{trans('dashboard_trans.Tax Free')}}</option>
                                                     <option value="1">{{trans('dashboard_trans.Taxable Goods')}}</option>
@@ -508,25 +514,11 @@
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
                                             <!--begin::Label-->
-                                            <label class="required form-label">{{trans('dashboard_trans.Barcode')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" name="sku" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Barcode')}}" value="" />
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Enter the product barcode number')}}.</div>
-                                            <!--end::Description-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
                                             <label class="required form-label">{{trans('dashboard_trans.Quantity')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <div class="d-flex gap-3">
-                                                <input type="number" name="shelf" class="form-control mb-2" placeholder="On shelf" value="" />
-                                                <input type="number" name="warehouse" class="form-control mb-2" placeholder="In warehouse" />
+                                                <input type="number" name="quantity" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Quantity')}}" value="" />
                                             </div>
                                             <!--end::Input-->
                                             <!--begin::Description-->
@@ -578,7 +570,7 @@
                                                         <div data-repeater-item="" class="form-group d-flex flex-wrap align-items-center gap-5">
                                                             <!--begin::Select2-->
                                                             <div class="w-100 w-md-200px">
-                                                                <select class="form-select" name="product_option" data-placeholder="Select a variation" data-kt-ecommerce-catalog-add-product="product_option">
+                                                                <select class="form-select" data-control="select2" name="product_option" data-placeholder="Select a variation" data-kt-ecommerce-catalog-add-product="product_option">
                                                                     <option></option>
                                                                     <option value="color">{{trans('dashboard_trans.Color')}}</option>
                                                                     <option value="size">{{trans('dashboard_trans.Size')}}</option>
