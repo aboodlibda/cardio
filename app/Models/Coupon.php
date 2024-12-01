@@ -12,7 +12,7 @@ class Coupon extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'coupon_products', 'coupon_id', 'product_id');
     }
 
     public function orders(): HasMany
