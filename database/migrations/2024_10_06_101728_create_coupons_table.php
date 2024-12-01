@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->enum('discount_type',['percentage','fixed']);
             $table->string('times_used')->default(0);
             $table->string('max_used');
+            $table->enum('status',['active','inactive'])->default('active');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
