@@ -578,6 +578,7 @@ return [
     'Coupon created successfully'=>'Coupon created successfully',
     'Failed to create coupon'=>'Failed to create coupon',
     'Coupon updated successfully'=>'Coupon updated successfully',
+    'Failed to update coupon'=>'Failed to update coupon',
     'Percentage'=>'Percentage',
     'Fixed'=>'Fixed',
     'The tag name is required'=>'The tag name is required',
@@ -592,6 +593,16 @@ return [
     'Error'=>'Error',
     'Tag Updated Successfully'=>'Tag Updated Successfully',
     'Failed to Update Tag'=>'Failed to Update Tag',
+    'An error occurred. Please try again later'=>'An error occurred. Please try again laterً',
+    'Coupon deleted successfully'=>'Coupon deleted successfully',
+    'Failed to delete coupon'=>'Failed to delete coupon',
+    'Search Coupons'=>'Search Coupons',
+    'Coupon Details'=>'Coupon Details',
+    'Add coupon to a product'=>'Add coupon to a product',
+    'Yes'=>'Yes',
+    'Failed to delete this product'=>'Failed to delete this product',
+
+
 
 
 
