@@ -49,8 +49,8 @@
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <div class="w-100 mw-150px">
                             <!--begin::Select2-->
-                            <select class="form-select form-select-solid"  data-hide-search="true" data-placeholder="status" data-kt-ecommerce-product-filter="status">
-                                <option disabled hidden selected>{{trans('dashboard_trans.Status')}}</option>
+                            <select class="form-select form-select-solid" data-control="select2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Status')}}" data-kt-ecommerce-product-filter="status">
+                                <option></option>
                                 <option value="all">{{trans('dashboard_trans.All')}}</option>
                                 <option value="published">{{trans('dashboard_trans.Published')}}</option>
                                 <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
@@ -87,7 +87,7 @@
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
                         @foreach($products as $product)
-                        <tr>
+                        <tr data-product-id="{{$product->id}}">
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
@@ -95,11 +95,11 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    @if($products->images)
-                                        @foreach($products as $image)
+                                @if($product->images)
+                                        @foreach($product->images as $image)
                                     <!--begin::Thumbnail-->
                                     <a href="#" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{url('images/products/',$image)}});"></span>
+                                        <span class="symbol-label" style="background-image:url({{url(Storage::url($image->image))}});"></span>
                                     </a>
                                         @endforeach
                                     @else
@@ -123,6 +123,7 @@
                                 <span class="fw-bold ms-3">{{$product->quantity}}</span>
                             </td>
                             <td class="text-end pe-0">{{$product->price}}</td>
+
                             <td class="text-end pe-0" data-order="rating-5">
                                 <div class="rating justify-content-end">
                                     <div class="rating-label checked">
@@ -142,6 +143,7 @@
                                     </div>
                                 </div>
                             </td>
+
                             <td class="text-end pe-0" data-order="{{$product->status}}">
                                 @if($product->status == 'published')
                                     <!--begin::Badges-->
