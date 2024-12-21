@@ -70,7 +70,7 @@
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
                 <!--begin::Logo-->
-                <a href="../../demo3/dist/index.html">
+                <a href="{{ route('dashboard') }}">
                     <img alt="Logo" src="{{asset('assets/media/logos/demo3.svg')}}" class="h-20px logo theme-light-show" />
                     <img alt="Logo" src="{{asset('assets/media/logos/demo3-dark.svg')}}" class="h-20px logo theme-dark-show" />
                 </a>
