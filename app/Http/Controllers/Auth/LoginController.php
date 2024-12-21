@@ -39,7 +39,6 @@ class LoginController extends Controller
                     'icon' => 'warning',
                     'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
                     'text' => trans('dashboard_trans.This User InActive'),
-
                 ]);
             }
         }else{
