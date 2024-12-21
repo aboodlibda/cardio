@@ -195,6 +195,7 @@ return [
     'Post deleted successfully' => 'تم حذف الخبر بنجاح',
     'Failed to delete this post!' => 'لم يتم حذف الخبر',
     'Product deleted successfully' => 'تم حذف المنتج بنجاح',
+    'Failed to delete this product'=>'لم يتم حذف المنتج',
     'Failed to delete this service!' => 'لم يتم حذف الخدمة!',
     'Role created successfully' => 'تم إضافة الدور بنجاح',
     'Failed to create role!' => 'لم يتم إضافة الدور!',
@@ -569,7 +570,7 @@ return [
     'Reset'=>'ضبط',
     'Discard'=>'تجاهل',
     'Search Product'=>'بحث عن منتج',
-    'Failed to create product'=>'لم يتم انشاء المنتج',
+    'Failed to create product'=>'لم يتم اضافة المنتج',
     'Category created successfully'=>'تم انشاء الفئة بنحاح',
     'Failed to create category!'=>'لم يتم انشاء الفئة!',
     'Category updated successfully'=>'تم تحديث الفئة بنجاح',
@@ -593,6 +594,20 @@ return [
     'Error'=>'خطأ',
     'Tag Updated Successfully'=>'تم تعديل الوسم بنجاح',
     'Failed to Update Tag'=>'لم يتم تعديل الوسم',
+    'Coupon updated successfully'=>'تم تعديل كود الخصم بنحاح',
+    'An error occurred. Please try again later'=>'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً',
+    'Coupon deleted successfully'=>'تم حذف كود الخصم بنجاح',
+    'Failed to delete coupon'=>'لم يتم حذف كود الخصم',
+    'Search Coupons'=>'بحث اكواد الخصم',
+    'Coupon Details'=>'تفاصيل كود الخصم',
+    'Add coupon to a product'=>'اضافة كود الخصم الى المنتج',
+    'Yes'=>'نعم',
+
+
+
+
+
+
 
 
 
