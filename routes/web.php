@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
@@ -16,6 +17,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
+    Route::post('comments/{id}', [CommentController::class,'store'])->name('comments.reply');
+
     /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
     Route::prefix('cms')->middleware(['auth:user,customer'])->group(function (){
         Route::view('/','cms.dashboard')->name('dashboard');
@@ -37,8 +40,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::put('update-password/{id}',[UserController::class,'updatePassword'])->name('update-password');
         Route::put('update-role/{id}',[UserController::class,'updateRole'])->name('update-role');
 
-        Route::post('/upload-image', [ProductController::class, 'uploadImage']);
-
+        Route::post('/store-media', [ProductController::class, 'storeMedia'])->name('store-media');
 
 
         Route::view('show-order','cms.order.show')->name('show-order');
