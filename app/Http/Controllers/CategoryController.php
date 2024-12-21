@@ -17,7 +17,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
-        $categories = Category::query()->get();
+        $categories = Category::query()->with('products')->get();
         return view('cms.category.index',compact('categories'));
     }
 
@@ -57,7 +57,7 @@ class CategoryController extends Controller
             ]);
         }else{
             return response()->json([
-                'icon' => 'success',
+                'icon' => 'error',
                 'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
                 'text' => trans('dashboard_trans.Failed to create category!'),
             ]);
