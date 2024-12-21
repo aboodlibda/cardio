@@ -28,7 +28,7 @@ var KTAppEcommerceSaveProduct = function () {
     const initDropzone = () => {
         const uploadedFiles = [];
         const myDropzone = new Dropzone("#kt_ecommerce_add_product_media", {
-            url: "/upload-image", // Update this to your server-side upload handler
+            url: routes.post, // Update this to your server-side upload handler
             paramName: "images",
             maxFiles: 10,
             maxFilesize: 10, // MB
@@ -67,7 +67,7 @@ var KTAppEcommerceSaveProduct = function () {
 
     // Handle Discount Options Toggle
     const handleDiscountOptions = () => {
-        const discountOptions = document.querySelectorAll('input[name="discount_option"]');
+        const discountOptions = document.querySelectorAll('input[name="discount_type"]');
         const percentageField = document.getElementById("kt_ecommerce_add_product_discount_percentage");
         const fixedPriceField = document.getElementById("kt_ecommerce_add_product_discount_fixed");
 
@@ -76,13 +76,13 @@ var KTAppEcommerceSaveProduct = function () {
                 const value = e.target.value;
 
                 // Toggle fields based on selected discount option
-                if (value === "1") {
+                if (value === "no_discount") {
                     percentageField.classList.add("d-none");
                     fixedPriceField.classList.add("d-none");
-                } else if (value === "2") {
+                } else if (value === "percentage") {
                     percentageField.classList.remove("d-none");
                     fixedPriceField.classList.add("d-none");
-                } else if (value === "3") {
+                } else if (value === "fixed_price") {
                     percentageField.classList.add("d-none");
                     fixedPriceField.classList.remove("d-none");
                 }
@@ -138,7 +138,7 @@ var KTAppEcommerceSaveProduct = function () {
                         submitButton.disabled = false;
 
                         Swal.fire({
-                            text: response.message,
+                            text: response.text,
                             icon: response.icon,
                             buttonsStyling: false,
                             confirmButtonText: response.confirmButtonText,
@@ -176,18 +176,18 @@ var KTAppEcommerceSaveProduct = function () {
                             });
 
                             Swal.fire({
-                                text: "Please correct the errors and try again.",
-                                icon: "error",
+                                text: xhr.responseJSON.text,
+                                icon: xhr.responseJSON.icon,
                                 buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
+                                confirmButtonText: xhr.responseJSON.confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         } else {
                             Swal.fire({
-                                text: "An unexpected error occurred. Please try again.",
-                                icon: "error",
+                                text: xhr.responseJSON.text,
+                                icon: xhr.responseJSON.icon,
                                 buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
+                                confirmButtonText: xhr.responseJSON.confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         }
