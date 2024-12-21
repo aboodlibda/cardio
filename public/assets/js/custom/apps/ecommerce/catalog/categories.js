@@ -69,11 +69,11 @@ var KTAppEcommerceCategories = function () {
                             confirmButtonText: "Ok, got it!",
                             customClass: { confirmButton: "btn fw-bold btn-primary" }
                         });
-                    }
+                        }
+                    });
                 });
-            });
-        }));
-    };
+            }));
+        };
 
     return {
         init: function () {
