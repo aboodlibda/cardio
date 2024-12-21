@@ -9,7 +9,7 @@
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
             <li class="breadcrumb-item text-muted"><a class="text-muted text-hover-primary" href="{{ route('coupons.index') }}">{{trans('dashboard_trans.Coupons')}}</a></li>
@@ -23,7 +23,7 @@
         <!--begin::Container-->
         <div class="container-xxl" id="kt_content_container">
             <!--begin::Form-->
-            <form id="kt_ecommerce_add_coupon_form" action="{{route('coupons.store')}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="../../demo3/dist/apps/ecommerce/catalog/products.html">
+            <form id="kt_ecommerce_add_coupon_form" action="{{route('coupons.store')}}" class="form d-flex flex-column flex-lg-row" data-kt-redirect="{{route('coupons.create')}}">
              @csrf
                 @method('POST')
                 <!--begin::Main column-->
@@ -120,7 +120,7 @@
                                                 <label class="required form-label">{{trans('dashboard_trans.Max Usage')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="number" name="max_usage" placeholder="{{trans('dashboard_trans.Max Usage')}}" class="form-control mb-2" value="" />
+                                                <input type="number" name="max_used" placeholder="{{trans('dashboard_trans.Max Usage')}}" class="form-control mb-2" value="" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -132,7 +132,7 @@
                                             <label class="required form-label">{{trans('dashboard_trans.Start Date')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <input type="date" name="start_at" placeholder="{{trans('dashboard_trans.Start Date')}}" class="form-control mb-2" value="" />
+                                            <input type="date" name="start_date" placeholder="{{trans('dashboard_trans.Start Date')}}" class="form-control mb-2" value="" />
                                             <!--end::Editor-->
                                         </div>
                                         <!--end::Input group-->
@@ -142,7 +142,7 @@
                                             <label class="required form-label">{{trans('dashboard_trans.End Date')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Editor-->
-                                            <input type="date"  name="end_at" placeholder="{{trans('dashboard_trans.End Date')}}" class="form-control mb-2" value="" />
+                                            <input type="date"  name="end_date" placeholder="{{trans('dashboard_trans.End Date')}}" class="form-control mb-2" value="" />
                                             <!--end::Editor-->
                                         </div>
                                         <!--end::Input group-->
@@ -150,39 +150,72 @@
                                 </div>
                                 <!--end::General options-->
                             </div>
-                                <!--begin::Status-->
+                                <!--begin::Products & Status-->
                                 <div class="card card-flush py-4">
                                     <!--begin::Card header-->
                                     <div class="card-header">
                                         <!--begin::Card title-->
                                         <div class="card-title">
-                                            <h2>{{trans('dashboard_trans.Status')}}</h2>
+                                            <h2>{{trans('dashboard_trans.Coupon Details')}}</h2>
                                         </div>
                                         <!--end::Card title-->
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar">
-                                            <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_coupon_status"></div>
-                                        </div>
-                                        <!--begin::Card toolbar-->
                                     </div>
                                     <!--end::Card header-->
                                     <!--begin::Card body-->
                                     <div class="card-body pt-0">
+                                        <!--begin::Input group-->
+                                        <!--begin::Label-->
+                                        <label class="form-label">{{trans('dashboard_trans.Products')}}</label>
+                                        <!--end::Label-->
                                         <!--begin::Select2-->
-                                        <select class="form-select mb-2" name="status"   data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_coupon_status_select">
-                                            <option disabled selected hidden=>{{trans('dashboard_trans.Select an option')}}</option>
-                                            <option value="active">{{trans('dashboard_trans.Active')}}</option>
-                                            <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
+                                        <select class="form-select mb-2 select2-hidden-accessible"  name="product" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                                            <option></option>
+                                            @foreach($products as $product)
+                                                <option value="{{$product->id}}">{{$product->name}}</option>
+                                            @endforeach
                                         </select>
                                         <!--end::Select2-->
                                         <!--begin::Description-->
-                                        <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
+                                        <div class="text-muted fs-7 mb-7">{{trans('dashboard_trans.Add coupon to a product')}}.</div>
                                         <!--end::Description-->
+                                        <!--end::Input group-->
                                     </div>
-                                    <div id="status-error" class="error-message"></div>
                                     <!--end::Card body-->
+                                    <!--begin::Status-->
+
+                                        <!--begin::Card header-->
+                                        <div class="card-header">
+                                            <!--begin::Card title-->
+                                            <div class="card-title">
+                                                <h2>{{trans('dashboard_trans.Status')}}</h2>
+                                            </div>
+                                            <!--end::Card title-->
+                                            <!--begin::Card toolbar-->
+                                            <div class="card-toolbar">
+                                                <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_coupon_status"></div>
+                                            </div>
+                                            <!--begin::Card toolbar-->
+                                        </div>
+                                        <!--end::Card header-->
+                                        <!--begin::Card body-->
+                                        <div class="card-body pt-0">
+                                            <!--begin::Select2-->
+                                            <select class="form-select mb-2" name="status" data-control="select2"   data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_coupon_status_select">
+                                                <option></option>
+                                                <option value="active">{{trans('dashboard_trans.Active')}}</option>
+                                                <option value="inactive">{{trans('dashboard_trans.Inactive')}}</option>
+                                            </select>
+                                            <!--end::Select2-->
+                                            <!--begin::Description-->
+                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
+                                            <!--end::Description-->
+                                        </div>
+                                        <div id="status-error" class="error-message"></div>
+                                        <!--end::Card body-->
+
+                                    <!--end::Status-->
                                 </div>
-                                <!--end::Status-->
+                                <!--end::Products & Status-->
                         </div>
                         <!--end::Tab pane-->
                         </div>
