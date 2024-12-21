@@ -1,5 +1,8 @@
 @extends('cms.layout.master')
 @section('title',trans('dashboard_trans.Add new products'))
+@section('style')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-10 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
@@ -107,7 +110,7 @@
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <!--begin::Select2-->
-                            <select class="form-select mb-2" data-control="select2"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_product_status_select">
+                            <select class="form-select mb-2" data-control="select2" name="status" data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}" id="kt_ecommerce_add_product_status_select">
                                 <option></option>
                                 <option value="published">{{trans('dashboard_trans.Published')}}</option>
                                 <option value="draft">{{trans('dashboard_trans.Draft')}}</option>
@@ -149,7 +152,7 @@
                             <select class="form-select mb-2 select2-hidden-accessible" name="category_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
                                 <option></option>
                                 @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                <option value="{{$category->id}}" @selected(old('category_id') == $category->id)>{{$category->name}}</option>
                                 @endforeach
                             </select>
                             <!--end::Select2-->
@@ -166,10 +169,10 @@
                             <label class="form-label d-block">{{trans('dashboard_trans.Tags')}}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select class="form-select mb-2 select2-hidden-accessible" name="tags" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                            <select class="form-select mb-2 select2-hidden-accessible" name="tag_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
                                 <option></option>
                                 @foreach($tags as $tag)
-                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                    <option value="{{$tag->id}}" @selected(old('tags') == $tag->id)>{{$tag->name}}</option>
                                 @endforeach
                             </select>
                             <!--end::Input-->
@@ -241,9 +244,9 @@
                                             <label class="required form-label">{{trans('dashboard_trans.Product Name')}} ({{$lang}})</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="title[{{$key}}]" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('title.'.$key)}}" />
+                                            <input type="text" name="name[{{$key}}]" id="name" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('name.'.$key)}}" />
                                             <!--end::Input-->
-                                            <div id="title-{{ $key }}-error" class="error-message"></div>
+                                            <div id="name-{{ $key }}-error" class="error-message"></div>
                                         </div>
                                         @endforeach
                                         <!--begin::Description-->
@@ -330,7 +333,7 @@
                                             <label class="required form-label">{{trans('dashboard_trans.Base Price')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="price" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product price')}}" value="" />
+                                            <input type="text" name="price" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product price')}}" value="{{old('price')}}" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the product price')}}.</div>
@@ -358,7 +361,7 @@
                                                     <label class="btn btn-outline btn-outline-dashed btn-active-light-primary active d-flex text-start p-6" data-kt-button="true">
                                                         <!--begin::Radio-->
                                                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																			<input class="form-check-input" type="radio" name="discount_option" value="1" checked="checked" />
+																			<input class="form-check-input" type="radio" name="discount_type" @checked(old('no_discount')) value="no_discount" checked="checked" />
 																		</span>
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
@@ -376,7 +379,7 @@
                                                     <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6" data-kt-button="true">
                                                         <!--begin::Radio-->
                                                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																			<input class="form-check-input" type="radio" name="discount_option" value="2" />
+																			<input class="form-check-input" type="radio" @checked(old('percentage')) name="discount_type" value="percentage" />
 																		</span>
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
@@ -394,7 +397,7 @@
                                                     <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6" data-kt-button="true">
                                                         <!--begin::Radio-->
                                                         <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-																			<input class="form-check-input" type="radio" name="discount_option" value="3" />
+																			<input class="form-check-input" type="radio" name="discount_type" @checked(old('fixed_price')) value="fixed_price" />
 																		</span>
                                                         <!--end::Radio-->
                                                         <!--begin::Info-->
@@ -435,7 +438,7 @@
                                             <label class="form-label">{{trans('dashboard_trans.Fixed Discounted Price')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="discounted_price" class="form-control mb-2" placeholder="Discounted price" />
+                                            <input type="text" name="discounted_price" value="{{old('discounted_price')}}" class="form-control mb-2" placeholder="Discounted price" />
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the discounted product price. The product will be reduced at the determined fixed price')}}</div>
@@ -450,11 +453,11 @@
                                                 <label class="required form-label">{{trans('dashboard_trans.Tax Class')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Select2-->
-                                                <select class="form-select mb-2" data-control="select2" name="tax"  data-hide-search="true" data-placeholder="Select an option">
-                                                    <option disabled hidden selected>{{trans('dashboard_trans.Select an option')}}</option>
-                                                    <option value="0">{{trans('dashboard_trans.Tax Free')}}</option>
-                                                    <option value="1">{{trans('dashboard_trans.Taxable Goods')}}</option>
-                                                    <option value="2">{{trans('dashboard_trans.Downloadable Product')}}</option>
+                                                <select class="form-select mb-2" data-control="select2" name="tax_type"  data-hide-search="true" data-placeholder="{{trans('dashboard_trans.Select an option')}}">
+                                                    <option></option>
+                                                    <option value="free" @selected(old('tax_type') == 'free')>{{trans('dashboard_trans.Tax Free')}}</option>
+                                                    <option value="taxable_goods" @selected(old('taxable_goods') == 'taxable_goods')>{{trans('dashboard_trans.Taxable Goods')}}</option>
+                                                    <option value="downloadable_product" @selected(old('downloadable_product') == 'downloadable_product')>{{trans('dashboard_trans.Downloadable Product')}}</option>
                                                 </select>
                                                 <!--end::Select2-->
                                                 <!--begin::Description-->
@@ -468,7 +471,7 @@
                                                 <label class="form-label">{{trans('dashboard_trans.VAT Amount (%)')}}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="text" class="form-control mb-2" value="" />
+                                                <input type="text" class="form-control mb-2" name="vat_amount" value="{{old('vat_amount')}}" />
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
                                                 <div class="text-muted fs-7">{{trans('dashboard_trans.Set the product VAT about')}}.</div>
@@ -500,15 +503,12 @@
                                     <div class="card-body pt-0">
                                         <!--begin::Input group-->
                                         <div class="mb-10 fv-row">
-                                            <!--begin::Label-->
+                                            <!-- Label -->
                                             <label class="required form-label">{{trans('dashboard_trans.SKU')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" name="sku" class="form-control mb-2" placeholder="{{trans('dashboard_trans.SKU')}}" value="" />
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Enter the product SKU')}}.</div>
-                                            <!--end::Description-->
+                                            <!-- Input -->
+                                            <input type="text" readonly name="SKU" id="sku-input" class="form-control mb-2" placeholder="{{trans('dashboard_trans.SKU')}}" value="" />
+                                            <!-- Description -->
+{{--                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Enter the product SKU')}}.</div>--}}
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -527,20 +527,20 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="fv-row">
-                                            <!--begin::Label-->
-                                            <label class="form-label">{{trans('dashboard_trans.Allow Backorders')}}</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <div class="form-check form-check-custom form-check-solid mb-2">
-                                                <input class="form-check-input" type="checkbox" value="" />
-                                                <label class="form-check-label">Yes</label>
-                                            </div>
-                                            <!--end::Input-->
-                                            <!--begin::Description-->
-                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Allow customers to purchase products that are out of stock')}}.</div>
-                                            <!--end::Description-->
-                                        </div>
+{{--                                        <div class="fv-row">--}}
+{{--                                            <!--begin::Label-->--}}
+{{--                                            <label class="form-label">{{trans('dashboard_trans.Allow Backorders')}}</label>--}}
+{{--                                            <!--end::Label-->--}}
+{{--                                            <!--begin::Input-->--}}
+{{--                                            <div class="form-check form-check-custom form-check-solid mb-2">--}}
+{{--                                                <input class="form-check-input" type="checkbox" value="" />--}}
+{{--                                                <label class="form-check-label">{{trans('dashboard_trans.Yes')}}</label>--}}
+{{--                                            </div>--}}
+{{--                                            <!--end::Input-->--}}
+{{--                                            <!--begin::Description-->--}}
+{{--                                            <div class="text-muted fs-7">{{trans('dashboard_trans.Allow customers to purchase products that are out of stock')}}.</div>--}}
+{{--                                            <!--end::Description-->--}}
+{{--                                        </div>--}}
                                         <!--end::Input group-->
                                     </div>
                                     <!--end::Card header-->
@@ -602,6 +602,25 @@
                                             <!--end::Repeater-->
                                         </div>
                                         <!--end::Input group-->
+                                        <!--begin::Card body-->
+
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <!--begin::Input group-->
+                                        <div class="mb-10">
+                                            <!--begin::Label-->
+                                            <label class="form-label">({{'slug'}}){{ 'عنوان الرابط' }}</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input group with button-->
+                                            <div class="input-group mb-2">
+                                                <input type="text" id="slug" class="form-control" name="slug" placeholder="عنوان الرابط" />
+                                            </div>
+                                            <!--end::Input group with button-->
+                                            <!--begin::Description-->
+                                            <div class="text-muted fs-7">{{ 'توليد عنوان رابط تلقائي' }}</div>
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Card header-->
                                 </div>
@@ -633,15 +652,68 @@
     <!--end::Content-->
 @endsection
 @section('script')
+
     <!--begin::Vendors Javascript(used for this page only)-->
     <script src="{{asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js')}}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+
+    <script>
+        const routes = {
+            post: "{{ route('store-media') }}",
+        };
+    </script>
     <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-product.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
     <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
     <script src="{{asset('assets/js/custom/widgets.js')}}"></script>
     <!--end::Custom Javascript-->
 
+
+
+    <script>
+        document.querySelectorAll('input[name]').forEach(function(input) {
+            input.addEventListener('input', function() {
+                // Check if the input field's name is "name[en]"
+                if (this.name === 'name[en]') {
+                    let productName = this.value;
+                    let slug = productName
+                        .toLowerCase() // Convert to lowercase
+                        .trim() // Remove leading and trailing spaces
+                        .replace(/[\s\W-]+/g, '-') // Replace spaces and non-word characters with dashes
+                        .replace(/^-+|-+$/g, ''); // Remove leading and trailing dashes
+
+                    // Set the slug value in the slug input field
+                    document.getElementById('slug').value = slug;
+                }
+            });
+        });
+
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const skuInput = document.getElementById('sku-input');
+
+            // Function to generate random SKU
+            function generateSKU() {
+                const randomNumber = Math.floor(100000 + Math.random() * 900000); // Generates 6-digit random number
+                return `SKU-${randomNumber}`;
+            }
+
+            // Generate SKU when the page loads if the field is empty
+            if (skuInput && skuInput.value.trim() === '') {
+                skuInput.value = generateSKU();
+            }
+
+            // Optional: Generate SKU on click if the field is empty
+            skuInput.addEventListener('focus', function () {
+                if (skuInput.value.trim() === '') {
+                    skuInput.value = generateSKU();
+                }
+            });
+        });
+    </script>
 @endsection
