@@ -1,7 +1,7 @@
 "use strict";
 var user_id = $('meta[name="user_id"]').attr('content');
 var root = window.location.protocol + '//' + window.location.host;
-var lang = $('html').attr('lang'); // Get language from HTML lang attribute (e.g., "ar")
+var lang = $('html').attr('lang'); // Get language from HTML lang attributes (e.g., "ar")
 var baseURL = window.location.protocol + '//' + window.location.host + '/' + lang + '/cms/users/' + user_id;
 
 var KTUsersUpdateDetails = function () {
