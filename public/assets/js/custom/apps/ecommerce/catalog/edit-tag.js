@@ -5,7 +5,7 @@ var KTUsersEditTag = function () {
     const initTagModals = () => {
         // Iterate over all modal trigger buttons
         document.querySelectorAll('[data-bs-target^="#kt_modal_edit_tag"]').forEach((modalTrigger) => {
-            // Get the modal id from the button's data-bs-target attribute
+            // Get the modal id from the button's data-bs-target attributes
             const modalId = modalTrigger.getAttribute('data-bs-target');
             // Select the modal element
             const modalElement = document.querySelector(modalId);
