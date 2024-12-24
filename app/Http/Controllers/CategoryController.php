@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ControllerHelper;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Services\ImageUploadService;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -27,16 +28,9 @@ class CategoryController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'parent_id'    => 'nullable|int',
-            'name.*'       => 'required|string',
-            'description.*'  => 'nullable|string',
-            'image'        => 'nullable|image',
-            'status'       => 'required|in:active,inactive',
-            'slug'         => 'nullable|string|unique:categories',
-        ]);
+        $request->validated();
         $data = $request->only([
             'parent_id' , 'name', 'description' , 'image' , 'status' , 'slug'
         ]);
@@ -50,17 +44,9 @@ class CategoryController extends Controller
 
 
         if ($is_Saved){
-            return response()->json([
-                'icon' => 'success',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Category created successfully'),
-            ]);
+            return ControllerHelper::generateResponse('success',   trans('dashboard_trans.Category created successfully'),200);
         }else{
-            return response()->json([
-                'icon' => 'error',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Failed to create category!'),
-            ]);
+            return ControllerHelper::generateResponse('error',   trans('dashboard_trans.Failed to create category!'),500);
         }
     }
 
@@ -75,18 +61,11 @@ class CategoryController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $request->request->add(['id'=>$id]);
 
-        $request->validate([
-            'parent_id'    => 'nullable|int',
-            'name.*'         => 'required|string',
-            'description.*'  => 'nullable|string',
-            'image'        => 'image',
-            'status'       => 'in:active,inactive',
-            'slug'         => 'nullable|string|unique:categories',
-        ]);
+        $request->validated();
 
         $data = $request->only([
             'parent_id' , 'name', 'description' ,'image' , 'status' , 'slug'
@@ -100,17 +79,9 @@ class CategoryController extends Controller
         $isUpdated = Category::query()->find($id)->update($data);
 
         if ($isUpdated){
-            return response()->json([
-                'icon' => 'success',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Category updated successfully'),
-            ]);
+            return ControllerHelper::generateResponse('success', trans('dashboard_trans.Category updated successfully'),200);
         }else{
-            return response()->json([
-                'icon' => 'success',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Failed to update category!'),
-            ]);
+            return ControllerHelper::generateResponse('error', trans('dashboard_trans.Failed to update category!'),500);
         }
 
     }
@@ -118,19 +89,11 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $isDeleted = Category::destroy($id);
-        if ($isDeleted){
-            return response()->json([
-                'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
-                'icon' => 'success',
-                'text' => trans('dashboard_trans.Category Deleted Successfully'),
-            ]);
-        }else{
-            return response()->json([
-            'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),
-            'icon' => 'error',
-            'text' => trans('dashboard_trans.Failed to delete this category!'),
-        ]);
 
+        if ($isDeleted){
+            return ControllerHelper::generateResponse('success', trans('dashboard_trans.Category Deleted Successfully'),200);
+        }else{
+            return ControllerHelper::generateResponse('error', trans('dashboard_trans.Failed to delete this category!'),500);
         }
 
     }
