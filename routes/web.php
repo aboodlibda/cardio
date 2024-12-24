@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
@@ -33,6 +34,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
             'orders'      => OrderController::class,
             'permissions' => PermissionController::class,
             'customers'   => CustomerController::class,
+            'attributes'  => AttributeController::class,
         ]);
 
 
