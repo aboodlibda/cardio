@@ -110,6 +110,29 @@ var KTAppEcommerceSaveProduct = function () {
         $("#kt_ecommerce_add_product_status_datepicker").flatpickr({ enableTime: true, dateFormat: "Y-m-d H:i" });
     };
 
+
+    // اللغة الحالية (تبديل بين "ar" و "en")
+    const currentLanguage = document.documentElement.lang || "ar";
+
+    // رسائل الأخطاء متعددة اللغات
+    const messages = {
+        en: {
+            required: "This field is required.",
+            correctErrors: "Please correct the highlighted errors and try again.",
+            genericError: "An error occurred. Please try again later.",
+            validated: "Validated successfully!",
+            confirmButtonText: "Ok, got it!",
+
+        },
+        ar: {
+            required: "هذا الحقل مطلوب.",
+            correctErrors: "يرجى تصحيح الأخطاء المشار إليها ثم المحاولة مرة أخرى.",
+            genericError: "حدث خطأ. يرجى المحاولة لاحقًا.",
+            validated: "تم التحقق بنجاح!",
+            confirmButtonText:"حسناً،فهمت"
+        }
+    };
+
     // Handle Form Submission
     const handleFormSubmit = () => {
         const form = document.getElementById("kt_ecommerce_add_product_form");
@@ -176,18 +199,18 @@ var KTAppEcommerceSaveProduct = function () {
                             });
 
                             Swal.fire({
-                                text: xhr.responseJSON.text,
-                                icon: xhr.responseJSON.icon,
+                                text: messages[currentLanguage].correctErrors,
+                                icon: 'error',
                                 buttonsStyling: false,
-                                confirmButtonText: xhr.responseJSON.confirmButtonText,
+                                confirmButtonText: messages[currentLanguage].confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         } else {
                             Swal.fire({
-                                text: xhr.responseJSON.text,
-                                icon: xhr.responseJSON.icon,
+                                text: messages[currentLanguage].genericError,
+                                icon: 'error',
                                 buttonsStyling: false,
-                                confirmButtonText: xhr.responseJSON.confirmButtonText,
+                                confirmButtonText: messages[currentLanguage].confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         }
