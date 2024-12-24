@@ -602,6 +602,21 @@ return [
     'Coupon Details'=>'تفاصيل كود الخصم',
     'Add coupon to a product'=>'اضافة كود الخصم الى المنتج',
     'Yes'=>'نعم',
+    'Products Properties'=>'خصائص المنتجات',
+    'Attributes'=>'الخصائص',
+    'All Attributes'=>'كافة الخصائص',
+    'Search Attribute'=>'بحث الخصائص',
+    'Add Attribute'=>'اضافة خاصية',
+    'A attribute name is required and recommended to be unique'=>'يجب أن يكون اسم الخاصية فريدًا ومن المستحسن أن يكون فريدًا',
+    'Attribute Name'=>'اسم الخاصية',
+    'Attribute has been deleted successfully'=>'تم حذف الخاصية بنجاح',
+
+
+
+
+
+
+
 
 
 
