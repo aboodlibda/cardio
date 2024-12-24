@@ -9,6 +9,8 @@ use App\Models\Tag;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ProductRequest;
+
 
 class ProductController extends Controller
 {
@@ -32,31 +34,9 @@ class ProductController extends Controller
         return view('cms.product.create',compact('categories','tags'));
     }
 
-
-
-    // Adjusted store method to handle image uploading
-    public function store(Request $request,ImageUploadService $imageUploadService)
+    public function store(ProductRequest $request,ImageUploadService $imageUploadService)
     {
-        $validator = Validator::make($request->all(), [
-            'name.*'          => 'required|string|min:3|max:100',
-            'description.*'   => 'nullable|string',
-            'price'           => 'required|integer|numeric',
-            'status'          => 'required|in:published,unpublished,draft',
-            'slug'            => 'required|string|unique:products,slug',
-            'quantity'        => 'required|numeric',
-            'SKU'             => 'required|string|min:5|max:30',
-            'category_id'     => 'required|int|exists:categories,id',
-            'discount_type'   => 'required|in:no_discount,percentage,fixed_price',
-            'tax_type'        => 'required|in:free,taxable_goods,downloadable_product',
-            'vat_amount'      => 'nullable|numeric',
-            'discounted_price'=> 'nullable|numeric',
-            'images.*'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'tag_id'          => 'nullable|string|exists:tags,id',
-        ]);
-
-        if ($validator->fails()) {
-            return ControllerHelper::generateResponse($validator->errors(), 'error', trans('dashboard_trans.Please correct the highlighted errors and try again'), 422);
-        }
+        $request->validated();
 
         $data = $request->only([
             'name', 'description', 'price', 'status', 'user_id', 'slug', 'quantity', 'SKU', 'tax_type', 'vat_amount', 'discount_type', 'discounted_price'
@@ -92,9 +72,9 @@ class ProductController extends Controller
         session()->forget('uploaded_files');
 
         if ($product) {
-            return ControllerHelper::generateResponse('', 'success', trans('dashboard_trans.Product created successfully'), 201);
+            return ControllerHelper::generateResponse('success', trans('dashboard_trans.Product created successfully'), 201);
         } else {
-            return ControllerHelper::generateResponse('', 'error', trans('dashboard_trans.Failed to create product'), 500);
+            return ControllerHelper::generateResponse( 'error', trans('dashboard_trans.Failed to create product'), 500);
         }
     }
 
@@ -110,30 +90,12 @@ class ProductController extends Controller
         return view('cms.product.edit',compact('product','categories','tags'));
     }
 
-    public function update(Request $request, $id, ImageUploadService $imageUploadService)
+    public function update(ProductRequest $request, $id, ImageUploadService $imageUploadService)
     {
         $request->request->add(['id' => $request->$id]);
 
-        $validator = Validator::make($request->all(),[
-            'id'            =>'required|int|exists:products,id',
-            'name.*'        => 'required|string|min:3|max:100',
-            'description.*' => 'nullable|string',
-            'price'         => 'required|integer|numeric',
-            'status'        => 'in:published,unpublished,draft',
-//            'user_id'     => 'required|int|exists:users,id',
-            'slug'          => 'required|string|unique:products,slug',
-            'quantity'      => 'required|numeric',
-            'SKU'           => 'required|string|min:5|max:30',
-            'category_id'   => 'required|int|exists:categories,id',
-            'discount_type'    => 'required|in:no_discount,percentage,fixed_price',
-            'tax_type'         => 'required|in:free,taxable_goods,downloadable_product',
-            'vat_amount'       => 'nullable|numeric',
-            'discounted_price' => 'nullable|numeric',
-            'images.*'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-        ]);
-        if ($validator->fails()) {
-            return ControllerHelper::generateResponse($validator->errors(), 'error', trans('dashboard_trans.Please correct the highlighted errors and try again'),422);
-        }
+        $request->validated();
+
         $product = Product::query()->findOrFail($id);
 
         $data = $request->only([
@@ -172,9 +134,9 @@ class ProductController extends Controller
         session()->forget('uploaded_files');
 
         if ($isUpdated){
-            return ControllerHelper::generateResponse('','success',trans('dashboard_trans.Product updated successfully'),200);
+            return ControllerHelper::generateResponse('success',trans('dashboard_trans.Product updated successfully'),200);
         }else{
-            return ControllerHelper::generateResponse('','error',trans('dashboard_trans.Failed to update product'),500);
+            return ControllerHelper::generateResponse('error',trans('dashboard_trans.Failed to update product'),500);
 
         }
     }
@@ -195,9 +157,9 @@ class ProductController extends Controller
 
             $product->delete();
 
-            return ControllerHelper::generateResponse('','success',trans('dashboard_trans.Product deleted successfully'),201);
+            return ControllerHelper::generateResponse('success',trans('dashboard_trans.Product deleted successfully'),201);
         }
-        return ControllerHelper::generateResponse('','error',trans('dashboard_trans.Failed to delete this product'),500);
+        return ControllerHelper::generateResponse('error',trans('dashboard_trans.Failed to delete this product'),500);
     }
 
     public function storeMedia(Request $request, ImageUploadService $imageUploadService)
