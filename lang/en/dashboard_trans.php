@@ -601,6 +601,15 @@ return [
     'Add coupon to a product'=>'Add coupon to a product',
     'Yes'=>'Yes',
     'Failed to delete this product'=>'Failed to delete this product',
+    'Products Properties'=>'Products Properties',
+    'Attributes'=>'Attributes',
+    'All Attributes'=>'All Attributes',
+    'Search Attribute'=>'Search Attribute',
+    'Add Attribute'=>'Add Attribute',
+    'A attribute name is required and recommended to be unique'=>'A attribute name is required and recommended to be unique',
+    'Attribute Name'=>'Attribute Name',
+    'Attribute has been deleted successfully'=>'Attribute has been deleted successfully',
+
 
 
 
