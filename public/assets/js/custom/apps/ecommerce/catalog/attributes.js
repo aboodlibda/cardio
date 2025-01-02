@@ -1,70 +1,89 @@
 "use strict";
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+let messages = {};
+
+var lang = $('html').attr('lang');
 
 const currentLanguage = document.documentElement.lang || "ar";
 
-const messages = {
-
-    en: {
-        Deleted:"Are you sure you want to delete",
-        NotDeleted:"was not deleted.",
-        genericError: "An error occurred. Please try again later.",
-        confirmButtonText: "Ok, got it!",
-        YesButtonText: "Yes, delete!",
-        NoButtonText:"No, cancel!",
-
-    },
-
-    ar: {
-        Deleted:"هل انت متأكد أنك تريد حذف",
-        NotDeleted:"لم يتم حذفه",
-        genericError: "حدث خطأ. يرجى المحاولة لاحقًا.",
-        confirmButtonText:"حسناً،فهمت",
-        YesButtonText: "حسناً، احذفه",
-        NoButtonText:"لا، تراجع",
-
-
+function loadMessagesWithCache(lang) {
+    const cachedMessages = localStorage.getItem(`messages_${lang}`);
+    if (cachedMessages) {
+        messages = JSON.parse(cachedMessages);
+        return Promise.resolve();
+    } else {
+        return $.getJSON(`/assets/js/custom/apps/ecommerce/language/languages.json`, function (data) {
+            messages = data[lang] || data["en"];
+            localStorage.setItem(`messages_${lang}`, JSON.stringify(messages));
+        });
     }
-};
+}
 
+loadMessagesWithCache(currentLanguage).then(() => {
+    console.log("Messages loaded:", messages);
+});
+
+const dataTableLanguage = currentLanguage === "ar"
+    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
+    : '';
 var KTAppEcommerceAttributes = function () {
-    var t, e, n = () => {
-        t.querySelectorAll('[data-kt-ecommerce-attribute-filter="delete_row"]').forEach((t => {
-            t.addEventListener("click", function (t) {
-                t.preventDefault();
-                const n = t.target.closest("tr"),
-                    o = n.querySelector('[data-kt-ecommerce-attribute-filter="attribute_name"]').innerText,
-                    attributeId = n.getAttribute('data-attribute-id'); // Retrieve the attribute ID
+    return {
+        init: function () {
+            const table = $("#kt_ecommerce_attribute_table").DataTable({
+                processing: true,
+                serverSide: true,
+                language: { url: dataTableLanguage },
+                ajax: {
+                    url: '/' + lang + '/cms/attributes/',
+                    type: "GET",
+                },
+                columns: [
+                    // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    // {data: 'id', name: 'id'},
+                    { data: "checkbox", orderable: false, searchable: false },
+                    {data: 'name', name: 'name'},
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'actions', name: 'actions', orderable: true, searchable: true
+                    },
+                ],
+                order: [[1, "asc"]]
+                // target: "_all"
+
+            });
+
+            // Delete functionality
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            table.on("click", '[data-kt-ecommerce-attribute-filter="delete_row"]', function () {
+                const attributeId = $(this).closest("div[data-attribute-id]").data("attribute-id");
+                const attributeName = $(this).closest("div[data-attribute-id]").data("attribute-name");
 
                 Swal.fire({
-                    text: messages[currentLanguage].Deleted + ' ' + o + "?",
+                    text: `${messages.Deleted} ${attributeName}?`,
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: messages[currentLanguage].YesButtonText,
-                    cancelButtonText: messages[currentLanguage].NoButtonText,
+                    confirmButtonText:messages.YesButtonText,
+                    cancelButtonText: messages.NoButtonText,
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((result) => {
                     if (result.value) {
-                        // Show loading indicator while processing
                         Swal.fire({
-                            text: "Deleting " + o + "...",
+                            text: "Deleting " + attributeName + "...",
                             icon: "info",
                             showConfirmButton: false,
                             allowOutsideClick: false
                         });
-
                         $.ajax({
-                            url: `/cms/attributes/${attributeId}`,
-                            method: 'DELETE',
+                            url:  '/' + lang + '/cms/attributes/' + attributeId,
+                            type: "DELETE",
                             success: function (response) {
                                 Swal.fire({
                                     text: response.text,
@@ -72,50 +91,37 @@ var KTAppEcommerceAttributes = function () {
                                     buttonsStyling: false,
                                     confirmButtonText: response.confirmButtonText,
                                     customClass: { confirmButton: "btn fw-bold btn-primary" }
-                                }).then(function () {
-                                    e.row($(n)).remove().draw();
-                                });
+                                }).then(() => table.ajax.reload());
                             },
-                            error: function (response) {
+                            error: function () {
                                 Swal.fire({
-                                    text: response.text,
-                                    icon: response.icon,
+                                    text: messages.genericError,
+                                    icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: response.confirmButtonText,
+                                    confirmButtonText: messages.confirmButtonText,
                                     customClass: { confirmButton: "btn fw-bold btn-primary" }
                                 });
                             }
                         });
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    }else if(result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire({
-                            text: o + ' ' + messages[currentLanguage].NotDeleted,
+                            text: attributeName + messages.NotDeleted,
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: messages[currentLanguage].confirmButtonText,
+                            confirmButtonText: messages.confirmButtonText,
                             customClass: { confirmButton: "btn fw-bold btn-primary" }
                         });
                     }
                 });
             });
-        }));
-    };
-
-    return {
-        init: function () {
-            (t = document.querySelector("#kt_ecommerce_attribute_table")) && ((e = $(t).DataTable({
-                info: false,
-                order: [],
-                pageLength: 10,
-                columnDefs: [{ orderable: false, targets: 0 }, { orderable: false, targets: 3 }]
-            })).on("draw", function () {
-                n();
-            }), document.querySelector('[data-kt-ecommerce-attribute-filter="search"]').addEventListener("keyup", function (t) {
-                e.search(t.target.value).draw();
-            }), n());
         }
     };
 }();
+$('#kt_ecommerce_attribute_table').on('draw.dt', function () {
+    KTMenu.createInstances();
+});
 
 KTUtil.onDOMContentLoaded(function () {
     KTAppEcommerceAttributes.init();
+
 });
