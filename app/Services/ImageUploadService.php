@@ -71,6 +71,7 @@ class ImageUploadService
 //        return $savedFiles;
 //    }
 
+
     public function moveImages(array $uploadedFiles, $destinationFolder)
     {
         $savedFiles = [];
@@ -78,8 +79,11 @@ class ImageUploadService
         foreach ($uploadedFiles as $fileName) {
             $sourcePath = storage_path('tmp/uploads/' . $fileName);
             if (file_exists($sourcePath)) {
-                Storage::disk('public')->putFileAs($destinationFolder, $sourcePath, $fileName);
-                $savedFiles[] = $destinationFolder . '/' . $fileName;
+                $newFilePath =  Storage::disk('public')->putFileAs($destinationFolder, $sourcePath, $fileName);
+                if($newFilePath){
+                    $savedFiles[] =  $destinationFolder . '/' . $fileName;
+                    unlink($sourcePath);
+                }
             }
         }
 
