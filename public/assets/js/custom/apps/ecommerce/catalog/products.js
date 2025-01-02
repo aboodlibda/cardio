@@ -1,110 +1,130 @@
 "use strict";
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+let messages = {};
+
+var lang = $('html').attr('lang');
+
+const currentLanguage = document.documentElement.lang || "ar";
+
+function loadMessagesWithCache(lang) {
+    const cachedMessages = localStorage.getItem(`messages_${lang}`);
+    if (cachedMessages) {
+        messages = JSON.parse(cachedMessages);
+        return Promise.resolve();
+    } else {
+        return $.getJSON(`/assets/js/custom/apps/ecommerce/language/languages.json`, function (data) {
+            messages = data[lang] || data["en"];
+            localStorage.setItem(`messages_${lang}`, JSON.stringify(messages));
+        });
     }
+}
+
+loadMessagesWithCache(currentLanguage).then(() => {
+    console.log("Messages loaded:", messages);
 });
 
+const dataTableLanguage = currentLanguage === "ar"
+    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
+    : '';
 var KTAppEcommerceProducts = function () {
-    var t, e, n = () => {
-        t.querySelectorAll('[data-kt-ecommerce-product-filter="delete_row"]').forEach((t => {
-            t.addEventListener("click", function (t) {
-                t.preventDefault();
-                const n = t.target.closest("tr"),
-                    o = n.querySelector('[data-kt-ecommerce-product-filter="product_name"]').innerText,
-                    productId = n.getAttribute('data-product-id'); // Retrieve the product ID
+    return {
+        init: function () {
+            const table = $("#kt_ecommerce_products_table").DataTable({
+                processing: true,
+                serverSide: true,
+                language: { url: dataTableLanguage },
+                ajax: {
+                    url: '/' + lang + '/cms/products/',
+                    type: "GET",
+                },
+                columns: [
+                    // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    // {data: 'id', name: 'id'},
+                    {data: "checkbox", orderable: false, searchable: false },
+                    {data: 'partials', name: 'partials'},
+                    // {data: 'name',      name: 'name'},
+                    {data: 'SKU',       name: 'SKU'},
+                    {data: 'quantity',  name: 'quantity'},
+                    {data: 'price',     name: 'price'},
+                    {data: 'status',    name: 'status'},
+                    {data: 'actions',   name: 'actions', orderable: true, searchable: true},
+                ],
+                order: [[1, "asc"]]
+                // target: "_all"
+
+            });
+
+            // Delete functionality
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            table.on("click", '[data-kt-ecommerce-product-filter="delete_row"]', function () {
+                const productId = $(this).closest("div[data-product-id]").data("product-id");
+                const productName = $(this).closest("div[data-product-id]").data("product-name");
 
                 Swal.fire({
-                    text: "Are you sure you want to delete " + o + "?",
+                    text: `${messages.Deleted} ${productName}?`,
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
+                    confirmButtonText:messages.YesButtonText,
+                    cancelButtonText: messages.NoButtonText,
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((result) => {
                     if (result.value) {
-                        // Show loading indicator while processing
                         Swal.fire({
-                            text: "Deleting " + o + "...",
+                            text: messages.Deleting + productName + "...",
                             icon: "info",
                             showConfirmButton: false,
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
+                            allowOutsideClick: false
                         });
-
-                        // Perform AJAX request to delete the product
                         $.ajax({
-                            url: `/cms/products/${productId}`,
-                            method: 'DELETE',
+                            url:  '/' + lang + '/cms/products/' + productId,
+                            type: "DELETE",
                             success: function (response) {
                                 Swal.fire({
                                     text: response.text,
                                     icon: response.icon,
                                     buttonsStyling: false,
                                     confirmButtonText: response.confirmButtonText,
-                                    customClass: { confirmButton: "btn btn-primary" }
-                                }).then(function () {
-                                    e.row($(n)).remove().draw(); // Remove the row from the DataTable
-                                });
+                                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                                }).then(() => table.ajax.reload());
                             },
-                            error: function (xhr) {
-                                if (xhr.status === 422) {
-                                    let errors = xhr.responseJSON.errors;
-                                    Swal.fire({
-                                        text: xhr.responseJSON.text,
-                                        icon: xhr.responseJSON.icon,
-                                        buttonsStyling: false,
-                                        confirmButtonText: xhr.responseJSON.confirmButtonText,
-                                        customClass: { confirmButton: "btn btn-primary" }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        text: xhr.responseJSON.text,
-                                        icon: xhr.responseJSON.icon,
-                                        buttonsStyling: false,
-                                        confirmButtonText: xhr.responseJSON.confirmButtonText,
-                                        customClass: { confirmButton: "btn btn-primary" }
-                                    });
-                                }
+                            error: function () {
+                                Swal.fire({
+                                    text: messages.genericError,
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: messages.confirmButtonText,
+                                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                                });
                             }
                         });
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    }else if(result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire({
-                            text: o + " was not deleted.",
+                            text: productName + messages.NotDeleted,
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: messages.confirmButtonText,
                             customClass: { confirmButton: "btn fw-bold btn-primary" }
                         });
                     }
                 });
             });
-        }));
-    };
-
-    return {
-        init: function () {
-            (t = document.querySelector("#kt_ecommerce_products_table")) && ((e = $(t).DataTable({
-                info: false,
-                order: [],
-                pageLength: 10,
-                columnDefs: [{ orderable: false, targets: 0 }, { orderable: false, targets: 3 }]
-            })).on("draw", function () {
-                n();
-            }), document.querySelector('[data-kt-ecommerce-product-filter="search"]').addEventListener("keyup", function (t) {
-                e.search(t.target.value).draw();
-            }), n());
         }
     };
 }();
+$('#kt_ecommerce_products_table').on('draw.dt', function () {
+    KTMenu.createInstances();
+});
 
 KTUtil.onDOMContentLoaded(function () {
     KTAppEcommerceProducts.init();
+
 });
