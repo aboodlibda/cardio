@@ -31,13 +31,15 @@ class ProductRequest extends FormRequest
             'slug'            => 'required|string|unique:products,slug',
             'quantity'        => 'required|numeric',
             'SKU'             => 'required|string|min:5|max:30',
-            'category_id'     => 'required|int|exists:categories,id',
+            'category_id'     => 'required|exists:categories,id',
+            'attribute_id'    => 'required|exists:attributes,id',
             'discount_type'   => 'required|in:no_discount,percentage,fixed_price',
             'tax_type'        => 'required|in:free,taxable_goods,downloadable_product',
             'vat_amount'      => 'nullable|numeric',
             'discounted_price'=> 'nullable|numeric',
             'images.*'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'tag_id'          => 'nullable|string|exists:tags,id',
+            'thumbnail'       => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'tag_id'          => 'nullable|exists:tags,id',
         ];
     }
 }
