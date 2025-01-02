@@ -1,5 +1,24 @@
 "use strict";
 var KTAppEcommerceSaveProduct = function () {
+    let messages = {};
+
+    const currentLanguage = document.documentElement.lang || "ar";
+    function loadMessagesWithCache(lang) {
+        const cachedMessages = localStorage.getItem(`messages_${lang}`);
+        if (cachedMessages) {
+            messages = JSON.parse(cachedMessages);
+            return Promise.resolve();
+        } else {
+            return $.getJSON(`/assets/js/custom/apps/ecommerce/language/languages.json`, function (data) {
+                messages = data[lang] || data["en"];
+                localStorage.setItem(`messages_${lang}`, JSON.stringify(messages));
+            });
+        }
+    }
+
+    loadMessagesWithCache(currentLanguage).then(() => {
+        console.log("Messages loaded:", messages);
+    });
     // Initialize Repeater
     const initRepeater = () => {
         $("#kt_ecommerce_add_product_options").repeater({
@@ -111,28 +130,6 @@ var KTAppEcommerceSaveProduct = function () {
     };
 
 
-    // اللغة الحالية (تبديل بين "ar" و "en")
-    const currentLanguage = document.documentElement.lang || "ar";
-
-    // رسائل الأخطاء متعددة اللغات
-    const messages = {
-        en: {
-            required: "This field is required.",
-            correctErrors: "Please correct the highlighted errors and try again.",
-            genericError: "An error occurred. Please try again later.",
-            validated: "Validated successfully!",
-            confirmButtonText: "Ok, got it!",
-
-        },
-        ar: {
-            required: "هذا الحقل مطلوب.",
-            correctErrors: "يرجى تصحيح الأخطاء المشار إليها ثم المحاولة مرة أخرى.",
-            genericError: "حدث خطأ. يرجى المحاولة لاحقًا.",
-            validated: "تم التحقق بنجاح!",
-            confirmButtonText:"حسناً،فهمت"
-        }
-    };
-
     // Handle Form Submission
     const handleFormSubmit = () => {
         const form = document.getElementById("kt_ecommerce_add_product_form");
@@ -199,18 +196,18 @@ var KTAppEcommerceSaveProduct = function () {
                             });
 
                             Swal.fire({
-                                text: messages[currentLanguage].correctErrors,
+                                text: messages.correctErrors,
                                 icon: 'error',
                                 buttonsStyling: false,
-                                confirmButtonText: messages[currentLanguage].confirmButtonText,
+                                confirmButtonText: messages.confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         } else {
                             Swal.fire({
-                                text: messages[currentLanguage].genericError,
+                                text: messages.genericError,
                                 icon: 'error',
                                 buttonsStyling: false,
-                                confirmButtonText: messages[currentLanguage].confirmButtonText,
+                                confirmButtonText: messages.confirmButtonText,
                                 customClass: { confirmButton: "btn btn-primary" }
                             });
                         }
@@ -219,6 +216,64 @@ var KTAppEcommerceSaveProduct = function () {
             });
         }
     };
+
+    const initializeSelect2WithInfiniteScroll = (selectElement, url) => {
+        selectElement.select2({
+            allowClear: true,
+            // multiple: true,
+            ajax: {
+                url: url,
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        page: params.page || 1,
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: $.map(data.data, function (item) {
+                            return {
+                                id: item.id,
+                                text: item.name[currentLanguage] || item.name["ar"] || item.name.en, // <--- تعديل هنا
+                            };
+                        }),
+                        pagination: {
+                            more: data.current_page < data.last_page,
+                        },
+                    };
+                },
+                cache: true,
+            },
+            minimumInputLength: 0,
+            templateResult: function (item) {
+                if (item.loading) {
+                    return item.text;
+                }
+                if (typeof item.text === 'object') {
+                    return item.text[currentLanguage] || item.text["ar"] || item.text.en;
+                }
+                return item.text;
+            },
+            templateSelection: function (item) {
+                if (item && item.text) {
+                    if (typeof item.text === 'object') {
+                        return item.text[currentLanguage] || item.text["ar"] || item.text.en;
+                    }
+                    return item.text;
+                }
+                return item ? item.text : item;
+            },
+        });
+    };
+    $(document).ready(function(){
+        initializeSelect2WithInfiniteScroll($('select[name="category_id[]"]'), categories.get);
+        initializeSelect2WithInfiniteScroll($('select[name="tag_id[]"]'), tags.get);
+        initializeSelect2WithInfiniteScroll($('select[name="attribute_id[]"]'), attributes.get);
+    });
 
     return {
         init: function () {
