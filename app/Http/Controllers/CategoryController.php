@@ -16,10 +16,35 @@ class CategoryController extends Controller
     {
         $this->imageUploadService = $imageUploadService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::query()->with('products')->get();
-        return view('cms.category.index',compact('categories'));
+        if ($request->ajax()) {
+            $query = Category::query()->latest();
+
+            return datatables()->of($query)
+                ->addColumn('actions', function ($row) {
+                    return view('cms.category.partials.actions', compact('row'))->render();
+                })
+                ->addColumn('checkbox', function ($row) {
+                    return '<input class="form-check-input" type="checkbox"  id="select-all"  data-kt-check-target="#kt_ecommerce_attribute_table .form-check-input" value="1" data-id="'.$row->id.'">';
+                })
+                ->addColumn('image', function ($row) {
+                    return view('cms.category.partials.image', compact('row'))->render();
+                })
+                ->editColumn('name',function($row){
+                    return $row->name;
+                })
+                ->editColumn('status', function ($row) {
+                    if ($row->status == 'active') {
+                        return '<div class="badge badge-success">'. trans('dashboard_trans.Active') .'</div>';
+                    } else {
+                        return '<div class="badge badge-danger">'. trans('dashboard_trans.Inactive') .'</div>';
+                    }
+                })
+                ->rawColumns(['actions','checkbox','image', 'status'])
+                ->make(true);
+        }
+        return view('cms.category.index');
     }
 
     public function create()
@@ -38,7 +63,7 @@ class CategoryController extends Controller
         $image = $this->imageUploadService->upload($request, 'image', 'images/categories');
         $data['image'] = $image;
 
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
+        $request->status = $request->input('status') === 'active' ? 'active' : ($request->has('status') ? 'active' : 'inactive');
 
         $is_Saved = Category::query()->create($data);
 
@@ -67,16 +92,30 @@ class CategoryController extends Controller
 
         $request->validated();
 
+        $category = Category::query()->findOrFail($id);
+
         $data = $request->only([
             'parent_id' , 'name', 'description' ,'image' , 'status' , 'slug'
         ]);
 
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
+        $request->status = $request->input('status') === 'active' ? 'active' : ($request->has('status') ? 'active' : 'inactive');
 
-        $image = $this->imageUploadService->upload($request, 'image', 'images/categories');
-        $data['image'] = $image;
+        if ($request->has('image')) {
+            if ($category->image) {
+                $imagePath = public_path('storage/'.$category->image);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            $image = $this->imageUploadService->upload($request, 'image', 'images/categories');
+            $data['image'] = $image;
 
-        $isUpdated = Category::query()->find($id)->update($data);
+        }else{
+            $data['image'] = $category->image;
+        }
+
+
+        $isUpdated = $category->update($data);
 
         if ($isUpdated){
             return ControllerHelper::generateResponse('success', trans('dashboard_trans.Category updated successfully'),200);
@@ -88,7 +127,16 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $isDeleted = Category::destroy($id);
+        $category = Category::findOrFail($id);
+        $image    = $category->image;
+
+        if ($image){
+            $imagePath = public_path('storage/'.$image);
+            if (file_exists($imagePath)){
+                unlink($imagePath);
+            }
+        }
+        $isDeleted = $category->delete();
 
         if ($isDeleted){
             return ControllerHelper::generateResponse('success', trans('dashboard_trans.Category Deleted Successfully'),200);
