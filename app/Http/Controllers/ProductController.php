@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ControllerHelper;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ProductRequest;
 
 
@@ -20,18 +20,102 @@ class ProductController extends Controller
     {
         $this->imageUploadService = $imageUploadService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::query()->with(['categories','tags','variants','images','coupons','orderItems'])->latest()->get();
-        return view('cms.product.index',compact('products'));
+        if ($request->ajax()) {
+            $query = Product::query()->latest();
+             return datatables()->of($query)
+                 ->addColumn('actions', function ($product) {
+                     return view('cms.product.partials.actions', compact('product'))->render();
+                 })
+                 ->addColumn('checkbox', function ($row) {
+                     return '<input class="form-check-input" type="checkbox"  id="select-all"  data-kt-check-target="#kt_ecommerce_attribute_table .form-check-input" value="1" data-id="'.$row->id.'">';
+                 })
+                 ->addColumn('partials', function ($product) {
+                     return view('cms.product.partials.partials', compact('product'))->render();
+                 })
+                 ->editColumn('name', function ($product) {
+                     return $product->name;
+                 })
+                 ->editColumn('sku', function ($product) {
+                     return $product->sku ?? '-';
+                 })
+                 ->editColumn('quantity', function ($product) {
+                     return $product->quantity ?? '-';
+                 })
+                 ->editColumn('price', function ($product) {
+                     return $product->price ?? '-';
+                 })
+                 ->editColumn('status', function ($product) {
+                     if ($product->status == 'published') {
+                         return '<div class="badge badge-light-primary">'. trans('dashboard_trans.Published') .'</div>';
+                     } elseif($product->status == 'draft') {
+                         return '<div class="badge badge-light-info">'. trans('dashboard_trans.Draft') .'</div>';
+                     }else{
+                         return '<div class="badge badge-light-danger">'. trans('dashboard_trans.Unpublished') .'</div>';
+                     }
+                 })
+                 ->rawColumns(['actions','checkbox','partials','status'])
+                 ->make(true);
+        }
+        return view('cms.product.index');
 
     }
 
+
+    public function getCategoriesData(Request $request)
+    {
+        $search = $request->input('q', '');
+        $page = $request->input('page', 1);
+
+        $categoriesQuery = Category::query()->where('name', 'like', "%{$search}%")
+        ->where('status','active');
+
+        $categories = $categoriesQuery->latest()->paginate(10);
+
+        $formattedCategories = $categories->items();
+
+        return response()->json([
+            'data' => $formattedCategories,
+            'current_page' => $categories->currentPage(),
+            'last_page' => $categories->lastPage(),
+        ]);
+    }
+
+    public function getTagsData(Request $request)
+    {
+        $search = $request->input('q', '');
+        $page = $request->input('page', 1);
+
+        $tagsQuery = Tag::query()->where('name', 'like', "%{$search}%");
+
+        $tags = $tagsQuery->paginate(10);
+
+        return response()->json([
+            'data' => $tags->items(),
+            'current_page' => $tags->currentPage(),
+            'last_page' => $tags->lastPage(),
+        ]);
+    }
+    public function getAttributesData(Request $request)
+    {
+        $search = $request->input('q', '');
+        $page = $request->input('page', 1);
+
+        $attributesQuery = Attribute::query()->where('name', 'like', "%{$search}%");
+
+        $attributes = $attributesQuery->paginate(10);
+
+        return response()->json([
+            'data' => $attributes->items(),
+            'current_page' => $attributes->currentPage(),
+            'last_page' => $attributes->lastPage(),
+        ]);
+    }
     public function create()
     {
-        $categories = Category::query()->get();
-        $tags = Tag::query()->latest()->get(['id','name']);
-        return view('cms.product.create',compact('categories','tags'));
+
+        return view('cms.product.create');
     }
 
     public function store(ProductRequest $request,ImageUploadService $imageUploadService)
@@ -46,6 +130,8 @@ class ProductController extends Controller
 
         $request->status = $request->input('status') === 'draft' ? 'draft' : ($request->has('status') ? 'published' : 'unpublished');
 
+        $thumbnail = $this->imageUploadService->upload($request,'thumbnail','images/products');
+        $data['thumbnail'] = $thumbnail;
 
         $product = Product::query()->create($data);
 
@@ -55,6 +141,9 @@ class ProductController extends Controller
 
         if ($request->has('category_id')) {
             $product->categories()->attach($request->category_id);
+        }
+        if ($request->has('attribute_id')) {
+            $product->attributes()->attach($request->attribute_id);
         }
 
         // Move images from temporary storage to permanent directory
@@ -67,7 +156,6 @@ class ProductController extends Controller
                 'image' => $imagePath,
             ]);
         }
-
         // Clear the session
         session()->forget('uploaded_files');
 
@@ -121,6 +209,8 @@ class ProductController extends Controller
             ]);
         }
 
+        // Clear the session
+        session()->forget('uploaded_files');
 
         if ($request->has('tag_id')) {
             $product->tags()->sync($request->tag_id);
@@ -130,8 +220,11 @@ class ProductController extends Controller
             $product->categories()->sync($request->category_id);
         }
 
-        // Clear the session
-        session()->forget('uploaded_files');
+        if ($request->has('attribute_id')) {
+            $product->attributes()->sync($request->attribute_id);
+        }
+
+
 
         if ($isUpdated){
             return ControllerHelper::generateResponse('success',trans('dashboard_trans.Product updated successfully'),200);
@@ -146,6 +239,12 @@ class ProductController extends Controller
         $product = Product::query()->find($id);
 
         if ($product) {
+            if ($product->thumbnail) {
+                $imagePath = public_path('storage/' . $product->thumbnail);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
             foreach ($product->images as $image) {
                 if ($image) {
                     $imagePath = public_path('storage/' . $image->image);
