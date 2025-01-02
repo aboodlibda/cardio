@@ -6,17 +6,55 @@ use App\Helpers\ControllerHelper;
 use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class AttributeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $attributes = Attribute::query()->latest()->paginate(10);
-        return view('cms.attributes.index', compact('attributes'));
+        if ($request->ajax()) {
+            $query = Attribute::query()->latest();
+
+            return datatables()->of($query)
+                ->addColumn('actions', function ($row) {
+                    return view('cms.attributes.partials.actions', compact('row'))->render();
+                })
+                ->addColumn('checkbox', function ($row) {
+                    return '<input class="form-check-input" type="checkbox"  id="select-all"  data-kt-check-target="#kt_ecommerce_attribute_table .form-check-input" value="1" data-id="'.$row->id.'">';
+                })
+                ->editColumn('name', function ($row) {
+                    return $row->name;
+                })
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d/m/Y');
+                })
+                ->rawColumns(['actions', 'checkbox'])
+                ->make(true);
+        }
+        return view('cms.attributes.index');
+
     }
+
+
+//    public function test(Request $request)
+//    {
+//        if ($request->ajax()) {
+//            $data = Attribute::latest()->get();
+//            return Datatables::of($data)
+//                ->addIndexColumn()
+//                ->addColumn('action', function($row){
+//                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a>
+//                                  <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+//                    return $actionBtn;
+//                })
+//                ->rawColumns(['action'])
+//                ->make(true);
+//        }
+//    }
+
 
     /**
      * Show the form for creating a new resource.
