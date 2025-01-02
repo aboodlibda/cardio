@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreignId('user_id');
             $table->string('slug')->unique();
             $table->string('quantity');
+            $table->string('thumbnail');
             $table->string('discounted_price')->nullable();
             $table->string('vat_amount')->nullable();
             $table->enum('discount_type',['no_discount','percentage','fixed_price']);
