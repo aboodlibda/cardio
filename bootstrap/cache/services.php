@@ -32,7 +32,8 @@
     28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     29 => 'Termwind\\Laravel\\TermwindServiceProvider',
     30 => 'Spatie\\Translatable\\TranslatableServiceProvider',
-    31 => 'App\\Providers\\AppServiceProvider',
+    31 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    32 => 'App\\Providers\\AppServiceProvider',
   ),
   'eager' => 
   array (
@@ -52,7 +53,8 @@
     13 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     14 => 'Termwind\\Laravel\\TermwindServiceProvider',
     15 => 'Spatie\\Translatable\\TranslatableServiceProvider',
-    16 => 'App\\Providers\\AppServiceProvider',
+    16 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    17 => 'App\\Providers\\AppServiceProvider',
   ),
   'deferred' => 
   array (
