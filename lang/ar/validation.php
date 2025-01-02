@@ -214,7 +214,7 @@ return [
         'state'                 => 'الإمارة',
         'industrial_area'       => 'المنطقة الصناعية',
         'industrial_license'    =>'الرخصة الصناعية',
-        'website'              =>'الموقع الإلكتروني',
+        'website'               =>'الموقع الإلكتروني',
         'salesperson_email'     =>'البريد الإلكتروني لمندوب المبيعات',
         'salesperson_phone'     =>'هاتف مندوب المبيعات',
         'industry_phone'        =>'هاتف المصنع',
