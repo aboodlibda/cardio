@@ -610,6 +610,12 @@ return [
     'A attribute name is required and recommended to be unique'=>'يجب أن يكون اسم الخاصية فريدًا ومن المستحسن أن يكون فريدًا',
     'Attribute Name'=>'اسم الخاصية',
     'Attribute has been deleted successfully'=>'تم حذف الخاصية بنجاح',
+    'Attribute has been created successfully'=>'تم اضافة الخاصية بنجاح',
+    'Something went wrong'=>'لقد حدث خطأ ما',
+    'Attribute has been updated successfully'=>'تم تحديث الخاصية بنجاح',
+
+
+
 
 
 
