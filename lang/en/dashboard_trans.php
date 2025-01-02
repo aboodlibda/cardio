@@ -609,6 +609,10 @@ return [
     'A attribute name is required and recommended to be unique'=>'A attribute name is required and recommended to be unique',
     'Attribute Name'=>'Attribute Name',
     'Attribute has been deleted successfully'=>'Attribute has been deleted successfully',
+    'Attribute has been created successfully'=>'Attribute has been created successfully',
+    'Something went wrong'=>'Something went wrong',
+    'Attribute has been updated successfully'=>'Attribute has been updated successfully',
+
 
 
 
