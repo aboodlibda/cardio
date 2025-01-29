@@ -58,7 +58,7 @@
                                         <span class="path2"></span>
                                     </i>
                                     <!--begin::Inputs-->
-                                    <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
+                                    <input type="file" name="thumbnail" accept=".png, .jpg, .jpeg" />
                                     <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
@@ -84,7 +84,7 @@
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted')}}</div>
                             <!--end::Description-->
-                            @error('image')
+                            @error('thumbnail')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -149,11 +149,8 @@
                             <label class="form-label">{{trans('dashboard_trans.Categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
-                            <select class="form-select mb-2 select2-hidden-accessible" name="category_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                            <select class="form-select mb-2 select2-hidden-accessible" data-control="select2" name="category_id[]" data-hide-search="true"  multiple="multiple"  aria-hidden="true"  data-placeholder="{{trans('dashboard_trans.Select an option')}}">
                                 <option></option>
-                                @foreach($categories as $category)
-                                <option value="{{$category->id}}" @selected(old('category_id') == $category->id)>{{$category->name}}</option>
-                                @endforeach
                             </select>
                             <!--end::Select2-->
                             <!--begin::Description-->
@@ -169,11 +166,8 @@
                             <label class="form-label d-block">{{trans('dashboard_trans.Tags')}}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select class="form-select mb-2 select2-hidden-accessible" name="tag_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
+                            <select class="form-select mb-2 select2-hidden-accessible" name="tag_id[]" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
                                 <option></option>
-                                @foreach($tags as $tag)
-                                    <option value="{{$tag->id}}" @selected(old('tags') == $tag->id)>{{$tag->name}}</option>
-                                @endforeach
                             </select>
                             <!--end::Input-->
                             <!--begin::Description-->
@@ -565,29 +559,27 @@
                                             <!--begin::Repeater-->
                                             <div id="kt_ecommerce_add_product_options">
                                                 <!--begin::Form group-->
-                                                <div class="form-group">
-                                                    <div data-repeater-list="kt_ecommerce_add_product_options" class="d-flex flex-column gap-3">
-                                                        <div data-repeater-item="" class="form-group d-flex flex-wrap align-items-center gap-5">
-                                                            <!--begin::Select2-->
-                                                            <div class="w-100 w-md-200px">
-                                                                <select class="form-select" data-control="select2" name="product_option" data-placeholder="Select a variation" data-kt-ecommerce-catalog-add-product="product_option">
-                                                                    <option></option>
-                                                                    <option value="color">{{trans('dashboard_trans.Color')}}</option>
-                                                                    <option value="size">{{trans('dashboard_trans.Size')}}</option>
-                                                                    <option value="material">{{trans('dashboard_trans.Material')}}</option>
-                                                                    <option value="style">{{trans('dashboard_trans.Style')}}</option>
-                                                                </select>
+                                                <div class="form-group" data-repeater-list="kt_ecommerce_add_product_options_list">
+                                                    <div>
+                                                        <div class="d-flex flex-column gap-3">
+                                                            <div class="form-group d-flex flex-wrap align-items-center gap-5">
+                                                                <!--begin::Select2-->
+                                                                <div class="w-100 w-md-200px">
+                                                                    <select class="form-select mb-2 select2-hidden-accessible" name="attribute_id[]" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true"  aria-hidden="true" >
+                                                                        <option></option>
+                                                                    </select>
+                                                                </div>
+                                                                <!--end::Select2-->
+                                                                <!--begin::Input-->
+                                                                <input type="text" class="form-control mw-100 w-200px" name="product_option_value[]" placeholder="Variation" />
+                                                                <!--end::Input-->
+                                                                <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
+                                                                    <i class="ki-duotone ki-cross fs-1">
+                                                                        <span class="path1"></span>
+                                                                        <span class="path2"></span>
+                                                                    </i>
+                                                                </button>
                                                             </div>
-                                                            <!--end::Select2-->
-                                                            <!--begin::Input-->
-                                                            <input type="text" class="form-control mw-100 w-200px" name="product_option_value" placeholder="Variation" />
-                                                            <!--end::Input-->
-                                                            <button type="button" data-repeater-delete="" class="btn btn-sm btn-icon btn-light-danger">
-                                                                <i class="ki-duotone ki-cross fs-1">
-                                                                    <span class="path1"></span>
-                                                                    <span class="path2"></span>
-                                                                </i>
-                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -600,8 +592,7 @@
                                                 <!--end::Form group-->
                                             </div>
                                             <!--end::Repeater-->
-                                        </div>
-                                        <!--end::Input group-->
+                                        </div>                                        <!--end::Input group-->
                                         <!--begin::Card body-->
 
                                     </div>
@@ -658,10 +649,21 @@
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-
+    @if(App::getLocale()=='ar')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/ar.min.js"></script>
+    @endif
     <script>
         const routes = {
             post: "{{ route('store-media') }}",
+        };
+        const categories = {
+            get: "{{ route('getCategories') }}",
+        };
+        const tags = {
+            get: "{{ route('getTags') }}",
+        };
+        const attributes = {
+            get: "{{ route('getAttributes') }}",
         };
     </script>
     <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-product.js')}}"></script>
