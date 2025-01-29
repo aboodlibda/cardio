@@ -67,74 +67,13 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_category_table .form-check-input" value="1" />
                                 </div>
                             </th>
+                            <th class="min-w-100px">{{trans('dashboard_trans.Image')}}</th>
                             <th class="min-w-250px">{{trans('dashboard_trans.Category')}}</th>
                             <th class="min-w-150px">{{trans('dashboard_trans.Status')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                        @foreach($categories as $category)
-                        <tr data-category-id="{{ $category->id }}">
-                            <td>
-                                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                </div>
-                            </td>
-                            <td class="min-w-20px">
-                                <div class="d-flex">
-                                    @if($category->image)
-                                    <!--begin::Thumbnail-->
-                                    <a href="#" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{asset('storage/'.$category->image )}});"></span>
-                                    </a>
-                                    @else
-                                        <a href="#" class="symbol symbol-50px">
-                                            <span class="symbol-label" style="background-image:url({{asset('assets/media/svg/files/blank-image.svg' )}});"></span>
-                                        </a>
-                                    @endif
-                                    <!--end::Thumbnail-->
-                                    <div class="ms-5">
-                                        <!--begin::Title-->
-                                        <a href="{{ route('categories.edit',$category->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">{{ $category->name }}</a>
-                                        <!--end::Title-->
-                                        <!--begin::Description-->
-                                        <div class="text-muted fs-7 fw-bold">{{ $category->description }}</div>
-                                        <!--end::Description-->
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                @if($category->status == 'active')
-                                <!--begin::Badges-->
-                                <div class="badge badge-light-success">{{trans('dashboard_trans.Active')}}</div>
-                                <!--end::Badges-->
-                                @else
-                                    <!--begin::Badges-->
-                                    <div class="badge badge-light-danger">{{trans('dashboard_trans.Inactive')}}</div>
-                                    <!--end::Badges-->
-                                @endif
-                            </td>
-                            <td class="text-end">
-                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="{{ route('categories.edit',$category->id) }}" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3" >
-                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
-
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu-->
-                            </td>
-                        </tr>
-                        @endforeach
                         </tbody>
                         <!--end::Table body-->
                     </table>
@@ -150,11 +89,7 @@
 @endsection
 @section('script')
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <!--end::Vendors Javascript-->
-    <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/categories.js')}}"></script>
-{{--    <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>--}}
-{{--    <script src="{{asset('assets/js/custom/widgets.js')}}"></script>--}}
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 
 @endsection
