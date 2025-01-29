@@ -54,7 +54,7 @@
                                 <option value="all">{{trans('dashboard_trans.All')}}</option>
                                 <option value="published">{{trans('dashboard_trans.Published')}}</option>
                                 <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
-                                <option value="inactive">{{trans('dashboard_trans.InActive')}}</option>
+                                <option value="unpublished">{{trans('dashboard_trans.Unpublished')}}</option>
                             </select>
                             <!--end::Select2-->
                         </div>

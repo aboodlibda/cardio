@@ -122,14 +122,12 @@
                             <!--begin::Description-->
                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the category status')}}.</div>
                             <!--end::Description-->
-                            <div id="status-error" class="error-message"></div>
-
                         </div>
+                        <div id="status-error" class="error-message"></div>
                         <!--end::Card body-->
                     </div>
                     <!--end::Status-->
                     <!--begin::Template settings-->
-
                     <!--end::Template settings-->
                 </div>
                 <!--end::Aside column-->
@@ -148,23 +146,23 @@
                         <div class="row card-body pt-0">
                             @foreach(config('lang') as $key => $lang)
                             <!--begin::Input group-->
-                            <div class="col-md-6 mb-10 fv-row">
+                            <div class="col-md-6 fv-row">
                                 <!--begin::Label-->
                                 <label class="required form-label">{{trans('dashboard_trans.Category Name')}} ({{$lang}})</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text"   name="name[{{$key}}]" value="{{old('name.'.$key)}}" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Category Name')}}"  />
                                 <!--end::Input-->
-                                <!--begin::Description-->
-                                <div class="text-muted fs-7">{{trans('dashboard_trans.A category name is required and recommended to be unique')}}.</div>
-                                <!--end::Description-->
-                                <div id="name.{{$key}}-error" class="error-message"></div>
+                                <div id="name-{{$key}}-error" class="error-message"></div>
                             </div>
                             @endforeach
+                                <!--begin::Description-->
+                                <div class="text-muted fs-7 mb-5">{{trans('dashboard_trans.A category name is required and recommended to be unique')}}.</div>
+                                <!--end::Description-->
                             <!--end::Input group-->
                             <!--begin::Input group-->
                                 @foreach(config('lang') as $key => $lang)
-                            <div class="mb-10 fv-row">
+                            <div class="col-md-12 mb-5 fv-row">
                                 <!--begin::Label-->
                                 <label class="form-label">{{trans('dashboard_trans.Description')}} ({{$lang}})</label>
                                 <!--end::Label-->
@@ -173,13 +171,12 @@
                                     <textarea name="description[{{$key}}]" class="form-control @error('description') is-invalid @enderror">{{old('description.'.$key)}}</textarea>
                                 </div>
                                 <!--end::Editor-->
+                                <div id="description-{{$key}}-error" class="error-message"></div>
+                            </div>
+                                @endforeach
                                 <!--begin::Description-->
                                 <div class="text-muted fs-7">{{trans('dashboard_trans.Set a description to the for better visibility')}}.</div>
                                 <!--end::Description-->
-                                <div id="description.{{$key}}-error" class="error-message"></div>
-
-                            </div>
-                                @endforeach
                             <!--end::Input group-->
                         </div>
                         <!--end::Card header-->

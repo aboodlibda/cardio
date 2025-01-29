@@ -1,4 +1,9 @@
 "use strict";
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 var KTUsersList = function () {
     var e, t, n, r, o = document.getElementById("kt_table_users"), c = () => {
         o.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((t => {

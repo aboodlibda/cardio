@@ -32,8 +32,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'title'       => 'required|string|min:3|max:100',
-            'description' => 'nullable|string',
+            'title.*'       => 'required|string|min:3|max:100',
+            'description.*' => 'nullable|string',
             'price'       => 'required|integer|numeric',
             'status'      => 'in:published,unpublished,draft',
             'user_id'     => 'required|int|exists:users,id',
@@ -48,12 +48,15 @@ class ProductController extends Controller
             'title' , 'description' , 'price' , 'status' , 'user_id' , 'slug' , 'quantity' , 'SKU'
         ]);
 
+        $data['status'] = $request->input('status') === 'draft' ? 'draft' : ($request->has('status') ? 'published' : 'unpublished');
+
         $avatar = $this->imageUploadService->upload($request, 'images', 'images/products');
+
         $data['images'] = $avatar;
 
-        $is_Saved = Product::query()->create($data);
+        $isSaved = Product::query()->create($data);
 
-        if ($is_Saved){
+        if ($isSaved){
             return response()->json([
                 'icon' => 'success',
                 'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
