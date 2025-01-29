@@ -37,6 +37,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
             'attributes'  => AttributeController::class,
         ]);
 
+//        Route::get('load-attributes',[AttributeController::class,'load'])->name('load-attributes');
+
+        Route::get('/data-categories', [ProductController::class, 'getCategoriesData'])->name('getCategories');
+        Route::get('/get-tags', [ProductController::class, 'getTagsData'])->name('getTags');
+        Route::get('/get-attributes', [ProductController::class, 'getAttributesData'])->name('getAttributes');
 
         Route::put('update-email/{id}',[UserController::class,'updateEmail'])->name('update-email');
         Route::put('update-password/{id}',[UserController::class,'updatePassword'])->name('update-password');
