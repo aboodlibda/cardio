@@ -195,6 +195,7 @@ return [
     'Post deleted successfully' => 'تم حذف الخبر بنجاح',
     'Failed to delete this post!' => 'لم يتم حذف الخبر',
     'Product deleted successfully' => 'تم حذف المنتج بنجاح',
+    'Failed to delete this product'=>'لم يتم حذف المنتج',
     'Failed to delete this service!' => 'لم يتم حذف الخدمة!',
     'Role created successfully' => 'تم إضافة الدور بنجاح',
     'Failed to create role!' => 'لم يتم إضافة الدور!',
@@ -569,13 +570,82 @@ return [
     'Reset'=>'ضبط',
     'Discard'=>'تجاهل',
     'Search Product'=>'بحث عن منتج',
-    'Failed to create product'=>'لم يتم انشاء المنتج',
+    'Failed to create product'=>'لم يتم اضافة المنتج',
     'Category created successfully'=>'تم انشاء الفئة بنحاح',
     'Failed to create category!'=>'لم يتم انشاء الفئة!',
     'Category updated successfully'=>'تم تحديث الفئة بنجاح',
     'Failed to update category!'=>'لم يتم تحديث الفئة!',
     'Category Deleted Successfully'=>'تم حذف الفئة بنجاح',
     'Failed to delete this category!'=>'لم يتم حذف هذه الفئة!',
+    'Coupon created successfully'=>'تم انشاء الكوبون بنجاح',
+    'Failed to create coupon'=>'لم يتم انشاء الكوبون',
+    'Failed to update coupon'=>'لم يتم تحديث الكوبون',
+    'Percentage'=>'نسبة مئوية',
+    'Fixed'=>'محدد',
+    'The tag name is required'=>'اسم الوسم مطلوب',
+    'Enter the name of tag'=>'ادخل اسم الوسم',
+    'Create new tag'=>'اضافة وسم جديد',
+    'Tag Created Successfully'=>'تم اضافة الوسم بنجاح',
+    'Failed to Create Tag'=>'لم يتم اضافة الوسم',
+    'Please correct the highlighted errors and try again'=>'يرجى تصحيح الأخطاء ثم المحاولة مرة أخرى',
+    'Success'=>'نجاح',
+    'Tag Deleted Successfully'=>'تم حذف الوسم بنجاح',
+    'Failed to Delete Tag'=>'لم يتم حذف الوسم',
+    'Error'=>'خطأ',
+    'Tag Updated Successfully'=>'تم تعديل الوسم بنجاح',
+    'Failed to Update Tag'=>'لم يتم تعديل الوسم',
+    'Coupon updated successfully'=>'تم تعديل كود الخصم بنحاح',
+    'An error occurred. Please try again later'=>'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً',
+    'Coupon deleted successfully'=>'تم حذف كود الخصم بنجاح',
+    'Failed to delete coupon'=>'لم يتم حذف كود الخصم',
+    'Search Coupons'=>'بحث اكواد الخصم',
+    'Coupon Details'=>'تفاصيل كود الخصم',
+    'Add coupon to a product'=>'اضافة كود الخصم الى المنتج',
+    'Yes'=>'نعم',
+    'Products Properties'=>'خصائص المنتجات',
+    'Attributes'=>'الخصائص',
+    'All Attributes'=>'كافة الخصائص',
+    'Search Attribute'=>'بحث الخصائص',
+    'Add Attribute'=>'اضافة خاصية',
+    'A attribute name is required and recommended to be unique'=>'يجب أن يكون اسم الخاصية فريدًا ومن المستحسن أن يكون فريدًا',
+    'Attribute Name'=>'اسم الخاصية',
+    'Attribute has been deleted successfully'=>'تم حذف الخاصية بنجاح',
+    'Attribute has been created successfully'=>'تم اضافة الخاصية بنجاح',
+    'Something went wrong'=>'لقد حدث خطأ ما',
+    'Attribute has been updated successfully'=>'تم تحديث الخاصية بنجاح',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

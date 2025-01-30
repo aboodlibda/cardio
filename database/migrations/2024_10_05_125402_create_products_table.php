@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->string('quantity');
             $table->string('image');
             $table->string('discounted_price');
+            $table->string('thumbnail');
+            $table->string('discounted_price')->nullable();
             $table->string('vat_amount')->nullable();
             $table->enum('discount_type',['no_discount','percentage','fixed_price']);
             $table->enum('tax_type',['free','taxable_goods','downloadable_product']);

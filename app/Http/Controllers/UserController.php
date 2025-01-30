@@ -134,8 +134,24 @@ class UserController extends Controller
 
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $avatar = $this->imageUploadService->upload($request, 'avatar', 'images/users');
-        $data['avatar'] = $avatar;
+
+        if ($user) {
+            if ($request->hasFile('avatar')) {
+                // إذا كان هناك صورة جديدة، احذف القديمة وقم بتحديث الصورة
+                if ($user->avatar) {
+                    $imagePath = public_path('storage/' . $user->avatar);
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+                $avatar = $this->imageUploadService->upload($request, 'avatar', 'images/users');
+                $data['avatar'] = $avatar;
+            } else {
+                // احتفظ بالصورة القديمة في حالة عدم تحميل صورة جديدة
+                $data['avatar'] = $user->avatar;
+            }
+        }
+
 
         $isUpdated = $user->update($data);
 
@@ -157,7 +173,19 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $is_Deleted = User::destroy($id);
+        $user = User::find($id);
+
+        if ($user){
+            $avatar = $user->avatar;
+            if ($avatar){
+                $imagePath = public_path('storage/' . $avatar);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        }
+        $is_Deleted = $user->delete();
+
         if ($is_Deleted){
             return response()->json([
                 'confirmButtonText' => trans('dashboard_trans.Ok, got it!'),

@@ -1,1 +1,130 @@
-"use strict";var KTAppEcommerceProducts=function(){var t,e,n=()=>{t.querySelectorAll('[data-kt-ecommerce-product-filter="delete_row"]').forEach((t=>{t.addEventListener("click",(function(t){t.preventDefault();const n=t.target.closest("tr"),r=n.querySelector('[data-kt-ecommerce-product-filter="product_name"]').innerText;Swal.fire({text:"Are you sure you want to delete "+r+"?",icon:"warning",showCancelButton:!0,buttonsStyling:!1,confirmButtonText:"Yes, delete!",cancelButtonText:"No, cancel",customClass:{confirmButton:"btn fw-bold btn-danger",cancelButton:"btn fw-bold btn-active-light-primary"}}).then((function(t){t.value?Swal.fire({text:"You have deleted "+r+"!.",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}}).then((function(){e.row($(n)).remove().draw()})):"cancel"===t.dismiss&&Swal.fire({text:r+" was not deleted.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn fw-bold btn-primary"}})}))}))}))};return{init:function(){(t=document.querySelector("#kt_ecommerce_products_table"))&&((e=$(t).DataTable({info:!1,order:[],pageLength:10,columnDefs:[{render:DataTable.render.number(",",".",2),targets:4},{orderable:!1,targets:0},{orderable:!1,targets:7}]})).on("draw",(function(){n()})),document.querySelector('[data-kt-ecommerce-product-filter="search"]').addEventListener("keyup",(function(t){e.search(t.target.value).draw()})),(()=>{const t=document.querySelector('[data-kt-ecommerce-product-filter="status"]');$(t).on("change",(t=>{let n=t.target.value;"all"===n&&(n=""),e.column(6).search(n).draw()}))})(),n())}}}();KTUtil.onDOMContentLoaded((function(){KTAppEcommerceProducts.init()}));
+"use strict";
+
+let messages = {};
+
+var lang = $('html').attr('lang');
+
+const currentLanguage = document.documentElement.lang || "ar";
+
+function loadMessagesWithCache(lang) {
+    const cachedMessages = localStorage.getItem(`messages_${lang}`);
+    if (cachedMessages) {
+        messages = JSON.parse(cachedMessages);
+        return Promise.resolve();
+    } else {
+        return $.getJSON(`/assets/js/custom/apps/ecommerce/language/languages.json`, function (data) {
+            messages = data[lang] || data["en"];
+            localStorage.setItem(`messages_${lang}`, JSON.stringify(messages));
+        });
+    }
+}
+
+loadMessagesWithCache(currentLanguage).then(() => {
+    console.log("Messages loaded:", messages);
+});
+
+const dataTableLanguage = currentLanguage === "ar"
+    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
+    : '';
+var KTAppEcommerceProducts = function () {
+    return {
+        init: function () {
+            const table = $("#kt_ecommerce_products_table").DataTable({
+                processing: true,
+                serverSide: true,
+                language: { url: dataTableLanguage },
+                ajax: {
+                    url: '/' + lang + '/cms/products/',
+                    type: "GET",
+                },
+                columns: [
+                    // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    // {data: 'id', name: 'id'},
+                    {data: "checkbox", orderable: false, searchable: false },
+                    {data: 'partials', name: 'partials'},
+                    // {data: 'name',      name: 'name'},
+                    {data: 'SKU',       name: 'SKU'},
+                    {data: 'quantity',  name: 'quantity'},
+                    {data: 'price',     name: 'price'},
+                    {data: 'status',    name: 'status'},
+                    {data: 'actions',   name: 'actions', orderable: true, searchable: true},
+                ],
+                order: [[1, "asc"]]
+                // target: "_all"
+
+            });
+
+            // Delete functionality
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            table.on("click", '[data-kt-ecommerce-product-filter="delete_row"]', function () {
+                const productId = $(this).closest("div[data-product-id]").data("product-id");
+                const productName = $(this).closest("div[data-product-id]").data("product-name");
+
+                Swal.fire({
+                    text: `${messages.Deleted} ${productName}?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText:messages.YesButtonText,
+                    cancelButtonText: messages.NoButtonText,
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary"
+                    }
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire({
+                            text: messages.Deleting + productName + "...",
+                            icon: "info",
+                            showConfirmButton: false,
+                            allowOutsideClick: false
+                        });
+                        $.ajax({
+                            url:  '/' + lang + '/cms/products/' + productId,
+                            type: "DELETE",
+                            success: function (response) {
+                                Swal.fire({
+                                    text: response.text,
+                                    icon: response.icon,
+                                    buttonsStyling: false,
+                                    confirmButtonText: response.confirmButtonText,
+                                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                                }).then(() => table.ajax.reload());
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    text: messages.genericError,
+                                    icon: "error",
+                                    buttonsStyling: false,
+                                    confirmButtonText: messages.confirmButtonText,
+                                    customClass: { confirmButton: "btn fw-bold btn-primary" }
+                                });
+                            }
+                        });
+                    }else if(result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire({
+                            text: productName + messages.NotDeleted,
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: messages.confirmButtonText,
+                            customClass: { confirmButton: "btn fw-bold btn-primary" }
+                        });
+                    }
+                });
+            });
+        }
+    };
+}();
+$('#kt_ecommerce_products_table').on('draw.dt', function () {
+    KTMenu.createInstances();
+});
+
+KTUtil.onDOMContentLoaded(function () {
+    KTAppEcommerceProducts.init();
+
+});

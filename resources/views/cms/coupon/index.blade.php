@@ -40,7 +40,7 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            <input type="text" data-kt-ecommerce-product-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Product" />
+                            <input type="text" data-kt-ecommerce-coupons-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="{{trans('dashboard_trans.Search Coupons')}}" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -49,11 +49,10 @@
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <div class="w-100 mw-150px">
                             <!--begin::Select2-->
-                            <select class="form-select form-select-solid"  data-hide-search="true"  data-placeholder="status" data-kt-ecommerce-product-filter="status">
-                                <option disabled hidden selected>{{trans('dashboard_trans.Status')}}</option>
+                            <select class="form-select form-select-solid"  data-control="select2" data-hide-search="true"  data-placeholder="{{trans('dashboard_trans.Status')}}" data-kt-ecommerce-coupons-filter="status">
+                                <option></option>
                                 <option value="all">{{trans('dashboard_trans.All')}}</option>
-                                <option value="published">{{trans('dashboard_trans.Published')}}</option>
-                                <option value="scheduled">{{trans('dashboard_trans.Scheduled')}}</option>
+                                <option value="active">{{trans('dashboard_trans.Active')}}</option>
                                 <option value="inactive">{{trans('dashboard_trans.InActive')}}</option>
                             </select>
                             <!--end::Select2-->
@@ -68,25 +67,26 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Table-->
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_coupons_table">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_products_table .form-check-input" value="1" />
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_ecommerce_coupons_table .form-check-input" value="1" />
                                 </div>
                             </th>
                             <th class="min-w-200px">{{trans('dashboard_trans.Coupon')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Description')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Times Used')}}</th>
                             <th class="text-end min-w-100px">{{trans('dashboard_trans.Max Usage')}}</th>
                             <th class="text-end min-w-100px">{{trans('dashboard_trans.Start Date')}}</th>
                             <th class="text-end min-w-100px">{{trans('dashboard_trans.End Date')}}</th>
+                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Status')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                        <tr>
+                        @foreach($coupons as $coupon)
+                        <tr data-coupon-id="{{ $coupon->id }}">
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
@@ -94,48 +94,31 @@
                             </td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <!--begin::Thumbnail-->
-                                    <a href="../../demo3/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{url('assets/media//stock/ecommerce/1.png')}});"></span>
-                                    </a>
-                                    <!--end::Thumbnail-->
                                     <div class="ms-5">
                                         <!--begin::Title-->
-                                        <a href="../../demo3/dist/apps/ecommerce/catalog/edit-product.html" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">Product 1</a>
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-coupons-filter="coupon_name">{{$coupon->code}}</a>
                                         <!--end::Title-->
                                     </div>
                                 </div>
                             </td>
                             <td class="text-end pe-0">
-                                <span class="fw-bold">04517009</span>
+                                <span class="fw-bold ms-3">{{$coupon->times_used}}</span>
                             </td>
-                            <td class="text-end pe-0" data-order="16">
-                                <span class="fw-bold ms-3">16</span>
-                            </td>
-                            <td class="text-end pe-0">238</td>
-                            <td class="text-end pe-0" data-order="rating-5">
-                                <div class="rating justify-content-end">
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-end pe-0" data-order="Scheduled">
+                            <td class="text-end pe-0">{{$coupon->max_used}}</td>
+                            <td class="text-end pe-0">{{$coupon->start_date}}</td>
+                            <td class="text-end pe-0">
                                 <!--begin::Badges-->
-                                <div class="badge badge-light-primary">Scheduled</div>
+                                <div class="badge badge-light-primary">{{$coupon->end_date}}</div>
                                 <!--end::Badges-->
+                            </td>
+                            <td class="text-end pe-0">
+                                @switch($coupon->status)
+                                    @case('active')
+                                        <span class="badge badge-success fw-bold">{{trans('dashboard_trans.Active')}}</span>
+                                    @break
+                                    @case('inactive')
+                                        <span class="badge badge-danger fw-bold">{{trans('dashboard_trans.InActive')}}</span>
+                                @endswitch
                             </td>
                             <td class="text-end">
                                 <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
@@ -144,18 +127,19 @@
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
+                                        <a href="{{route('coupons.edit',$coupon->id)}}" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
+                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-coupons-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                 </div>
                                 <!--end::Menu-->
                             </td>
                         </tr>
+                        @endforeach
                         </tbody>
                     </table>
                     <!--end::Table-->
@@ -170,6 +154,6 @@
 @endsection
 @section('script')
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/products.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/coupons.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 @endsection

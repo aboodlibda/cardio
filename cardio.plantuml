@@ -1,0 +1,311 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class addresses {
+   address_line_1: text
+   address_line_2: text
+   postal_code: varchar(191)
+   country: varchar(191)
+   city: varchar(191)
+   phone_number: varchar(191)
+   customer_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class attribute_values {
+   value: varchar(191)
+   attribute_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class attributes {
+   name: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class cache {
+   value: mediumtext
+   expiration: int
+   key: varchar(191)
+}
+class cache_locks {
+   owner: varchar(191)
+   expiration: int
+   key: varchar(191)
+}
+class categories {
+   parent_id: int
+   name: json
+   description: json
+   image: varchar(191)
+   status: enum('active', 'inactive')
+   slug: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class category_products {
+   category_id: bigint unsigned
+   product_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class coupon_products {
+   product_id: bigint unsigned
+   coupon_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class coupons {
+   code: varchar(191)
+   description: text
+   discount_value: varchar(191)
+   discount_type: enum('percentage', 'fixed')
+   times_used: varchar(191)
+   max_used: varchar(191)
+   status: enum('active', 'inactive')
+   start_date: date
+   end_date: date
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class customers {
+   first_name: varchar(191)
+   last_name: varchar(191)
+   user_name: varchar(191)
+   email: varchar(191)
+   email_verified_at: timestamp
+   password: varchar(191)
+   phone_number: varchar(191)
+   status: enum('active', 'inactive')
+   gender: enum('male', 'female')
+   remember_token: varchar(100)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class failed_jobs {
+   uuid: varchar(191)
+   connection: text
+   queue: text
+   payload: longtext
+   exception: longtext
+   failed_at: timestamp
+   id: bigint unsigned
+}
+class images {
+   image: varchar(191)
+   product_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class job_batches {
+   name: varchar(191)
+   total_jobs: int
+   pending_jobs: int
+   failed_jobs: int
+   failed_job_ids: longtext
+   options: mediumtext
+   cancelled_at: int
+   created_at: int
+   finished_at: int
+   id: varchar(191)
+}
+class jobs {
+   queue: varchar(191)
+   payload: longtext
+   attempts: tinyint unsigned
+   reserved_at: int unsigned
+   available_at: int unsigned
+   created_at: int unsigned
+   id: bigint unsigned
+}
+class migrations {
+   migration: varchar(191)
+   batch: int
+   id: int unsigned
+}
+class order_items {
+   order_id: bigint unsigned
+   product_id: bigint unsigned
+   quantity: int
+   price: decimal(10,2)
+   subtotal: decimal(10,2)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class orders {
+   customer_id: bigint unsigned
+   order_number: varchar(191)
+   total_amount: decimal(10,2)
+   status: enum('pending', 'processing', 'completed', 'canceled')
+   coupon_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class password_reset_tokens {
+   token: varchar(191)
+   created_at: timestamp
+   email: varchar(191)
+}
+class payments {
+   order_id: bigint unsigned
+   amount: decimal(10,2)
+   payment_method: varchar(191)
+   payment_status: enum('pending', 'completed', 'failed')
+   currency: varchar(191)
+   transaction_id: varchar(191)
+   gateway: varchar(191)
+   paid_at: timestamp
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class permissions {
+   role_id: bigint unsigned
+   name: varchar(191)
+   permissions: text
+   description: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class product_attributes {
+   product_id: bigint unsigned
+   attribute_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class product_tags {
+   product_id: bigint unsigned
+   tag_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class products {
+   name: json
+   description: json
+   price: varchar(191)
+   status: enum('published', 'unpublished', 'draft')
+   user_id: bigint unsigned
+   slug: varchar(191)
+   quantity: varchar(191)
+   discounted_price: varchar(191)
+   vat_amount: varchar(191)
+   discount_type: enum('no_discount', 'percentage', 'fixed_price')
+   tax_type: enum('free', 'taxable_goods', 'downloadable_product')
+   SKU: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class roles {
+   name: varchar(191)
+   description: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class sessions {
+   user_id: bigint unsigned
+   ip_address: varchar(45)
+   user_agent: text
+   payload: longtext
+   last_activity: int
+   id: varchar(191)
+}
+class sponsors {
+   name: varchar(191)
+   description: text
+   logo: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class tags {
+   name: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class transactions {
+   payment_id: bigint unsigned
+   transaction_type: varchar(191)
+   transaction_status: enum('pending', 'completed', 'failed')
+   amount: decimal(10,2)
+   gateway_transaction_id: varchar(191)
+   error_message: varchar(191)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class users {
+   name: varchar(191)
+   user_name: varchar(191)
+   phone_number: varchar(191)
+   avatar: varchar(191)
+   gender: enum('male', 'female')
+   status: enum('active', 'inactive')
+   role_id: bigint unsigned
+   email: varchar(191)
+   email_verified_at: timestamp
+   password: varchar(191)
+   remember_token: varchar(100)
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class variant_values {
+   variant_id: bigint unsigned
+   attribute_value_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+class variants {
+   product_id: bigint unsigned
+   created_at: timestamp
+   updated_at: timestamp
+   id: bigint unsigned
+}
+
+addresses              -[#595959,plain]-^  customers             : "customer_id:id"
+attribute_values       -[#595959,plain]-^  attributes            : "attribute_id:id"
+category_products      -[#595959,plain]-^  categories            : "category_id:id"
+category_products      -[#595959,plain]-^  products              : "product_id:id"
+coupon_products        -[#595959,plain]-^  coupons               : "coupon_id:id"
+coupon_products        -[#595959,plain]-^  products              : "product_id:id"
+images                 -[#595959,plain]-^  products              : "product_id:id"
+order_items            -[#595959,plain]-^  orders                : "order_id:id"
+order_items            -[#595959,plain]-^  products              : "product_id:id"
+orders                 -[#595959,plain]-^  coupons               : "coupon_id:id"
+orders                 -[#595959,plain]-^  customers             : "customer_id:id"
+payments               -[#595959,plain]-^  orders                : "order_id:id"
+payments               -[#595959,plain]-^  transactions          : "transaction_id:id"
+permissions            -[#595959,plain]-^  roles                 : "role_id:id"
+product_attributes     -[#595959,plain]-^  attributes            : "attribute_id:id"
+product_attributes     -[#595959,plain]-^  products              : "product_id:id"
+product_tags           -[#595959,plain]-^  products              : "product_id:id"
+product_tags           -[#595959,plain]-^  tags                  : "tag_id:id"
+products               -[#595959,plain]-^  users                 : "user_id:id"
+sessions               -[#595959,plain]-^  users                 : "user_id:id"
+transactions           -[#595959,plain]-^  payments              : "payment_id:id"
+users                  -[#595959,plain]-^  roles                 : "role_id:id"
+variant_values         -[#595959,plain]-^  attribute_values      : "attribute_value_id:id"
+variant_values         -[#595959,plain]-^  variants              : "variant_id:id"
+variants               -[#595959,plain]-^  products              : "product_id:id"
+@enduml

@@ -9,7 +9,9 @@ var KTUsersList = function () {
         o.querySelectorAll('[data-kt-users-table-filter="delete_row"]').forEach((t => {
             t.addEventListener("click", (function (t) {
                 t.preventDefault();
-                const n = t.target.closest("tr"), r = n.querySelectorAll("td")[1].querySelectorAll("a")[1].innerText;
+                const n = t.target.closest("tr"),
+                    r = n.querySelectorAll("td")[1].querySelectorAll("a")[1].innerText,
+                    userId = n.getAttribute('data-user-id');
                 Swal.fire({
                     text: "Are you sure you want to delete " + r + "?",
                     icon: "warning",
@@ -28,8 +30,9 @@ var KTUsersList = function () {
                         buttonsStyling: !1,
                         confirmButtonText: "Ok, got it!",
                         customClass: {confirmButton: "btn fw-bold btn-primary"}
-                    }).then((function () {
-                        e.row($(n)).remove().draw()
+                    }
+                    ).then((function () {
+                        e.row($(userId)).remove().draw()
                     })).then((function () {
                         a()
                     })) : "cancel" === t.dismiss && Swal.fire({
@@ -54,7 +57,7 @@ var KTUsersList = function () {
             }))
         })), s.addEventListener("click", (function () {
             Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
+                text: "Are you sure you want to delete selected users?",
                 icon: "warning",
                 showCancelButton: !0,
                 buttonsStyling: !1,
@@ -66,7 +69,7 @@ var KTUsersList = function () {
                 }
             }).then((function (t) {
                 t.value ? Swal.fire({
-                    text: "You have deleted all selected customers!.",
+                    text: "You have deleted all selected users!.",
                     icon: "success",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",
@@ -79,7 +82,7 @@ var KTUsersList = function () {
                 })).then((function () {
                     a(), l()
                 })) : "cancel" === t.dismiss && Swal.fire({
-                    text: "Selected customers was not deleted.",
+                    text: "Selected users was not deleted.",
                     icon: "error",
                     buttonsStyling: !1,
                     confirmButtonText: "Ok, got it!",

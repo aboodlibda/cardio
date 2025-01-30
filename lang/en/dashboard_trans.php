@@ -575,6 +575,49 @@ return [
     'Failed to update category!'=>'Failed to update category!',
     'Category Deleted Successfully'=>'Category Deleted Successfully',
     'Failed to delete this category!'=>'Failed to delete this category!',
+    'Coupon created successfully'=>'Coupon created successfully',
+    'Failed to create coupon'=>'Failed to create coupon',
+    'Coupon updated successfully'=>'Coupon updated successfully',
+    'Failed to update coupon'=>'Failed to update coupon',
+    'Percentage'=>'Percentage',
+    'Fixed'=>'Fixed',
+    'The tag name is required'=>'The tag name is required',
+    'Enter the name of tag'=>'Enter the name of tag',
+    'Create new tag'=>'Create new tag',
+    'Tag Created Successfully'=>'Tag Created Successfully',
+    'Failed to Create Tag'=>'Failed to Create Tag',
+    'Please correct the highlighted errors and try again'=>'Please correct the highlighted errors and try again',
+    'Success'=>'Success',
+    'Tag Deleted Successfully'=>'Tag Deleted Successfully',
+    'Failed to Delete Tag'=>'Failed to Delete Tag',
+    'Error'=>'Error',
+    'Tag Updated Successfully'=>'Tag Updated Successfully',
+    'Failed to Update Tag'=>'Failed to Update Tag',
+    'An error occurred. Please try again later'=>'An error occurred. Please try again laterً',
+    'Coupon deleted successfully'=>'Coupon deleted successfully',
+    'Failed to delete coupon'=>'Failed to delete coupon',
+    'Search Coupons'=>'Search Coupons',
+    'Coupon Details'=>'Coupon Details',
+    'Add coupon to a product'=>'Add coupon to a product',
+    'Yes'=>'Yes',
+    'Failed to delete this product'=>'Failed to delete this product',
+    'Products Properties'=>'Products Properties',
+    'Attributes'=>'Attributes',
+    'All Attributes'=>'All Attributes',
+    'Search Attribute'=>'Search Attribute',
+    'Add Attribute'=>'Add Attribute',
+    'A attribute name is required and recommended to be unique'=>'A attribute name is required and recommended to be unique',
+    'Attribute Name'=>'Attribute Name',
+    'Attribute has been deleted successfully'=>'Attribute has been deleted successfully',
+    'Attribute has been created successfully'=>'Attribute has been created successfully',
+    'Something went wrong'=>'Something went wrong',
+    'Attribute has been updated successfully'=>'Attribute has been updated successfully',
+
+
+
+
+
+
 
 
 

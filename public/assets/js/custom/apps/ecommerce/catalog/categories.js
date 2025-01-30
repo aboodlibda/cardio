@@ -1,45 +1,89 @@
 "use strict";
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+let messages = {};
+
+var lang = $('html').attr('lang');
+
+const currentLanguage = document.documentElement.lang || "ar";
+
+function loadMessagesWithCache(lang) {
+    const cachedMessages = localStorage.getItem(`messages_${lang}`);
+    if (cachedMessages) {
+        messages = JSON.parse(cachedMessages);
+        return Promise.resolve();
+    } else {
+        return $.getJSON(`/assets/js/custom/apps/ecommerce/language/languages.json`, function (data) {
+            messages = data[lang] || data["en"];
+            localStorage.setItem(`messages_${lang}`, JSON.stringify(messages));
+        });
     }
+}
+
+loadMessagesWithCache(currentLanguage).then(() => {
+    console.log("Messages loaded:", messages);
 });
 
+const dataTableLanguage = currentLanguage === "ar"
+    ? '//cdn.datatables.net/plug-ins/2.1.8/i18n/ar.json'
+    : '';
 var KTAppEcommerceCategories = function () {
-    var t, e, n = () => {
-        t.querySelectorAll('[data-kt-ecommerce-category-filter="delete_row"]').forEach((t => {
-            t.addEventListener("click", function (t) {
-                t.preventDefault();
-                const n = t.target.closest("tr"),
-                    o = n.querySelector('[data-kt-ecommerce-category-filter="category_name"]').innerText,
-                    categoryId = n.getAttribute('data-category-id'); // Retrieve the category ID
+    return {
+        init: function () {
+            const table = $("#kt_ecommerce_category_table").DataTable({
+                processing: true,
+                serverSide: true,
+                language: { url: dataTableLanguage },
+                ajax: {
+                    url: '/' + lang + '/cms/categories/',
+                    type: "GET",
+                },
+                columns: [
+                    // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    // {data: 'id', name: 'id'},
+                    { data: "checkbox", orderable: false, searchable: false },
+                    {data: 'image', name: 'image'},
+                    {data: 'name', name: 'name'},
+                    {data: 'status', name: 'status'},
+                    {data: 'actions', name: 'actions', orderable: true, searchable: true},
+                ],
+                order: [[1, "asc"]]
+                // target: "_all"
+
+            });
+
+            // Delete functionality
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            table.on("click", '[data-kt-ecommerce-category-filter="delete_row"]', function () {
+                const categoryId = $(this).closest("div[data-category-id]").data("category-id");
+                const categoryName = $(this).closest("div[data-category-id]").data("category-name");
 
                 Swal.fire({
-                    text: "Are you sure you want to delete " + o + "?",
+                    text: `${messages.Deleted} ${categoryName}?`,
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
+                    confirmButtonText:messages.YesButtonText,
+                    cancelButtonText: messages.NoButtonText,
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
                     }
                 }).then((result) => {
                     if (result.value) {
-                        // Show loading indicator while processing
                         Swal.fire({
-                            text: "Deleting " + o + "...",
+                            text: messages.Deleting + categoryName + "...",
                             icon: "info",
                             showConfirmButton: false,
                             allowOutsideClick: false
                         });
-
-                        // Perform AJAX request to delete the category
                         $.ajax({
-                            url: `/cms/categories/${categoryId}`, // Correctly use the category ID to construct the URL
-                            method: 'DELETE', // Use DELETE method for deletion
+                            url:  '/' + lang + '/cms/categories/' + categoryId,
+                            type: "DELETE",
                             success: function (response) {
                                 Swal.fire({
                                     text: response.text,
@@ -47,50 +91,37 @@ var KTAppEcommerceCategories = function () {
                                     buttonsStyling: false,
                                     confirmButtonText: response.confirmButtonText,
                                     customClass: { confirmButton: "btn fw-bold btn-primary" }
-                                }).then(function () {
-                                    e.row($(n)).remove().draw(); // Remove the row from the DataTable
-                                });
+                                }).then(() => table.ajax.reload());
                             },
                             error: function () {
                                 Swal.fire({
-                                    text: "Failed to delete the category. Please try again.",
+                                    text: messages.genericError,
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "Ok, got it!",
+                                    confirmButtonText: messages.confirmButtonText,
                                     customClass: { confirmButton: "btn fw-bold btn-primary" }
                                 });
                             }
                         });
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    }else if(result.dismiss === Swal.DismissReason.cancel) {
                         Swal.fire({
-                            text: o + " was not deleted.",
+                            text: categoryName + messages.NotDeleted,
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: messages.confirmButtonText,
                             customClass: { confirmButton: "btn fw-bold btn-primary" }
                         });
                     }
                 });
             });
-        }));
-    };
-
-    return {
-        init: function () {
-            (t = document.querySelector("#kt_ecommerce_category_table")) && ((e = $(t).DataTable({
-                info: false,
-                order: [],
-                pageLength: 10,
-                columnDefs: [{ orderable: false, targets: 0 }, { orderable: false, targets: 3 }]
-            })).on("draw", function () {
-                n();
-            }), document.querySelector('[data-kt-ecommerce-category-filter="search"]').addEventListener("keyup", function (t) {
-                e.search(t.target.value).draw();
-            }), n());
         }
     };
 }();
+$('#kt_ecommerce_category_table').on('draw.dt', function () {
+    KTMenu.createInstances();
+});
 
 KTUtil.onDOMContentLoaded(function () {
     KTAppEcommerceCategories.init();
+
 });

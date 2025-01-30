@@ -14340,7 +14340,7 @@ $.extend(!0, $.fn.dataTable.defaults, defaults),
                             if (e = r.match(/^<([\w:.-]+)\s*/, !0)) {
                                 for (var o = new t(e[1], 1, null, i); e = r.match(/^([\w:.-]+)(?:\s*=\s*"([^"]*)"|\s*=\s*'([^']*)')?\s*/, !0);) {
                                     var s = e[1], a = M(e[2] || e[3] || "");
-                                    o.attributes[s] ? (YA('parseXml: duplicate attribute "' + s + '"'), i = !0) : (o.attributes[s] = a, "id" === s && (o.id = a), "class" === s && (o.classList = a.split(" ")))
+                                    o.attributes[s] ? (YA('parseXml: duplicate attributes "' + s + '"'), i = !0) : (o.attributes[s] = a, "id" === s && (o.id = a), "class" === s && (o.classList = a.split(" ")))
                                 }
                                 if (r.match(/^>/)) {
                                     for (; n = A();) o.childNodes.push(n), n.parentNode = o, o.textContent += 3 === n.nodeType || 4 === n.nodeType ? n.nodeValue : n.textContent;
@@ -23086,7 +23086,7 @@ $.extend(!0, $.fn.dataTable.defaults, defaults),
                         }(n), n.q = n.c = "", n.bufferCheckPosition = A.MAX_BUFFER_LENGTH, n.opt = e || {}, n.opt.lowercase = n.opt.lowercase || n.opt.lowercasetags, n.looseCase = n.opt.lowercase ? "toLowerCase" : "toUpperCase", n.tags = [], n.closed = n.closedRoot = n.sawRoot = !1, n.tag = n.error = null, n.strict = !!t, n.noscript = !(!t && !n.opt.noscript), n.state = p.BEGIN, n.strictEntities = n.opt.strictEntities, n.ENTITIES = n.strictEntities ? Object.create(A.XML_ENTITIES) : Object.create(A.ENTITIES), n.attribList = [], n.opt.xmlns && (n.ns = Object.create(B)), n.trackPosition = !1 !== n.opt.position, n.trackPosition && (n.position = n.line = n.column = 0), y(n, "onready")
                     }
 
-                    A.EVENTS = ["text", "processinginstruction", "sgmldeclaration", "doctype", "comment", "opentagstart", "attribute", "opentag", "closetag", "opencdata", "cdata", "closecdata", "error", "end", "ready", "script", "opennamespace", "closenamespace"], Object.create || (Object.create = function (A) {
+                    A.EVENTS = ["text", "processinginstruction", "sgmldeclaration", "doctype", "comment", "opentagstart", "attributes", "opentag", "closetag", "opencdata", "cdata", "closecdata", "error", "end", "ready", "script", "opennamespace", "closenamespace"], Object.create || (Object.create = function (A) {
                         function t() {
                         }
 
@@ -23191,10 +23191,10 @@ $.extend(!0, $.fn.dataTable.defaults, defaults),
                                     continue;
                                 case p.ATTRIB:
                                     if (h(i)) continue;
-                                    ">" === i ? T(e) : "/" === i ? e.state = p.OPEN_TAG_SLASH : Q(g, i) ? (e.attribName = i, e.attribValue = "", e.state = p.ATTRIB_NAME) : z(e, "Invalid attribute name");
+                                    ">" === i ? T(e) : "/" === i ? e.state = p.OPEN_TAG_SLASH : Q(g, i) ? (e.attribName = i, e.attribValue = "", e.state = p.ATTRIB_NAME) : z(e, "Invalid attributes name");
                                     continue;
                                 case p.ATTRIB_NAME:
-                                    "=" === i ? e.state = p.ATTRIB_VALUE : ">" === i ? (z(e, "Attribute without value"), e.attribValue = e.attribName, x(e), T(e)) : h(i) ? e.state = p.ATTRIB_NAME_SAW_WHITE : Q(l, i) ? e.attribName += i : z(e, "Invalid attribute name");
+                                    "=" === i ? e.state = p.ATTRIB_VALUE : ">" === i ? (z(e, "Attribute without value"), e.attribValue = e.attribName, x(e), T(e)) : h(i) ? e.state = p.ATTRIB_NAME_SAW_WHITE : Q(l, i) ? e.attribName += i : z(e, "Invalid attributes name");
                                     continue;
                                 case p.ATTRIB_NAME_SAW_WHITE:
                                     if ("=" === i) e.state = p.ATTRIB_VALUE; else {
@@ -23202,12 +23202,12 @@ $.extend(!0, $.fn.dataTable.defaults, defaults),
                                         z(e, "Attribute without value"), e.tag.attributes[e.attribName] = "", e.attribValue = "", v(e, "onattribute", {
                                             name: e.attribName,
                                             value: ""
-                                        }), e.attribName = "", ">" === i ? T(e) : Q(g, i) ? (e.attribName = i, e.state = p.ATTRIB_NAME) : (z(e, "Invalid attribute name"), e.state = p.ATTRIB)
+                                        }), e.attribName = "", ">" === i ? T(e) : Q(g, i) ? (e.attribName = i, e.state = p.ATTRIB_NAME) : (z(e, "Invalid attributes name"), e.state = p.ATTRIB)
                                     }
                                     continue;
                                 case p.ATTRIB_VALUE:
                                     if (h(i)) continue;
-                                    E(i) ? (e.q = i, e.state = p.ATTRIB_VALUE_QUOTED) : (z(e, "Unquoted attribute value"), e.state = p.ATTRIB_VALUE_UNQUOTED, e.attribValue = i);
+                                    E(i) ? (e.q = i, e.state = p.ATTRIB_VALUE_QUOTED) : (z(e, "Unquoted attributes value"), e.state = p.ATTRIB_VALUE_UNQUOTED, e.attribValue = i);
                                     continue;
                                 case p.ATTRIB_VALUE_QUOTED:
                                     if (i !== e.q) {
@@ -23217,7 +23217,7 @@ $.extend(!0, $.fn.dataTable.defaults, defaults),
                                     x(e), e.q = "", e.state = p.ATTRIB_VALUE_CLOSED;
                                     continue;
                                 case p.ATTRIB_VALUE_CLOSED:
-                                    h(i) ? e.state = p.ATTRIB : ">" === i ? T(e) : "/" === i ? e.state = p.OPEN_TAG_SLASH : Q(g, i) ? (z(e, "No whitespace between attributes"), e.attribName = i, e.attribValue = "", e.state = p.ATTRIB_NAME) : z(e, "Invalid attribute name");
+                                    h(i) ? e.state = p.ATTRIB : ">" === i ? T(e) : "/" === i ? e.state = p.OPEN_TAG_SLASH : Q(g, i) ? (z(e, "No whitespace between attributes"), e.attribName = i, e.attribValue = "", e.state = p.ATTRIB_NAME) : z(e, "Invalid attributes name");
                                     continue;
                                 case p.ATTRIB_VALUE_UNQUOTED:
                                     if (!f(i)) {

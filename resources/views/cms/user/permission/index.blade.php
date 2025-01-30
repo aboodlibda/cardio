@@ -78,7 +78,7 @@
                         <tr>
                             <td>{{$permission->name}}</td>
                             <td>
-                                <a href="{{ route('show-role') }}" class="badge badge-light-primary fs-7 m-1">{{$permission->role->name}}</a>
+                                <a href="{{ route('roles.show',$permission->role->id) }}" class="badge badge-light-primary fs-7 m-1">{{$permission->role->name}}</a>
                             </td>
                             <td>{{$permission->created_at}}</td>
                             <td class="text-end">

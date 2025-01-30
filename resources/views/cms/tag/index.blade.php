@@ -26,15 +26,18 @@
     </div>
     <!--end::Page title=-->
     <!--begin::Modal - New Target-->
-    <div class="modal fade" id="kt_modal_new_target" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="kt_modal_add_tag" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
-            <div class="modal-content rounded">
+            <div class="modal-content">
                 <!--begin::Modal header-->
-                <div class="modal-header pb-0 border-0 justify-content-end">
+                <div class="modal-header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold">{{trans('dashboard_trans.Create new tag')}}</h2>
+                    <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-tags-modal-action="close">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
@@ -42,69 +45,45 @@
                     </div>
                     <!--end::Close-->
                 </div>
-                <!--begin::Modal header-->
+                <!--end::Modal header-->
                 <!--begin::Modal body-->
-                <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
-                    <!--begin:Form-->
-                    <form id="kt_modal_new_target_form" class="form" action="#">
-                        <!--begin::Heading-->
-                        <div class="mb-13 text-center">
-                            <!--begin::Title-->
-                            <h1 class="mb-3">{{trans('dashboard_trans.Add New Tag')}}</h1>
-                            <!--end::Title-->
-{{--                            <!--begin::Description-->--}}
-{{--                            <div class="text-muted fw-semibold fs-5">If you need more info, please check--}}
-{{--                                <a href="#" class="fw-bold link-primary">Project Guidelines</a>.</div>--}}
-{{--                            <!--end::Description-->--}}
-                        </div>
-                        <!--end::Heading-->
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form-->
+                    <form id="kt_modal_add_tag_form" class="form" data-kt-redirect="{{route('tags.index')}}" action="{{route('tags.store')}}" method="POST">
+                        @csrf
+                        @foreach(config('lang') as $key=>$lang)
+                        <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">{{trans('dashboard_trans.Tag Name')}}</span>
-                                <span class="ms-1" data-bs-toggle="tooltip" title="{{trans('dashboard_trans.Tag Name')}}">
-										<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
-											<span class="path1"></span>
-											<span class="path2"></span>
-											<span class="path3"></span>
-										</i>
-									</span>
+                            <label class="fs-6 fw-semibold form-label mb-2">
+                                <span class="required">{{trans('dashboard_trans.Name')}} ({{$lang}})</span>
+                                <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="{{trans('dashboard_trans.The tag name is required')}}">
+															<i class="ki-duotone ki-information fs-7">
+																<span class="path1"></span>
+																<span class="path2"></span>
+																<span class="path3"></span>
+															</i>
+														</span>
                             </label>
                             <!--end::Label-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{trans('dashboard_trans.Tag Name')}}" name="tag" />
+                            <!--begin::Input-->
+                            <input class="form-control form-control-solid" placeholder="{{trans('dashboard_trans.Enter the name of tag')}}" name="name[{{$key}}]" value="{{old('name.'.$key)}}" />
+                            <!--end::Input-->
+                            <div id="name-{{ $key }}-error" class="error-message"></div>
                         </div>
-                        <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-8 fv-row">
-                            <!--begin::Label-->
-                            <label class="d-flex align-items-center fs-6 fw-semibold mb-2">
-                                <span class="required">{{trans('dashboard_trans.Icon')}}</span>
-                                <span class="ms-1" data-bs-toggle="tooltip">
-										<i class="ki-duotone ki-information-5 text-gray-500 fs-6">
-											<span class="path1"></span>
-											<span class="path2"></span>
-											<span class="path3"></span>
-										</i>
-									</span>
-                            </label>
-                            <!--end::Label-->
-                            <input class="form-control form-control-solid" value="" name="icon" />
-                        </div>
+                        @endforeach
                         <!--end::Input group-->
                         <!--begin::Actions-->
-                        <div class="text-center">
-                            <button type="reset" id="kt_modal_new_target_cancel" class="btn btn-light me-3">{{trans('dashboard_trans.Cancel')}}</button>
-                            <button type="submit" id="kt_modal_new_target_submit" class="btn btn-primary">
-                                <span class="indicator-label">{{trans('dashboard_trans.Create')}}</span>
-                                <span class="indicator-progress">Please wait...
-									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-kt-tags-modal-action="cancel">{{trans('dashboard_trans.Cancel')}}</button>
+                            <button type="submit" class="btn btn-primary" data-kt-tags-modal-action="submit">
+                                <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
+                                <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
+														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                             </button>
                         </div>
                         <!--end::Actions-->
                     </form>
-                    <!--end:Form-->
+                    <!--end::Form-->
                 </div>
                 <!--end::Modal body-->
             </div>
@@ -129,7 +108,7 @@
                                 <span class="path1"></span>
                                 <span class="path2"></span>
                             </i>
-                            <input type="text" data-kt-ecommerce-category-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Category" />
+                            <input type="text" data-kt-ecommerce-tag-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Category" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -137,7 +116,7 @@
                     <!--begin::Card toolbar-->
                     <div class="card-toolbar">
                         <!--begin::Add customer-->
-                        <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_new_target">{{trans('dashboard_trans.Add New Tag')}}</a>
+                        <a href="#" class="btn btn-primary er fs-6 px-8 py-4" data-bs-toggle="modal" data-bs-target="#kt_modal_add_tag">{{trans('dashboard_trans.Add New Tag')}}</a>
                         <!--end::Add customer-->
                     </div>
                     <!--end::Card toolbar-->
@@ -146,7 +125,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Table-->
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_tag_table">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                             <th class="w-10px pe-2">
@@ -155,12 +134,13 @@
                                 </div>
                             </th>
                             <th class="min-w-250px">{{trans('dashboard_trans.Tags')}}</th>
-                            <th class="min-w-150px">{{trans('dashboard_trans.Icon')}}</th>
+                            <th class="min-w-150px">{{trans('dashboard_trans.Created Date')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                        <tr>
+                        @foreach($tags as $tag)
+                        <tr data-tag-id="{{ $tag->id }}">
                             <td>
                                 <div class="form-check form-check-sm form-check-custom form-check-solid">
                                     <input class="form-check-input" type="checkbox" value="1" />
@@ -168,48 +148,113 @@
                             </td>
                             <td>
                                 <div class="d-flex">
-                                    <!--begin::Thumbnail-->
-                                    <a href="../../demo3/dist/apps/ecommerce/catalog/edit-category.html" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{url('assets/media//stock/ecommerce/68.png')}});"></span>
-                                    </a>
-                                    <!--end::Thumbnail-->
                                     <div class="ms-5">
                                         <!--begin::Title-->
-                                        <a href="../../demo3/dist/apps/ecommerce/catalog/edit-category.html" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-category-filter="category_name">Computers</a>
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1" data-kt-ecommerce-tag-filter="tag_name">#{{$tag->name}}</a>
                                         <!--end::Title-->
                                         <!--begin::Description-->
-                                        <div class="text-muted fs-7 fw-bold">Our computers and tablets include all the big brands.</div>
+                                        <div class="text-muted fs-7 fw-bold">{{$tag->products->count()}}</div>
                                         <!--end::Description-->
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <!--begin::Badges-->
-                                <div class="badge badge-light-success">Automated</div>
+                                <div class="badge badge-light-secondary">{{$tag->created_at}}</div>
                                 <!--end::Badges-->
                             </td>
                             <td class="text-end">
-                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+                                <a href="#" class="btn btn-sm btn-light btn-active-light-primary btn-flex btn-center" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
                                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
                                 <!--begin::Menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="../../demo3/dist/apps/ecommerce/catalog/add-category.html" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
+                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_tag{{$tag->id}}">{{trans('dashboard_trans.Edit')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
+                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-tag-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
                                     </div>
                                     <!--end::Menu item-->
                                 </div>
                                 <!--end::Menu-->
                             </td>
                         </tr>
+                        <!--begin::Modal - Edit Tag-->
+                        <div class="modal fade" id="kt_modal_edit_tag{{ $tag->id }}" tabindex="-1" aria-hidden="true">
+                            <!--begin::Modal dialog-->
+                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                <!--begin::Modal content-->
+                                <div class="modal-content">
+                                    <!--begin::Modal header-->
+                                    <div class="modal-header">
+                                        <!--begin::Modal title-->
+                                        <h2 class="fw-bold">{{trans('dashboard_trans.Edit tag')}}</h2>
+                                        <!--end::Modal title-->
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-tags-modal-action="close">
+                                            <i class="ki-duotone ki-cross fs-1">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                            </i>
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+                                    <!--end::Modal header-->
+                                    <!--begin::Modal body-->
+                                    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                        <!--begin::Form-->
+                                        <form id="kt_modal_edit_tag_form" class="form" data-kt-redirect="{{route('tags.index')}}" action="{{route('tags.update',$tag->id)}}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            @foreach(config('lang') as $key=>$lang)
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="fs-6 fw-semibold form-label mb-2">
+                                                        <span class="required">{{trans('dashboard_trans.Name')}} ({{$lang}})</span>
+                                                        <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="{{trans('dashboard_trans.The tag name is required')}}">
+															<i class="ki-duotone ki-information fs-7">
+																<span class="path1"></span>
+																<span class="path2"></span>
+																<span class="path3"></span>
+															</i>
+														</span>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input class="form-control form-control-solid" placeholder="{{trans('dashboard_trans.Enter the name of tag')}}" name="name[{{$key}}]" value="{{$tag->getTranslation('name',$key)}}" />
+                                                    <!--end::Input-->
+                                                    <div id="name-{{ $key }}-error" class="error-message"></div>
+                                                </div>
+                                            @endforeach
+                                            <!--end::Input group-->
+                                            <!--begin::Actions-->
+                                            <div class="text-center pt-15">
+                                                <button type="reset" class="btn btn-light me-3" data-kt-tags-modal-action="cancel">{{trans('dashboard_trans.Cancel')}}</button>
+                                                <button type="submit" class="btn btn-primary" data-kt-tags-modal-action="submit">
+                                                    <span class="indicator-label">{{trans('dashboard_trans.Submit')}}</span>
+                                                    <span class="indicator-progress">{{trans('dashboard_trans.Please wait')}}...
+														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                                </button>
+                                            </div>
+                                            <!--end::Actions-->
+                                        </form>
+                                        <!--end::Form-->
+                                    </div>
+                                    <!--end::Modal body-->
+                                </div>
+                                <!--end::Modal content-->
+                            </div>
+                            <!--end::Modal dialog-->
+                        </div>
+                        <!--end::Modal - Edit Tag-->
+                        @endforeach
                         </tbody>
                         <!--end::Table body-->
                     </table>
+
                     <!--end::Table-->
                 </div>
                 <!--end::Card body-->
@@ -222,11 +267,9 @@
 @endsection
 @section('script')
     <script src="{{asset('assets/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/categories.js')}}"></script>
-
-{{--    <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>--}}
-{{--    <script src="{{asset('assets/js/custom/widgets.js')}}"></script>--}}
-    <script src="{{asset('assets/js/custom/utilities/modals/new-target.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/tags.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-tag.js')}}"></script>
+    <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/edit-tag.js')}}"></script>
     <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
 @endsection
 

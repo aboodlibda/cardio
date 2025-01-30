@@ -70,7 +70,7 @@
             <!--begin::Brand-->
             <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
                 <!--begin::Logo-->
-                <a href="../../demo3/dist/index.html">
+                <a href="{{ route('dashboard') }}">
                     <img alt="Logo" src="{{asset('assets/media/logos/demo3.svg')}}" class="h-20px logo theme-light-show" />
                     <img alt="Logo" src="{{asset('assets/media/logos/demo3-dark.svg')}}" class="h-20px logo theme-dark-show" />
                 </a>
@@ -151,7 +151,16 @@
 
                                 <!--end:Menu item-->
                                 <!--begin:Menu item-->
-
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link" href="{{ route('attributes.index') }}"  data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+                                        <span class="menu-title">{{trans('dashboard_trans.Attributes')}}</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
                                 <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
@@ -1574,7 +1583,7 @@
 {{--<!--end::Vendors Javascript-->--}}
 {{--<!--begin::Custom Javascript(used for this page only)-->--}}
 {{--<script src="{{asset('assets/js/widgets.bundle.js')}}"></script>--}}
-{{--<script src="{{asset('assets/js/custom/widgets.js')}}"></script>--}}
+<script src="{{asset('assets/js/custom/widgets.js')}}"></script>
 {{--<script src="{{asset('assets/js/custom/apps/chat/chat.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>--}}
 <!--end::Global Javascript Bundle-->

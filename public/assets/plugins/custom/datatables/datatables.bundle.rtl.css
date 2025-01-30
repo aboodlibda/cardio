@@ -10,7 +10,11 @@ table.dataTable {
 
 table.dataTable td,
 table.dataTable th {
+
     -webkit-box-sizing: content-box;
+
+    -zwebkit-box-sizing: content-box;
+
     box-sizing: content-box;
 }
 
