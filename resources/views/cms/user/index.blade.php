@@ -3,7 +3,7 @@
 @section('style')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if(App::getLocale()=='ar')
-                <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.rtl.css')}}" rel="stylesheet" type="text/css">
     @else
         <link href="{{asset('assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
     @endif
@@ -17,7 +17,7 @@
         <!--begin::Breadcrumb-->
         <ul class="breadcrumb breadcrumb-dot fw-semibold fs-base my-1">
             <li class="breadcrumb-item text-muted">
-                <a href="../../demo3/dist/index.html" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
+                <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Dashboard')}}</li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.User Management')}}</li>
