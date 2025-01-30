@@ -77,108 +77,34 @@
                                 </div>
                             </th>
                             <th class="min-w-200px">{{trans('dashboard_trans.Product')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.SKU')}}</th>
-                            <th class="text-end min-w-70px">{{trans('dashboard_trans.QTY')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Price')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Rating')}}</th>
-                            <th class="text-end min-w-100px">{{trans('dashboard_trans.Status')}}</th>
+                            <th class="min-w-100px">{{trans('dashboard_trans.SKU')}}</th>
+                            <th class="min-w-70px">{{trans('dashboard_trans.QTY')}}</th>
+                            <th class="min-w-100px">{{trans('dashboard_trans.Price')}}</th>
+{{--                            <th class="min-w-100px">{{trans('dashboard_trans.Rating')}}</th>--}}
+                            <th class="min-w-100px">{{trans('dashboard_trans.Status')}}</th>
                             <th class="text-end min-w-70px">{{trans('dashboard_trans.Actions')}}</th>
                         </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                        @foreach($products as $product)
-                        <tr data-product-id="{{$product->id}}">
-                            <td>
-                                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                    <input class="form-check-input" type="checkbox" value="1" />
-                                </div>
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                @if($product->images)
-                                        @foreach($product->images as $image)
-                                    <!--begin::Thumbnail-->
-                                    <a href="#" class="symbol symbol-50px">
-                                        <span class="symbol-label" style="background-image:url({{url(Storage::url($image->image))}});"></span>
-                                    </a>
-                                        @endforeach
-                                    @else
-                                        <a href="#" class="symbol symbol-50px">
-                                            <span class="symbol-label" style="background-image:url({{asset('assets/media/svg/files/blank-image.svg')}});"></span>
-                                        </a>
-                                    @endif
-
-                                    <!--end::Thumbnail-->
-                                    <div class="ms-5">
-                                        <!--begin::Title-->
-                                        <a href="{{ route('products.show',$product->id) }}" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">{{ $product->name }}</a>
-                                        <!--end::Title-->
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="text-end pe-0">
-                                <span class="fw-bold">{{ $product->SKU }}</span>
-                            </td>
-                            <td class="text-end pe-0" data-order="16">
-                                <span class="fw-bold ms-3">{{$product->quantity}}</span>
-                            </td>
-                            <td class="text-end pe-0">{{$product->price}}</td>
-
-                            <td class="text-end pe-0" data-order="rating-5">
-                                <div class="rating justify-content-end">
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                    <div class="rating-label checked">
-                                        <i class="ki-duotone ki-star fs-6"></i>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td class="text-end pe-0" data-order="{{$product->status}}">
-                                @if($product->status == 'published')
-                                    <!--begin::Badges-->
-                                    <div class="badge badge-light-primary">{{trans('dashboard_trans.Published')}}</div>
-                                    <!--end::Badges-->
-                                @elseif($product->status == 'draft')
-                                    <!--begin::Badges-->
-                                    <div class="badge badge-light-info">{{trans('dashboard_trans.Draft')}}</div>
-                                    <!--end::Badges-->
-                                    @else
-                                    <!--begin::Badges-->
-                                    <div class="badge badge-light-danger">{{trans('dashboard_trans.Unpublished')}}</div>
-                                    <!--end::Badges-->
-                                    @endif
-                            </td>
-                            <td class="text-end">
-                                <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">{{trans('dashboard_trans.Actions')}}
-                                    <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">{{trans('dashboard_trans.Edit')}}</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-kt-ecommerce-product-filter="delete_row">{{trans('dashboard_trans.Delete')}}</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu-->
-                            </td>
-                        </tr>
-                        @endforeach
+{{--                            <td class="text-end pe-0" data-order="rating-5">--}}
+{{--                                <div class="rating justify-content-end">--}}
+{{--                                    <div class="rating-label checked">--}}
+{{--                                        <i class="ki-duotone ki-star fs-6"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="rating-label checked">--}}
+{{--                                        <i class="ki-duotone ki-star fs-6"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="rating-label checked">--}}
+{{--                                        <i class="ki-duotone ki-star fs-6"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="rating-label checked">--}}
+{{--                                        <i class="ki-duotone ki-star fs-6"></i>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="rating-label checked">--}}
+{{--                                        <i class="ki-duotone ki-star fs-6"></i>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </td>--}}
                         </tbody>
                     </table>
                     <!--end::Table-->
