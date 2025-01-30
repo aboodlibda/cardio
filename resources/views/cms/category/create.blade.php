@@ -19,7 +19,7 @@
                 <a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.Home')}}</a>
             </li>
             <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.Categories')}}</li>
-            <li class="breadcrumb-item text-muted">{{trans('dashboard_trans.All Categories')}}</li>
+            <li class="breadcrumb-item text-muted"><a href="{{ route('categories.index') }}" class="text-muted text-hover-primary">{{trans('dashboard_trans.All Categories')}}</a></li>
             <li class="breadcrumb-item text-dark">{{trans('dashboard_trans.Add Category')}}</li>
         </ul>
         <!--end::Breadcrumb-->
