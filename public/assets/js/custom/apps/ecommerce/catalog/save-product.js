@@ -140,11 +140,9 @@ var KTAppEcommerceSaveProduct = function () {
         if (form && submitButton) {
             submitButton.addEventListener("click", function (event) {
                 event.preventDefault();
-
                 // Create FormData object
                 let formData = new FormData(form);
 
-                // Show loading indicator
                 submitButton.setAttribute("data-kt-indicator", "on");
                 submitButton.disabled = true;
 
@@ -174,10 +172,8 @@ var KTAppEcommerceSaveProduct = function () {
                     error: function (xhr) {
                         submitButton.removeAttribute("data-kt-indicator");
                         submitButton.disabled = false;
-
                         if (xhr.status === 422) {
                             let errors = xhr.responseJSON.errors;
-
                             // Clear previous error messages
                             $('.error-message').empty();
 
@@ -240,7 +236,7 @@ const initializeSelect2WithInfiniteScroll = (selectElement, url) => {
                     results: $.map(data.data, function (item) {
                         return {
                             id: item.id,
-                            text: item.name[currentLanguage] || item.name["ar"] || item.name.en, // <--- تعديل هنا
+                            text: item.name[currentLanguage] || item.name["ar"] || item.name.en,
                         };
                     }),
                     pagination: {
