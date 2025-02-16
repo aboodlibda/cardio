@@ -10,6 +10,7 @@ use App\Models\Tag;
 use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Validator;
 
 
 class ProductController extends Controller
@@ -120,45 +121,11 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request,ImageUploadService $imageUploadService)
     {
-        $validator = Validator::make($request->all(),[
-            'title.*'       => 'required|string|min:3|max:100',
-            'description.*' => 'nullable|string',
-            'price'       => 'required|integer|numeric',
-            'status'      => 'in:published,unpublished,draft',
-            'user_id'     => 'required|int|exists:users,id',
-            'slug'        => 'required|string',
-            'quantity'    => 'required|numeric',
-            'SKU'         => 'required|string|min:5|max:30',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
         $request->validated();
 
         $data = $request->only([
             'name', 'description', 'price', 'status', 'user_id', 'slug', 'quantity', 'SKU', 'tax_type', 'vat_amount', 'discount_type', 'discounted_price'
         ]);
-
-        $data['status'] = $request->input('status') === 'draft' ? 'draft' : ($request->has('status') ? 'published' : 'unpublished');
-
-        $avatar = $this->imageUploadService->upload($request, 'images', 'images/products');
-
-        $data['images'] = $avatar;
-
-        $isSaved = Product::query()->create($data);
-
-        if ($isSaved){
-            return response()->json([
-                'icon' => 'success',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Product created successfully'),
-            ]);
-        }else{
-            return response()->json([
-                'icon' => 'error',
-                'confirmButtonText'=>trans('dashboard_trans.Ok, got it!'),
-                'text' => trans('dashboard_trans.Failed to create product'),
-            ]);
 
         $data['user_id'] = auth()->check() ? auth()->user()->id : null;
 
@@ -199,7 +166,7 @@ class ProductController extends Controller
             return ControllerHelper::generateResponse( 'error', trans('dashboard_trans.Failed to create product'), 500);
         }
     }
-}
+
 
     public function show($id)
     {
@@ -296,6 +263,7 @@ class ProductController extends Controller
         return ControllerHelper::generateResponse('error',trans('dashboard_trans.Failed to delete this product'),500);
     }
 
+
     public function storeMedia(Request $request, ImageUploadService $imageUploadService)
     {
         $path = storage_path('tmp/uploads');
@@ -323,4 +291,5 @@ class ProductController extends Controller
             'original_name' => $file->hashName(),
         ]);
     }
+
 }
