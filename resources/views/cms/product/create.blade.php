@@ -149,13 +149,7 @@
                             <label class="form-label">{{trans('dashboard_trans.Categories')}}</label>
                             <!--end::Label-->
                             <!--begin::Select2-->
-
-                            <select class="form-select mb-2 select2-hidden-accessible" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
-                            <select class="form-select mb-2 select2-hidden-accessible" name="category_id" data-control="select2" data-kt-select2="true"   data-placeholder="{{trans('dashboard_trans.Select an option')}}" data-allow-clear="true" multiple="multiple"  aria-hidden="true" >
-
-
                             <select class="form-select mb-2 select2-hidden-accessible" data-control="select2" name="category_id[]" data-hide-search="true"  multiple="multiple"  aria-hidden="true"  data-placeholder="{{trans('dashboard_trans.Select an option')}}">
-
                                 <option></option>
                             </select>
                             <!--end::Select2-->
@@ -246,9 +240,6 @@
                                             <!--begin::Input-->
                                             <input type="text" name="name[{{$key}}]" id="name" class="form-control mb-2" placeholder="{{trans('dashboard_trans.Product Name')}}" value="{{old('name.'.$key)}}" />
                                             <!--end::Input-->
-
-                                            <div id="title-{{ $key }}-error" class="error-message"></div>                                        </div>
-
                                             <div id="name-{{ $key }}-error" class="error-message"></div>
                                         </div>
 
@@ -454,6 +445,7 @@
                                         <!--end::Input group-->
                                         <!--begin::Tax-->
                                         <div class="d-flex flex-wrap gap-5">
+
                                             <!--begin::Input group-->
                                             <div class="fv-row w-100 flex-md-root">
                                                 <!--begin::Label-->
@@ -646,13 +638,13 @@
                         </button>
                         <!--end::Button-->
                     </div>
+            </form>
                 </div>
                 <!--end::Main column-->
-            </form>
             <!--end::Form-->
         </div>
         <!--end::Container-->
-    </div>
+
     <!--end::Content-->
 @endsection
 @section('script')
