@@ -433,10 +433,7 @@
                                             <label class="form-label">{{trans('dashboard_trans.Fixed Discounted Price')}}</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-
-                                            <input type="text" name="discounted_price" class="form-control mb-2" placeholder="Discounted price" />
                                             <input type="text" name="discounted_price" value="{{old('discounted_price')}}" class="form-control mb-2" placeholder="Discounted price" />
-
                                             <!--end::Input-->
                                             <!--begin::Description-->
                                             <div class="text-muted fs-7">{{trans('dashboard_trans.Set the discounted product price. The product will be reduced at the determined fixed price')}}</div>
@@ -672,7 +669,6 @@
         };
     </script>
     <script src="{{asset('assets/js/custom/apps/ecommerce/catalog/save-product.js')}}"></script>
-    <script src="{{asset('assets/js/custom/utilities/modals/users-search.js')}}"></script>
     <script src="{{asset('assets/js/widgets.bundle.js')}}"></script>
     <script src="{{asset('assets/js/custom/widgets.js')}}"></script>
     <!--end::Custom Javascript-->
